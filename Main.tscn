@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgpyopj26hwsm"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_a2d3g"]
+[ext_resource type="PackedScene" uid="uid://bthxomoiyyhnf" path="res://scenes/UI/Mouse Cursor.tscn" id="2_lk44h"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_a2d3g")
+
+[node name="Mouse Cursor" parent="." instance=ExtResource("2_lk44h")]
