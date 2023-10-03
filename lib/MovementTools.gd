@@ -9,7 +9,7 @@ static func clampPosition(position: Vector2, screen_size: Vector2) -> Vector2:
 	return new_pos
 
 static func calcMoveVectorBetweenPoints(position: Vector2, target: Vector2, speed, delta) -> Vector2:
-	return calcMoveVector(target - position, speed, delta)
+	return calcMoveVector(position.direction_to(target), speed, delta)
 
 static func calcMoveVector(direction: Vector2, speed, delta) -> Vector2:
 	return direction.normalized() * speed * delta

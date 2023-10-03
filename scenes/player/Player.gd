@@ -1,23 +1,33 @@
-extends Area2DPlus
+extends Area2D
 
-# Exported
-@export var speed : int = 1200
-var mouse_distance_threshold : int = 5
+# Nodes and Scenes
+@export var Reticle : Area2D
+@export var Bullet : PackedScene
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	position = get_viewport_size()/2
+# Public Vars
+@export var speed : int = 1500
+@export var attack_speed : int = 10 # How many times per second a bullet is fired
 
+# Private Vars
+var time_between_attacks : float = 1.0/attack_speed
+var time_since_last_attack : float = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	do_movement(delta)
-	
-func do_movement(delta):
-	var to_mouse = get_global_mouse_position() - position
-	var distance_from_mouse = to_mouse.length()
-	if distance_from_mouse > mouse_distance_threshold:
-		position += MovementTools.calcMoveVector(to_mouse, speed, delta)
-		position = MovementTools.clampPosition(position, get_viewport_size())
+	fire_weapon(delta)
+
+func fire_weapon(delta):
+	if time_since_last_attack <= 0:
+		time_since_last_attack += time_between_attacks
+		create_bullet()
 	else:
-		position = get_global_mouse_position()
+		time_since_last_attack -= delta
+
+func create_bullet():
+	var new_bullet = Bullet.instantiate()
+	owner.add_child(new_bullet)
+	new_bullet.position = position
+	new_bullet.rotation = angle_to_reticle()
+
+func angle_to_reticle():
+	return position.angle_to_point(Reticle.position)

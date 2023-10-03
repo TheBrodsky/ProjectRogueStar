@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgpyopj26hwsm"]
+[gd_scene load_steps=3 format=3 uid="uid://duv6p3f38ccgk"]
 
-[ext_resource type="Script" path="res://Main.gd" id="1_a2d3g"]
-[ext_resource type="PackedScene" uid="uid://bthxomoiyyhnf" path="res://scenes/UI/Mouse Cursor.tscn" id="2_lk44h"]
+[ext_resource type="PackedScene" uid="uid://bthxomoiyyhnf" path="res://scenes/UI/Mouse Cursor.tscn" id="1_p250y"]
+[ext_resource type="PackedScene" uid="uid://cqcojaes2hbm6" path="res://scenes/player/FullPlayer.tscn" id="2_7ffnb"]
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_a2d3g")
+[node name="Main" type="Node"]
 
-[node name="Mouse Cursor" parent="." instance=ExtResource("2_lk44h")]
+[node name="Mouse Cursor" parent="." instance=ExtResource("1_p250y")]
+
+[node name="FullPlayer" parent="." instance=ExtResource("2_7ffnb")]

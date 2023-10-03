@@ -8,30 +8,9 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "Area2D",
-"class": &"Area2DPlus",
-"language": &"GDScript",
-"path": "res://lib/Area2DPlus.gd"
-}, {
-"base": "Object",
-"class": &"MovementTools",
-"language": &"GDScript",
-"path": "res://lib/MovementTools.gd"
-}]
-_global_script_class_icons={
-"Area2DPlus": "",
-"MovementTools": ""
-}
-
 [application]
 
 config/name="Project RogueStar"
 run/main_scene="res://Main.tscn"
-config/features=PackedStringArray("4.0", "Forward Plus")
+config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-Reticle="*res://scenes/player/Reticle.tscn"
-Player="*res://scenes/player/Player.tscn"
