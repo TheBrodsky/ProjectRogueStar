@@ -14,3 +14,5 @@ Bullet = ExtResource("2_fo4rr")
 
 [node name="Reticle" parent="." instance=ExtResource("2_bt105")]
 z_index = -1
+
+[connection signal="mouse_entered" from="Player" to="." method="_on_player_mouse_entered"]

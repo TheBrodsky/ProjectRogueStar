@@ -34,3 +34,14 @@ func do_reticle_movement(delta, player_vector):
 		if distance_to_player > max_reticle_distance_from_player:
 			var move_limiter_factor = max_reticle_distance_from_player/distance_to_player # what fraction of the length between reticle and player is within the max distance
 			Reticle.position += vectorToPlayer.normalized() * distance_to_player * (1-move_limiter_factor)
+
+
+func _on_player_mouse_entered():
+	toggle_state(true)
+
+func toggle_state(state):
+	set_process(state)
+	Player.set_process(state)
+	Reticle.visible = state
+	if not state:
+		Reticle.position = Player.position
