@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_mp20d"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/bullet.tscn" id="4_6kvpb"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
+[ext_resource type="PackedScene" uid="uid://dxhcxxq16d00u" path="res://scenes/enemies/Dummy.tscn" id="7_iujnq"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_mp20d")
@@ -25,3 +26,6 @@ Reticle = NodePath("../Reticle")
 [node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
 z_index = -2
 scale = Vector2(4, 4)
+
+[node name="Dummy" parent="." instance=ExtResource("7_iujnq")]
+position = Vector2(-609, -255)
