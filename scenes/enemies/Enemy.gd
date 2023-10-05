@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Enemy
 
-func deal_damage(damage):
+func take_damage(damage):
 	pass
 
 func add_effect(effect):

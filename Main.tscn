@@ -29,3 +29,12 @@ scale = Vector2(4, 4)
 
 [node name="Dummy" parent="." instance=ExtResource("7_iujnq")]
 position = Vector2(-609, -255)
+
+[node name="Dummy2" parent="." instance=ExtResource("7_iujnq")]
+position = Vector2(-269, -342)
+
+[node name="Dummy3" parent="." instance=ExtResource("7_iujnq")]
+position = Vector2(-527, 258)
+
+[node name="Dummy4" parent="." instance=ExtResource("7_iujnq")]
+position = Vector2(1175, -491)

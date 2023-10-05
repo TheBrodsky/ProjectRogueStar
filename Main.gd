@@ -7,7 +7,7 @@ func _ready():
 	respawn()
 
 func _input(event):
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_filedialog_refresh"):
 		respawn()
 
 func respawn():
