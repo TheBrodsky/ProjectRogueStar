@@ -1,10 +1,9 @@
 extends Node2D
 
 @onready var Player : Node2D = $Player
-@onready var Respawn : Marker2D = $"Player Spawn Point"
+@onready var Respawn : Marker2D = $PlayerSpawnPoint
 
 func _ready():
-	Respawn.position = get_viewport_rect().size/2
 	respawn()
 
 func _input(event):
