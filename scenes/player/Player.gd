@@ -15,8 +15,7 @@ var time_since_last_attack : float = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	do_movement(delta)
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		fire_weapon(delta)
+	fire_weapon(delta)
 
 func do_movement(delta):
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -25,8 +24,9 @@ func do_movement(delta):
 
 func fire_weapon(delta):
 	if time_since_last_attack <= 0:
-		time_since_last_attack += time_between_attacks
-		create_bullet()
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			time_since_last_attack += time_between_attacks
+			create_bullet()
 	else:
 		time_since_last_attack -= delta
 

@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_mp20d"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/bullet.tscn" id="4_bnsg4"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/bullet.tscn" id="4_6kvpb"]
+[ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
+[ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
 
 [sub_resource type="GDScript" id="GDScript_4gftq"]
 script/source = "extends Marker2D
@@ -19,7 +21,15 @@ script = ExtResource("1_mp20d")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
 Reticle = NodePath("../Reticle")
-Bullet = ExtResource("4_bnsg4")
+Bullet = ExtResource("4_6kvpb")
 
 [node name="Player Spawn Point" type="Marker2D" parent="."]
 script = SubResource("GDScript_4gftq")
+
+[node name="Camera" parent="." node_paths=PackedStringArray("Player", "Reticle") instance=ExtResource("5_qx7nx")]
+Player = NodePath("../Player")
+Reticle = NodePath("../Reticle")
+
+[node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
+z_index = -2
+scale = Vector2(4, 4)
