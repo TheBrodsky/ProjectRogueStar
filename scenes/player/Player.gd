@@ -3,21 +3,21 @@ extends CharacterBody2D
 
 enum {IDLE, RUN, DODGE, DODGE_RECOVER}
 
-const speed : int = 800
-const dodge_distance : int = 300
-const attack_speed : int = 10 # How many times per second a bullet is fired
+const SPEED : int = 800
+const DODGE_DISTANCE : int = 300
+const ATTACK_SPEED : int = 10 # How many times per second a bullet is fired
 
 @export var Reticle : Area2D
 @export var Bullet : PackedScene
 
 var state : int = IDLE
 
-var _time_between_attacks : float = 1.0/attack_speed
+var _time_between_attacks : float = 1.0/ATTACK_SPEED
 var _time_since_last_attack : float = 0
 var _dodge_direction : Vector2
 
 @onready var DodgeTimer : Timer = $DodgeTimer
-@onready var _dodge_speed : float = dodge_distance / DodgeTimer.wait_time
+@onready var _dodge_speed : float = DODGE_DISTANCE / DodgeTimer.wait_time
 
 # VIRTUAL METHODS
 func _input(event):
@@ -62,7 +62,7 @@ func _do_movement(delta):
 
 func _run():
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_direction * speed
+	velocity = input_direction * SPEED
 
 
 func _dodge():

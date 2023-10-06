@@ -1,21 +1,21 @@
 [gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
 
-[ext_resource type="Script" path="res://Main.gd" id="1_mp20d"]
+[ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/bullet.tscn" id="4_6kvpb"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/Bullet.tscn" id="4_qenyi"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
-[ext_resource type="PackedScene" uid="uid://dxhcxxq16d00u" path="res://scenes/enemies/Dummy.tscn" id="7_iujnq"]
+[ext_resource type="PackedScene" uid="uid://bkvyfec6n64gc" path="res://scenes/enemies/Dummy.tscn" id="7_iujnq"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_mp20d")
+script = ExtResource("1_t0tca")
 
 [node name="Reticle" parent="." instance=ExtResource("2_icas4")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
 Reticle = NodePath("../Reticle")
-Bullet = ExtResource("4_6kvpb")
+Bullet = ExtResource("4_qenyi")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 

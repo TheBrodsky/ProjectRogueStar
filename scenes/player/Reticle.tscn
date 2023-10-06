@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://2kseyhofncyg"]
 
+[ext_resource type="Script" path="res://scenes/player/reticle.gd" id="1_dqwl0"]
 [ext_resource type="Texture2D" uid="uid://df8eqal6fawhs" path="res://assets/reticle_solid.png" id="1_p5xqu"]
-[ext_resource type="Script" path="res://scenes/player/Reticle.gd" id="1_tyexd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rrq55"]
 radius = 13.0
@@ -9,7 +9,7 @@ radius = 13.0
 [node name="Reticle" type="Area2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_tyexd")
+script = ExtResource("1_dqwl0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
