@@ -1,77 +1,99 @@
 extends CharacterBody2D
 
-# Nodes and Scenes
+
+enum {IDLE, RUN, DODGE, DODGE_RECOVER}
+
+const speed : int = 800
+const dodge_distance : int = 300
+const attack_speed : int = 10 # How many times per second a bullet is fired
+
 @export var Reticle : Area2D
 @export var Bullet : PackedScene
 
-# Public Vars
-@export var speed : int = 800
-@export var attack_speed : int = 10 # How many times per second a bullet is fired
-@export var dodge_decay : float = .96 # 0-1, How quickly dodge velocity decays
-@export var dodge_speed_multiplier : float = 3.5 # How much dodging accelerates the player as a multiple of speed
-@export var i_frame_velocity_cutoff : int = 400 # The velocity magnitude during dodge at which i_frames are disabled
+var state : int = IDLE
 
-# Private Vars
-var time_between_attacks : float = 1.0/attack_speed
-var time_since_last_attack : float = 0
-var is_dodging : bool = false
-var has_i_frames : bool = false
+var _time_between_attacks : float = 1.0/attack_speed
+var _time_since_last_attack : float = 0
+var _dodge_direction : Vector2
 
+@onready var DodgeTimer : Timer = $DodgeTimer
+@onready var _dodge_speed : float = dodge_distance / DodgeTimer.wait_time
+
+# VIRTUAL METHODS
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
-		dodge()
+		_state_change_dodge()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	_DEBUG_color_i_frames()
-	do_movement(delta)
-	fire_weapon(delta)
+	_do_movement(delta)
+	_fire_weapon(delta)
 
-func do_movement(delta):
-	if !is_dodging:
-		var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-		velocity = input_direction * speed
-	else:
-		velocity *= dodge_decay
-		if velocity.length() < i_frame_velocity_cutoff:
-			has_i_frames = false
-		if velocity.length() < 100:
-			velocity = Vector2.ZERO
-			is_dodging = false
+func _on_dodge_timer_timeout():
+	state = IDLE
+	velocity = Vector2.ZERO
+
+# PUBLIC METHODS
+func take_damage(damage):
+	if state == DODGE:
+		pass
+
+
+# STATES
+func _state_change_dodge():
+	_dodge_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
+	if _dodge_direction != Vector2.ZERO: # Cannot dodge with no direction input
+		state = DODGE
+		DodgeTimer.start()
+	
+
+# MOVEMENT
+func _do_movement(delta):
+	match state:
+		IDLE, RUN:
+			_run()
+		DODGE:
+			_dodge()
+		DODGE_RECOVER:
+			pass
 	move_and_slide()
 
-func dodge():
-	is_dodging = true
-	has_i_frames = true
+
+func _run():
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = speed * dodge_speed_multiplier * input_direction
+	velocity = input_direction * speed
 
-func fire_weapon(delta):
-	if time_since_last_attack <= 0:
+
+func _dodge():
+	velocity = _dodge_direction * _dodge_speed
+
+
+# WEAPON AND FIRING
+func _fire_weapon(delta):
+	if _time_since_last_attack <= 0:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			time_since_last_attack += time_between_attacks
-			create_bullet()
+			_time_since_last_attack += _time_between_attacks
+			_create_bullet()
 	else:
-		time_since_last_attack -= delta
+		_time_since_last_attack -= delta
 
-func create_bullet():
+
+func _create_bullet():
 	var new_bullet = Bullet.instantiate()
 	owner.add_child(new_bullet)
 	new_bullet.position = position
-	new_bullet.rotation = angle_to_reticle()
+	new_bullet.rotation = _angle_to_reticle()
 
-func angle_to_reticle():
+
+func _angle_to_reticle():
 	return position.angle_to_point(Reticle.position)
 
-func take_damage(damage):
-	if !has_i_frames:
-		pass
 
+# DEBUG METHODS
 func _DEBUG_color_i_frames():
-	if is_dodging:
-		if velocity.length() > i_frame_velocity_cutoff:
+	match state:
+		IDLE, RUN:
+			modulate = Color("white")
+		DODGE:
 			modulate = Color("green")
-		else:
-			modulate = Color("red")
-	else:
-		modulate = Color("white")
