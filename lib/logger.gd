@@ -1,10 +1,15 @@
 extends Node
 
 
-enum LoggingLevel{DEBUG, INFO, WARN, ERROR}
-const LoggingLevelLabels = ["DEBUG", "INFO", "WARN", "ERROR"] # Unfortunate workaround to get enum names, which is not supported natively
+enum LoggingLevel{TRACE, DEBUG, INFO, WARN, ERROR}
+const LoggingLevelLabels = ["TRACE","DEBUG", "INFO", "WARN", "ERROR"] # Unfortunate workaround to get enum names, which is not supported natively
 
 const MIN_LEVEL : LoggingLevel = LoggingLevel.DEBUG
+
+
+func log_trace(message: String):
+	_log(LoggingLevel.TRACE, message)
+
 
 func log_debug(message: String):
 	_log(LoggingLevel.DEBUG, message)

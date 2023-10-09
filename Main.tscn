@@ -28,21 +28,20 @@ Reticle = NodePath("../Reticle")
 z_index = -2
 scale = Vector2(4, 4)
 
-[node name="Dummy" parent="." instance=ExtResource("7_iujnq")]
-position = Vector2(-609, -255)
-
-[node name="Dummy2" parent="." instance=ExtResource("7_iujnq")]
-position = Vector2(-269, -342)
-
-[node name="Dummy3" parent="." instance=ExtResource("7_iujnq")]
-position = Vector2(-527, 258)
-
-[node name="Dummy4" parent="." instance=ExtResource("7_iujnq")]
-position = Vector2(1175, -491)
-
-[node name="Spawner" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("8_f7axw")]
+[node name="LocalSpawner" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("8_f7axw")]
+position = Vector2(-1304, -368)
 camera = NodePath("../Camera")
 entity_to_spawn = ExtResource("7_iujnq")
-spawn_frequency = 1
-amount = 5
+spawn_frequency = 1.5
+amount = 2
+max_entities = 6
+spawn_range = 150
+
+[node name="OffScreenSpawner" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("8_f7axw")]
+position = Vector2(-1304, -368)
+camera = NodePath("../Camera")
+entity_to_spawn = ExtResource("7_iujnq")
+spawn_frequency = 0.5
+amount = 2
+max_entities = 300
 type = 2
