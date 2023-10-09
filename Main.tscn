@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=9 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
 [ext_resource type="PackedScene" uid="uid://bkvyfec6n64gc" path="res://scenes/enemies/Dummy.tscn" id="7_iujnq"]
+[ext_resource type="PackedScene" uid="uid://dvhuu7aum03t4" path="res://scenes/enemies/Spawner.tscn" id="8_f7axw"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -38,3 +39,10 @@ position = Vector2(-527, 258)
 
 [node name="Dummy4" parent="." instance=ExtResource("7_iujnq")]
 position = Vector2(1175, -491)
+
+[node name="Spawner" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("8_f7axw")]
+camera = NodePath("../Camera")
+entity_to_spawn = ExtResource("7_iujnq")
+spawn_frequency = 1
+amount = 5
+type = 2

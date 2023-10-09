@@ -2,10 +2,12 @@ extends CharacterBody2D
 
 class_name Enemy
 
+signal died(spawner_ID : int)
 
 @export var max_health : int = 5
 
 var cur_health : int = max_health
+var spawner_parent_ID
 
 
 func _process(delta):
@@ -20,6 +22,8 @@ func take_damage(damage):
 
 
 func die():
+	if spawner_parent_ID != null:
+		died.emit(spawner_parent_ID)
 	queue_free()
 
 
