@@ -1,6 +1,10 @@
 extends Node2D
 
+
 enum Type {LOCAL, ON_SCREEN, OFF_SCREEN}
+enum Quadrant {TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT, RANDOM}
+
+const QUADRANT_TRANSFORMS = [Vector2(1,1), Vector2(-1,1), Vector2(1,-1), Vector2(-1,-1)] # In order: 
 
 @export_group("Spawn Control")
 @export var camera : Camera2D
@@ -18,10 +22,14 @@ enum Type {LOCAL, ON_SCREEN, OFF_SCREEN}
 @export var type : Type = Type.LOCAL
 @export var spawn_range : int = 100 ## Number of pixels range for local and global, off-screen spawn locations. No effect for global, on-screen
 
-@onready var half_screen_width = (camera.get_viewport_rect().size.x / 2)
-@onready var half_screen_height = (camera.get_viewport_rect().size.y / 2)
-@onready var no_zone_halfs = Vector2(half_screen_width + spawn_range, half_screen_height + spawn_range) # See _get_point_off_screen()
-@onready var spawn_zone_halfs = Vector2(no_zone_halfs.x + spawn_range, no_zone_halfs.y + spawn_range) # See _get_point_off_screen()
+# Precalculations done for off-screen point generation algorithm.
+@onready var half_screen_width : float
+@onready var half_screen_height : float
+@onready var no_zone_half : Vector2
+@onready var rect_a : Vector2 
+@onready var rect_b : Vector2
+@onready var rect_a_weight : float
+
 @onready var _spawn_timer = spawn_frequency
 
 var _num_entities = 0
@@ -30,6 +38,8 @@ var _ID
 
 func _ready():
 	_ID = Globals.get_unsaved_ID()
+	if type == Type.OFF_SCREEN:
+		_precompute_off_screen_constants()
 
 func _process(delta):
 	if is_automatic:
@@ -90,35 +100,58 @@ func _get_point_on_screen():
 	return camera.position + Vector2(x, y)
 
 
-# The math here is a bit tricky. There are 3 rectangles: the viewport (the camera), the viewport + spawn_range buffer (the "no-zone"), and no-zone + spawn_range (the "spawn_zone")
-# The camera is the smallest, the spawn-zone is the largest. We want to pick points within the spawn-zone but not within the no-zone.
-# The X coord is any point on the x-axis of the spawn-zone
-# If the X coord is on the outer edges (outside the no-zone), the Y coord is any point on the y-axis of the spawn-zone.
-# If the X coord is within the no-zone's x-axis, the Y coord is a narrow band of height spawn_range and is offset by the height of the no-zone
-func _get_point_off_screen():
-	return camera.position + _get_point_off_screen_helper(no_zone_halfs, spawn_zone_halfs, randi() % 2)
+func _get_point_off_screen(quadrant : Quadrant = Quadrant.RANDOM):
+	return choose_inner_quadrant_point() * _determine_quadrant_transform(quadrant)
 
 
-# See _get_point_off_screen for explanation of the math.
-# This is a generalized version of that math so that the x and y can be swapped to control the distribution of spawns
-func _get_point_off_screen_helper(no_zone_halfs: Vector2, spawn_zone_halfs: Vector2, is_width_first_generated: bool):
-	var primary_axis_index = is_width_first_generated as int
-	var secondary_axis_index = !is_width_first_generated as int
-	
-	var primary = (randf_range(-spawn_zone_halfs[primary_axis_index], spawn_zone_halfs[primary_axis_index]))
-	var secondary
-	if abs(primary) > no_zone_halfs[primary_axis_index]:
-		secondary = randf_range(-spawn_zone_halfs[secondary_axis_index], spawn_zone_halfs[secondary_axis_index])
+func choose_inner_quadrant_point():
+	var point : Vector2
+	if randf() > rect_a_weight:
+		# you're in rect b
+		var x = randf_range(0, rect_b.x) + no_zone_half.x
+		var y = randf_range(0, rect_b.y)
+		point = Vector2(x, y)
 	else:
-		var neg_or_pos = [-1, 1][randi() % 2] # coinflip -1 and 1
-		secondary = (randf_range(0, spawn_range) + no_zone_halfs[secondary_axis_index]) * neg_or_pos
+		# you're in rect a
+		var x = randf_range(0, rect_a.x)
+		var y = randf_range(0, rect_a.y) + no_zone_half.y
+		point = Vector2(x, y)
 	
-	return Vector2(secondary, primary) if is_width_first_generated else Vector2(primary, secondary)
+	return point
+
+
+func _determine_quadrant_transform(quadrant : Quadrant):
+	var quadrant_transform : Vector2
+	if quadrant == Quadrant.RANDOM:
+		quadrant_transform = Vector2(_coinflip(), _coinflip())
+	else:
+		quadrant_transform = QUADRANT_TRANSFORMS[quadrant]
+	
+	return quadrant_transform
+	
+
+func _precompute_off_screen_constants():
+	half_screen_width = camera.get_viewport_rect().size.x / 2
+	half_screen_height = (camera.get_viewport_rect().size.y / 2)
+	no_zone_half = Vector2(half_screen_width + spawn_range, half_screen_height + spawn_range) # See _get_point_off_screen()
+	var spawn_zone_half = Vector2(no_zone_half.x + spawn_range, no_zone_half.y + spawn_range) # See _get_point_off_screen()
+	
+	rect_a = Vector2(spawn_zone_half.x, spawn_range)
+	rect_b = Vector2(spawn_range, no_zone_half.y)
+	
+	var rect_a_area : float = rect_a.dot(Vector2.ONE)
+	var rect_b_area : float = rect_b.dot(Vector2.ONE)
+	var total_area = rect_a_area + rect_b_area
+	rect_a_weight = rect_a_area / total_area
 
 
 ## Finds a point on a radial line between 0 and radius then randomly rotates it
 func _get_point_in_circle():
 	return (Vector2.ONE * randf_range(0, spawn_range)).rotated(randf_range(0, 2 * PI))
+	
+
+func _coinflip(coin = [-1, 1]):
+	return [-1, 1][randi() % 2]
 
 
 func _entity_died(spawner_ID):
