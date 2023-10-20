@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8i7jri1f0ryg"]
+[gd_scene load_steps=11 format=3 uid="uid://c8i7jri1f0ryg"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_7xeq0"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="3_3t6e8"]
+[ext_resource type="Script" path="res://scenes/emitter/emitter.gd" id="3_4b3cm"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/Bullet.tscn" id="4_ffxsd"]
+[ext_resource type="PackedScene" uid="uid://3rtepghghn2g" path="res://scenes/emitter/pathing/AtReticle.tscn" id="5_14nqx"]
+[ext_resource type="PackedScene" uid="uid://dtta401iisc5o" path="res://scenes/emitter/triggers/Input.tscn" id="5_velfs"]
+[ext_resource type="PackedScene" uid="uid://bt7pgxagt7m22" path="res://scenes/emitter/triggers/Firerate.tscn" id="6_8lwc5"]
+[ext_resource type="PackedScene" uid="uid://eqv2bo83kvww" path="res://scenes/emitter/targets/Self.tscn" id="7_mwwgh"]
+[ext_resource type="PackedScene" uid="uid://bxlgthj65wodd" path="res://scenes/emitter/patterns/Pattern.tscn" id="8_af1qs"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ovf6d"]
 radius = 897.0
@@ -22,5 +29,22 @@ shape = SubResource("CapsuleShape2D_ovf6d")
 [node name="DodgeTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
+
+[node name="Primary Weapon" type="Node2D" parent="." node_paths=PackedStringArray("trigger", "target", "pattern")]
+script = ExtResource("3_4b3cm")
+emission_entity = ExtResource("4_ffxsd")
+trigger = NodePath("Input")
+target = NodePath("Self")
+pattern = NodePath("Pattern")
+pathing = ExtResource("5_14nqx")
+
+[node name="Input" parent="Primary Weapon" node_paths=PackedStringArray("sub_trigger") instance=ExtResource("5_velfs")]
+sub_trigger = NodePath("Firerate")
+
+[node name="Firerate" parent="Primary Weapon/Input" instance=ExtResource("6_8lwc5")]
+
+[node name="Self" parent="Primary Weapon" instance=ExtResource("7_mwwgh")]
+
+[node name="Pattern" parent="Primary Weapon" instance=ExtResource("8_af1qs")]
 
 [connection signal="timeout" from="DodgeTimer" to="." method="_on_dodge_timer_timeout"]

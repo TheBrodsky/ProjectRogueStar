@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bilg4tqky8fpw"]
+
+[ext_resource type="Script" path="res://scenes/emitter/triggers/trigger.gd" id="1_7flcp"]
+
+[node name="Trigger" type="Node"]
+script = ExtResource("1_7flcp")

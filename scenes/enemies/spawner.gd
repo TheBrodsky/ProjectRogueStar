@@ -22,7 +22,7 @@ const QUADRANT_TRANSFORMS = [Vector2(1,1), Vector2(-1,1), Vector2(1,-1), Vector2
 @export var type : Type = Type.LOCAL
 @export var spawn_range : int = 100 ## Number of pixels range for local and global, off-screen spawn locations. No effect for global, on-screen
 
-# Precalculations done for off-screen point generation algorithm.
+# Precalculation variables for off-screen point generation algorithm.
 @onready var half_screen_width : float
 @onready var half_screen_height : float
 @onready var no_zone_half : Vector2
@@ -93,29 +93,23 @@ func _find_central_spawn_point():
 
 func _get_point_on_screen():
 	var x_boundary : float = half_screen_width
-	var x = randf_range(-x_boundary, x_boundary)
 	var y_boundary : float = half_screen_height
-	var y = randf_range(-y_boundary, y_boundary)
-	
-	return camera.position + Vector2(x, y)
+	var neg_to_pos_range = Vector2(-1, 1)
+	return camera.position + _find_random_point_in_rectangle(neg_to_pos_range * x_boundary, neg_to_pos_range * y_boundary)
 
 
 func _get_point_off_screen(quadrant : Quadrant = Quadrant.RANDOM):
-	return choose_inner_quadrant_point() * _determine_quadrant_transform(quadrant)
+	return get_viewport().get_camera_2d().position + (choose_inner_quadrant_point() * _determine_quadrant_transform(quadrant))
 
 
 func choose_inner_quadrant_point():
 	var point : Vector2
 	if randf() > rect_a_weight:
-		# you're in rect b
-		var x = randf_range(0, rect_b.x) + no_zone_half.x
-		var y = randf_range(0, rect_b.y)
-		point = Vector2(x, y)
+		# In rect b
+		point = _find_random_point_in_rectangle(Vector2(0, rect_b.x), Vector2(0, rect_b.y)) + Vector2(no_zone_half.x, 0)
 	else:
-		# you're in rect a
-		var x = randf_range(0, rect_a.x)
-		var y = randf_range(0, rect_a.y) + no_zone_half.y
-		point = Vector2(x, y)
+		# In rect a
+		point = _find_random_point_in_rectangle(Vector2(0, rect_a.x), Vector2(0, rect_a.y)) + Vector2(0, no_zone_half.y)
 	
 	return point
 
@@ -143,6 +137,10 @@ func _precompute_off_screen_constants():
 	var rect_b_area : float = rect_b.dot(Vector2.ONE)
 	var total_area = rect_a_area + rect_b_area
 	rect_a_weight = rect_a_area / total_area
+
+
+func _find_random_point_in_rectangle(x_range : Vector2, y_range : Vector2):
+	return Vector2(randf_range(x_range.x, x_range.y), randf_range(y_range.x, y_range.y))
 
 
 ## Finds a point on a radial line between 0 and radius then randomly rotates it

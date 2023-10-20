@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4m07wy3of7j6"]
+
+[ext_resource type="Script" path="res://scenes/emitter/emitter_manager.gd" id="1_cpa0o"]
+
+[node name="EmitterManager" type="Node"]
+script = ExtResource("1_cpa0o")

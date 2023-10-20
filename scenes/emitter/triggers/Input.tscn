@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtta401iisc5o"]
+
+[ext_resource type="Script" path="res://scenes/emitter/triggers/input.gd" id="1_nc6d4"]
+
+[node name="Input" type="Node"]
+script = ExtResource("1_nc6d4")
