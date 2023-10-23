@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=6 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/Bullet.tscn" id="4_qenyi"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
 
@@ -14,7 +13,6 @@ script = ExtResource("1_t0tca")
 
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
 Reticle = NodePath("../Reticle")
-Bullet = ExtResource("4_qenyi")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 

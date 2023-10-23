@@ -11,12 +11,19 @@ const DODGE_DISTANCE : int = 300
 var state : int = IDLE
 
 var _dodge_direction : Vector2
+var _weapon : Emitter
 
+@onready var WeaponFactory : EmitterFactory = $PrimaryWeapon
 @onready var DodgeTimer : Timer = $DodgeTimer
 @onready var _dodge_speed : float = DODGE_DISTANCE / DodgeTimer.wait_time
 
 
 # VIRTUAL METHODS
+func _ready():
+	_weapon = WeaponFactory.build_emitter()
+	add_child(_weapon)
+
+
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		_state_change_dodge()
