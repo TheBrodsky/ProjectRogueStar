@@ -1,13 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8i7jri1f0ryg"]
+[gd_scene load_steps=4 format=3 uid="uid://c8i7jri1f0ryg"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_7xeq0"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="3_3t6e8"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/Bullet.tscn" id="4_ffxsd"]
-[ext_resource type="PackedScene" uid="uid://3rtepghghn2g" path="res://scenes/emitter/pathing/AtReticle.tscn" id="5_14nqx"]
-[ext_resource type="PackedScene" uid="uid://bt7pgxagt7m22" path="res://scenes/emitter/triggers/Firerate.tscn" id="6_8lwc5"]
-[ext_resource type="PackedScene" uid="uid://b4m07wy3of7j6" path="res://scenes/emitter/EmitterFactory.tscn" id="11_hxvic"]
-[ext_resource type="PackedScene" uid="uid://eqv2bo83kvww" path="res://scenes/emitter/targets/Self.tscn" id="12_ggoxq"]
-[ext_resource type="PackedScene" uid="uid://bxlgthj65wodd" path="res://scenes/emitter/patterns/Pattern.tscn" id="13_yaukp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ovf6d"]
 radius = 897.0
@@ -28,18 +22,5 @@ shape = SubResource("CapsuleShape2D_ovf6d")
 [node name="DodgeTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
-
-[node name="PrimaryWeapon" parent="." instance=ExtResource("11_hxvic")]
-emitted_entity = ExtResource("4_ffxsd")
-trigger_scene = ExtResource("6_8lwc5")
-target_scene = ExtResource("12_ggoxq")
-pattern_scene = ExtResource("13_yaukp")
-pathing_scene = ExtResource("5_14nqx")
-
-[node name="EmitterManager" parent="PrimaryWeapon" instance=ExtResource("11_hxvic")]
-emitted_entity = ExtResource("4_ffxsd")
-trigger_scene = ExtResource("6_8lwc5")
-target_scene = ExtResource("12_ggoxq")
-pattern_scene = ExtResource("13_yaukp")
 
 [connection signal="timeout" from="DodgeTimer" to="." method="_on_dodge_timer_timeout"]

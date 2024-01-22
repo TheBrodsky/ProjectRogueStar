@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmbsvfcfxcegy"]
+
+[ext_resource type="Script" path="res://scenes/emitter/pathing/managers/group_pathing.gd" id="1_s6mxh"]
+
+[node name="GroupPathing" type="Node"]
+script = ExtResource("1_s6mxh")

@@ -6,6 +6,10 @@ extends Trigger
 var did_sub_trigger_activate : bool = false
 
 func _ready():
+	var child = get_child(0)
+	if child is Trigger:
+		sub_trigger = child
+	
 	if sub_trigger != null:
 		sub_trigger.triggered.connect(_handle_subtrigger)
 

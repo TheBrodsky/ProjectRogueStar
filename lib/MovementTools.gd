@@ -1,6 +1,6 @@
-class_name MovementTools
-
 extends Object
+
+class_name MovementTools
 
 
 # contains methods for common ways of moving game objects

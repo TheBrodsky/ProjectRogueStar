@@ -1,4 +1,8 @@
 extends Node2D
+## The actual emission device which creates entities and emits them.
+## The Emitter itself is basically a manager that passes responsibility off to its subordinate components.
+## What the components do to alter the emission is not up to the Emitter--the Emitter doesn't even know what the components are doing.
+## Once the Emitter has handed off the emission object to all the components, it adds it to the scene tree and completes an emission cycle.
 
 class_name Emitter
 
@@ -7,8 +11,10 @@ class_name Emitter
 @export var trigger : Trigger # WHEN the Emitter emits
 @export var target : Target # WHERE the Emitter emits
 @export var pattern : Pattern # HOW (in what shape) the Emitter emits
-@export var pathing : PackedScene # Must be of type Pathing. (Optional) Controls how the emitted entity moves after emission
+@export var pathing_manager : PathingManager # Controls how Pathing nodes get added to the emission and contains the Pathing blueprint
 @export var next_emitter : EmitterFactory # Must be of type Emitter. (Optional) Emitter that will get attached to each emitted entity, chaining emissions.
+
+@onready var emission_scene : PackedScene = preload("res://scenes/emitter/Emission.tscn")
 
 
 func _ready():
@@ -16,38 +22,33 @@ func _ready():
 
 
 func emit_cycle():
-	var center : Vector2 = target._get_target()
-	var spawn_points : Array = pattern.get_pattern(center)
-	for point in spawn_points:
-		_emit(point)
+	var emission : Emission = _create_emission()
+	target.modify_emission(emission)
+	pattern.modify_emission(emission)
+	_add_chained_emitters(emission)
+	pathing_manager.modify_emission(emission)
+	get_tree().root.add_child(emission)
 
 
-func add_components(new_emission_entity : PackedScene, new_trigger : Trigger, new_target : Target, new_pattern : Pattern, new_pathing : PackedScene, new_next_emitter : EmitterFactory):
+func add_components(new_emission_entity : PackedScene, new_trigger : Trigger, new_target : Target, new_pattern : Pattern, new_path_manager : PathingManager, new_next_emitter : EmitterFactory):
 	emission_entity = new_emission_entity
 	_add_trigger(new_trigger)
 	_add_target(new_target)
 	_add_pattern(new_pattern)
-	pathing = new_pathing
+	_add_path_manager(new_path_manager)
 	_add_next_emitter(new_next_emitter)
 
 
-func _emit(point : Vector2):
-	var entity = emission_entity.instantiate()
-	
+func _create_emission():
+	var emission : Emission = emission_scene.instantiate()
+	emission.emission_entity = emission_entity
+	return emission
+
+
+func _add_chained_emitters(emission : Emission):
 	if next_emitter != null:
-		var chained_emitter = next_emitter.build_emitter()
-		entity.add_child(chained_emitter)
-	
-	var parent_entity
-	if pathing != null:
-		parent_entity = pathing.instantiate()
-		parent_entity.add_child(entity)
-		parent_entity.pathed_entity = entity
-	else:
-		parent_entity = entity
-	
-	parent_entity.global_position = point
-	get_tree().root.add_child(parent_entity)
+		for child in emission.get_children():
+			child.add_child(next_emitter.build_emitter())
 
 
 func _add_trigger(new_trigger : Trigger):
@@ -64,6 +65,11 @@ func _add_target(new_target : Target):
 func _add_pattern(new_pattern : Pattern):
 	_replace_child(pattern, new_pattern)
 	pattern = new_pattern
+
+
+func _add_path_manager(new_path_manager : PathingManager):
+	_replace_child(pathing_manager, new_path_manager)
+	pathing_manager = new_path_manager
 
 
 func _add_next_emitter(new_next_emitter : EmitterFactory):

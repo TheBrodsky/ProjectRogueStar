@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv51imqxg2wiy"]
+
+[ext_resource type="Script" path="res://scenes/emitter/pathing/managers/individual_pathing.gd" id="1_sx1am"]
+
+[node name="IndividualPathing" type="Node"]
+script = ExtResource("1_sx1am")

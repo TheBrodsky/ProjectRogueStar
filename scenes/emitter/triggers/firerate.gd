@@ -13,7 +13,6 @@ func _ready():
 
 func _on_timer_timeout():
 	triggered.emit()
-	print("triggered")
 
 
 func pause():
