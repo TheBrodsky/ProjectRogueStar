@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://budqwkkfid2ot"]
-
-[ext_resource type="Script" path="res://scenes/emitter/emitter_packer.gd" id="1_8j6ae"]
-
-[node name="EmitterPacker" type="Node"]
-script = ExtResource("1_8j6ae")

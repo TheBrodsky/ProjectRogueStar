@@ -1,20 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=10 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
+[ext_resource type="PackedScene" uid="uid://dpdrjydjk5aro" path="res://scenes/action_chain/triggers/OnCompoundTrigger.tscn" id="4_7rgq0"]
+[ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/action_chain/triggers/OnInput.tscn" id="4_vnxss"]
+[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/action_chain/triggers/OnTimer.tscn" id="5_qqf3p"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
-[ext_resource type="Script" path="res://scenes/emitter/emitter_packer.gd" id="6_fgp7r"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/projectiles/Bullet.tscn" id="7_fhd6v"]
-[ext_resource type="PackedScene" uid="uid://dtta401iisc5o" path="res://scenes/emitter/triggers/Input.tscn" id="8_r1v0a"]
-[ext_resource type="PackedScene" uid="uid://bt7pgxagt7m22" path="res://scenes/emitter/triggers/Firerate.tscn" id="9_u2jw7"]
-[ext_resource type="PackedScene" uid="uid://bmbsvfcfxcegy" path="res://scenes/emitter/pathing/managers/GroupPathing.tscn" id="10_1dkby"]
-[ext_resource type="PackedScene" uid="uid://eqv2bo83kvww" path="res://scenes/emitter/targets/Self.tscn" id="10_m34q7"]
-[ext_resource type="PackedScene" uid="uid://e5yeh1t53jwb" path="res://scenes/emitter/patterns/RandomCircle.tscn" id="11_hfpdf"]
-[ext_resource type="PackedScene" uid="uid://budqwkkfid2ot" path="res://scenes/emitter/EmitterPacker.tscn" id="12_d635k"]
-[ext_resource type="PackedScene" uid="uid://3rtepghghn2g" path="res://scenes/emitter/pathing/AtReticle.tscn" id="12_v2yi0"]
-[ext_resource type="PackedScene" uid="uid://dv51imqxg2wiy" path="res://scenes/emitter/pathing/managers/IndividualPathing.tscn" id="13_gc6c1"]
+[ext_resource type="PackedScene" uid="uid://bimqjjmc2wh6k" path="res://scenes/action_chain/events/DebugEvent.tscn" id="7_q7eg8"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -24,38 +18,13 @@ script = ExtResource("1_t0tca")
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
 Reticle = NodePath("../Reticle")
 
-[node name="Weapon" type="Node" parent="Player"]
-script = ExtResource("6_fgp7r")
+[node name="OnCompoundTrigger" parent="Player" instance=ExtResource("4_7rgq0")]
 
-[node name="Self" parent="Player/Weapon" instance=ExtResource("10_m34q7")]
-scale = Vector2(0.024, 0.024)
+[node name="OnTimer" parent="Player/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
 
-[node name="bullet" parent="Player/Weapon" instance=ExtResource("7_fhd6v")]
+[node name="OnInput" parent="Player/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
 
-[node name="Input" parent="Player/Weapon" instance=ExtResource("8_r1v0a")]
-
-[node name="Firerate" parent="Player/Weapon/Input" instance=ExtResource("9_u2jw7")]
-
-[node name="RandomCircle" parent="Player/Weapon" instance=ExtResource("11_hfpdf")]
-
-[node name="GroupPathing" parent="Player/Weapon" instance=ExtResource("10_1dkby")]
-
-[node name="AtReticle" parent="Player/Weapon/GroupPathing" instance=ExtResource("12_v2yi0")]
-
-[node name="Weapon2" parent="Player/Weapon" instance=ExtResource("12_d635k")]
-
-[node name="bullet" parent="Player/Weapon/Weapon2" instance=ExtResource("7_fhd6v")]
-
-[node name="Firerate" parent="Player/Weapon/Weapon2" instance=ExtResource("9_u2jw7")]
-
-[node name="Self" parent="Player/Weapon/Weapon2" instance=ExtResource("10_m34q7")]
-
-[node name="RandomCircle" parent="Player/Weapon/Weapon2" instance=ExtResource("11_hfpdf")]
-range = 100
-
-[node name="IndividualPathing" parent="Player/Weapon/Weapon2" instance=ExtResource("13_gc6c1")]
-
-[node name="AtReticle" parent="Player/Weapon/Weapon2/IndividualPathing" instance=ExtResource("12_v2yi0")]
+[node name="DebugEvent" parent="Player/OnCompoundTrigger" instance=ExtResource("7_q7eg8")]
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 

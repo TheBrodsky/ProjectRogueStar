@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://buib88ssfjic2"]
-
-[ext_resource type="Script" path="res://scenes/emitter/pathing/managers/pathing_manager.gd" id="1_ld2v2"]
-
-[node name="PathingManager" type="Node"]
-script = ExtResource("1_ld2v2")

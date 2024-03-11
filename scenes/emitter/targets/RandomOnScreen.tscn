@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf4xpf7no44a2"]
-
-[ext_resource type="Script" path="res://scenes/emitter/targets/random_on_screen.gd" id="1_o8iwt"]
-
-[node name="RandomOnScreen" type="Node2D"]
-script = ExtResource("1_o8iwt")

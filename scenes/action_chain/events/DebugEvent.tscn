@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bimqjjmc2wh6k"]
+
+[ext_resource type="Script" path="res://scenes/action_chain/events/debug_event.gd" id="1_q82ru"]
+
+[node name="DebugEvent" type="Node"]
+script = ExtResource("1_q82ru")

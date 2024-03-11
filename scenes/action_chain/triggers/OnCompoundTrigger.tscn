@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpdrjydjk5aro"]
+
+[ext_resource type="Script" path="res://scenes/action_chain/triggers/on_compound_trigger.gd" id="1_twwrn"]
+
+[node name="OnCompoundTrigger" type="Node"]
+script = ExtResource("1_twwrn")
