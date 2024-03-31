@@ -12,14 +12,14 @@ var state: int = IDLE
 
 var _dodge_direction: Vector2
 
-@onready var Weapon: Trigger = $Weapon
+@onready var Weapon: ChainRoot = $ChainRoot
 @onready var DodgeTimer: Timer = $DodgeTimer
 @onready var _dodge_speed: float = DODGE_DISTANCE / DodgeTimer.wait_time
 
 
 # VIRTUAL METHODS
 func _ready() -> void:
-	pass
+	pass 
 
 
 func _input(event: InputEvent) -> void:
@@ -44,7 +44,7 @@ func take_damage(damage: float) -> void:
 
 # STATES
 func _state_change_dodge() -> void:
-	_dodge_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
+	_dodge_direction = _get_input()
 	if _dodge_direction != Vector2.ZERO: # Cannot dodge with no direction input
 		state = DODGE
 		DodgeTimer.start()
@@ -63,12 +63,16 @@ func _do_movement(delta: float) -> void:
 
 
 func _run() -> void:
-	var input_direction: Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_direction: Vector2 = _get_input()
 	velocity = input_direction * SPEED
 
 
 func _dodge() -> void:
 	velocity = _dodge_direction * _dodge_speed
+
+
+func _get_input() -> Vector2:
+	return Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")).normalized()
 
 
 # DEBUG METHODS

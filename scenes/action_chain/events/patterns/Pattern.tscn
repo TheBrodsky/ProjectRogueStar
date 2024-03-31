@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bro8lsj88pu67"]
-
-[ext_resource type="Script" path="res://scenes/action_chain/events/patterns/pattern.gd" id="1_arcy7"]
-
-[node name="Pattern" type="Node"]
-script = ExtResource("1_arcy7")

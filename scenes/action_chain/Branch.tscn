@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvo56gdbv54g6"]
-
-[ext_resource type="Script" path="res://scenes/action_chain/branch.gd" id="1_ve6yc"]
-
-[node name="Branch" type="Node"]
-script = ExtResource("1_ve6yc")

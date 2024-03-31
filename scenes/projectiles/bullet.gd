@@ -1,16 +1,22 @@
 extends Area2D
 
 
-@export var damage : int = 1
+@export var damage: float = 1
+@export var speed: float = 600
 
-@onready var Notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var Notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 
-func _on_visible_on_screen_notifier_2d_screen_exited():
+func _process(delta: float) -> void:
+	position += MovementTools.calcMoveVector(MovementTools.calcDirectionFromAngle(rotation), speed, delta)
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
+	get_global_mouse_position()
 
 
-func _on_body_entered(body):
+func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy"):
 		var enemy : Enemy = body
 		enemy.take_damage(damage)

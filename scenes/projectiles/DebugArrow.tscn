@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://2mmj4swdfkml"]
+
+[ext_resource type="Texture2D" uid="uid://b3v5pmgs25b4a" path="res://assets/debug arrow.png" id="1_117vb"]
+
+[node name="DebugArrow" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_117vb")

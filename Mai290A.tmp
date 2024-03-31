@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=13 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
@@ -10,10 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
 [ext_resource type="PackedScene" uid="uid://bvo56gdbv54g6" path="res://scenes/action_chain/structure nodes/Branch.tscn" id="9_7ibvc"]
-[ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/action_chain/modifiers/SpeedMultiplier.tscn" id="10_624xo"]
 [ext_resource type="PackedScene" uid="uid://exdx31aarlv6" path="res://scenes/action_chain/structure nodes/events/SingleProjectile.tscn" id="10_umshq"]
 [ext_resource type="PackedScene" uid="uid://on2rmgdkngv3" path="res://scenes/action_chain/modifiers/AccuracyChange.tscn" id="11_pjavh"]
-[ext_resource type="PackedScene" uid="uid://2mmj4swdfkml" path="res://scenes/projectiles/DebugArrow.tscn" id="11_vdvb5"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -21,7 +19,6 @@ script = ExtResource("1_t0tca")
 [node name="Reticle" parent="." instance=ExtResource("2_icas4")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
-collision_mask = 24
 Reticle = NodePath("../Reticle")
 
 [node name="ChainRoot" parent="Player" instance=ExtResource("4_j5ogy")]
@@ -33,26 +30,11 @@ is_ordered = true
 
 [node name="OnInput" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
 
+[node name="AccuracyChange" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("11_pjavh")]
+
 [node name="Branch" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("9_7ibvc")]
 
-[node name="AccuracyChange" parent="Player/ChainRoot/OnCompoundTrigger/Branch" instance=ExtResource("11_pjavh")]
-accuracy_change = 15.0
-
-[node name="SpeedMultiplier" parent="Player/ChainRoot/OnCompoundTrigger/Branch" instance=ExtResource("10_624xo")]
-speed_mult = 0.7
-
 [node name="SingleProjectile" parent="Player/ChainRoot/OnCompoundTrigger/Branch" instance=ExtResource("10_umshq")]
-
-[node name="OnTimer" parent="Player/ChainRoot/OnCompoundTrigger/Branch/SingleProjectile" instance=ExtResource("5_qqf3p")]
-position = Vector2(9958.33, 7041.67)
-
-[node name="Branch" parent="Player/ChainRoot/OnCompoundTrigger/Branch/SingleProjectile/OnTimer" instance=ExtResource("9_7ibvc")]
-position = Vector2(0, -0.000488281)
-
-[node name="SingleProjectile" parent="Player/ChainRoot/OnCompoundTrigger/Branch/SingleProjectile/OnTimer/Branch" instance=ExtResource("10_umshq")]
-projectile_blueprint = ExtResource("11_vdvb5")
-
-[node name="SingleProjectile2" parent="Player/ChainRoot/OnCompoundTrigger/Branch/SingleProjectile/OnTimer/Branch" instance=ExtResource("10_umshq")]
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 

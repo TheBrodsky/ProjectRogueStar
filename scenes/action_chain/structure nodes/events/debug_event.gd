@@ -3,9 +3,8 @@ extends Event
 
 func _ready() -> void:
 	super._ready()
-	_name = ""
+	_name = "DebugEvent"
 
 
 func _do_event_action(state : ActionState) -> ActionState:
-	push_error("UNIMPLEMENTED ERROR: Event._do_event_action()")
 	return null

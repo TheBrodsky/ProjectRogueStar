@@ -3,6 +3,7 @@ extends Node2D
 
 @onready var Player: Node2D = $Player
 @onready var Respawn: Marker2D = $PlayerSpawnPoint
+@onready var Reticle: Area2D = $Reticle
 
 
 func _ready() -> void:
