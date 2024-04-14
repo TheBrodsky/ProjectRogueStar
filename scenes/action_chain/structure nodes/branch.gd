@@ -37,7 +37,7 @@ func _run(state: ActionState) -> void:
 
 
 # A slightly gross workaround for the situation where a branch proceeds an event.
-# The event needs to add all following triggers to its EventContainer, but a branch could be in between.
+# Event actions need to know what triggers proceed the event, but a branch could be in between.
 # Per ActionNode rules, the event node shouldnt be getting all up in Branch's business, so it's better to ask Branch to do it instead.
 func get_next_triggers() -> Array[Trigger]:
 	assert(childType == ActionType.TRIGGER)
