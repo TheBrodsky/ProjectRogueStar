@@ -10,7 +10,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	pass
+	find_next_action_nodes([ActionType.TRIGGER])
 
 
 func _run(state : ActionState) -> void:
@@ -27,15 +27,10 @@ func find_action() -> void:
 				break
 
 
+# really just exists to log the connection and cast the type
 func get_next_triggers() -> Array[Trigger]:
-	var triggers: Array[Trigger] = []
-	var next: ActionNode = _get_next()
-	if next != null:
-		if next is Branch:
-			for trigger: Trigger in (next as Branch).get_next_triggers():
-				Logger.log_debug("%s: connecting to node %s" % [get_action_name(), next.get_action_name()])
-				triggers.append(trigger)
-		else:
-			Logger.log_debug("%s: connecting to node %s" % [get_action_name(), next.get_action_name()])
-			triggers.append(next as Trigger)
-	return triggers
+	for trigger: Trigger in _next:
+		Logger.log_debug("%s: connecting to node %s" % [get_action_name(), trigger.get_action_name()])
+	var next_as_triggers: Array[Trigger]
+	next_as_triggers.assign(_next)
+	return next_as_triggers

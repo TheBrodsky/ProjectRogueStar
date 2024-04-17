@@ -16,13 +16,14 @@ extends Node2D
 ## The common theme of these rules is that objects and causality should only move down the chain, never up.
 
 
-enum ActionType {NONE, TRIGGER, EVENT, BRANCH} # used as workaround for type identification since types cannot be passed as parameters
-const ActionTypeLabels: Array[String] = ["NONE", "TRIGGER", "EVENT", "BRANCH"] # used to map enum to labels
+enum ActionType {NONE, TRIGGER, EVENT} # used as workaround for type identification since types cannot be passed as parameters
+const ActionTypeLabels: Array[String] = ["NONE", "TRIGGER", "EVENT"] # used to map enum to labels
 
+@export var num_next: int = 1
 
 var actionType: ActionType = ActionType.NONE
 
-var _next: ActionNode
+var _next: Array[ActionNode] = []
 var _name: String
 
 
@@ -31,17 +32,23 @@ func _run(state: ActionState) -> void:
 	_apply_modifiers(state)
 
 
-func get_next_action_node(type_whitelist: Array[ActionType] = []) -> ActionNode:
-	var next_node : ActionNode
+func run_next(state: ActionState) -> void:
+	for child: ActionNode in _next:
+		Logger.log_debug("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
+		child._run(state.clone())
+
+
+func find_next_action_nodes(type_whitelist: Array[ActionType] = []) -> void:
+	_next = []
+	var next_node : Array[ActionNode]
 	for child: Node in get_children():
+		if _next.size() == num_next:
+			break
+		
 		if child is ActionNode:
-			if !type_whitelist.is_empty():
-				if (child as ActionNode).actionType in type_whitelist:
-					next_node = child
-			else:
-				next_node = child
-				break
-	return next_node
+			var is_in_whitelist: bool = type_whitelist.size() == 0 or (child as ActionNode).actionType in type_whitelist
+			if is_in_whitelist:
+				_next.append(child)
 
 
 func get_action_name() -> String:
@@ -60,12 +67,10 @@ func copy_from(other: ActionNode) -> void:
 
 
 # returns the next node, prioritizing _next
-func _get_next() -> ActionNode:
-	var nextNode : ActionNode = _next
-	if nextNode == null:
-		nextNode = get_next_action_node()
-		_next = nextNode
-	return nextNode
+func _get_next() -> Array[ActionNode]:
+	if _next.size() < num_next:
+		find_next_action_nodes()
+	return _next
 
 
 func _apply_modifiers(state: ActionState) -> void:

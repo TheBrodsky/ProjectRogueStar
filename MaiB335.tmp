@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=16 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://be6r6kbleox2f" path="res://scenes/action_chain/modifiers/attachers/Boomerang.tscn" id="12_jkwxg"]
 [ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/action_chain/effects/projectiles/Bullet.tscn" id="12_uagey"]
 [ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/action_chain/structure nodes/events/event actions/persistant/emissions/Burst.tscn" id="13_2bnv8"]
-[ext_resource type="PackedScene" uid="uid://on2rmgdkngv3" path="res://scenes/action_chain/modifiers/stats/AccuracyChange.tscn" id="13_qo6hu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -27,22 +26,9 @@ collision_mask = 24
 Reticle = NodePath("../Reticle")
 
 [node name="ChainRoot" parent="Player" instance=ExtResource("4_j5ogy")]
-num_next = 2
-
-[node name="OnTimer" parent="Player/ChainRoot" instance=ExtResource("5_qqf3p")]
-activations_per_second = 8
-
-[node name="Event2" parent="Player/ChainRoot/OnTimer" instance=ExtResource("7_fqijc")]
-
-[node name="Emission" parent="Player/ChainRoot/OnTimer/Event2" instance=ExtResource("9_5s7cc")]
-entity = ExtResource("12_uagey")
-
-[node name="AccuracyChange" parent="Player/ChainRoot/OnTimer/Event2" instance=ExtResource("13_qo6hu")]
-accuracy_change = 25.0
 
 [node name="OnCompoundTrigger" parent="Player/ChainRoot" instance=ExtResource("4_7rgq0")]
 is_ordered = true
-num_next = 2
 
 [node name="Event" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("7_fqijc")]
 

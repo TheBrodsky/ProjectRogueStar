@@ -24,7 +24,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	_next = get_next_action_node([ActionType.EVENT, ActionType.BRANCH])
+	find_next_action_nodes([ActionType.EVENT])
 	pause()
 
 
@@ -41,17 +41,10 @@ func _do_trigger() -> void:
 		if is_one_shot:
 			pause()
 		triggered.emit(self)
-		run_next()
+		run_next(action_state)
 
 
 func _run(state: ActionState) -> void:
 	super._run(state)
 	action_state = state
 	resume()
-
-
-func run_next() -> void:
-	var next: ActionNode = _get_next()
-	if next != null:
-		Logger.log_debug("%s: connecting to node %s" % [get_action_name(), next.get_action_name()])
-		next._run(action_state.clone())

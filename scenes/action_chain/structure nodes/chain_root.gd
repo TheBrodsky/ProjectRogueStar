@@ -14,16 +14,16 @@ extends ActionNode
 
 
 func _ready() -> void:
-	_next = get_next_action_node([ActionType.TRIGGER])
-	assert(_next != null)
+	find_next_action_nodes([ActionType.TRIGGER])
+	assert(_next.size() > 0)
 	build_chain()
 	
 
 func build_chain() -> void:
-	var trigger: Trigger = _next
-	Logger.log_debug("ChainRoot hooked to %s" % _next.get_action_name())
-	var action_state: ActionState = _build_action_state()
-	trigger._run(action_state)
+	for trigger: Trigger in (_next as Array[Trigger]):
+		Logger.log_debug("ChainRoot hooked to %s" % trigger.get_action_name())
+		var action_state: ActionState = _build_action_state()
+		trigger._run(action_state)
 
 
 func _build_action_state() -> ActionState:

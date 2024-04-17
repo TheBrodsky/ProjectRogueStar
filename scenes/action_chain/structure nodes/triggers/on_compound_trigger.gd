@@ -17,8 +17,6 @@ var _index_map: Dictionary = {} # maps sub_triggers to their index in the _sub_t
 func _ready() -> void:
 	super._ready()
 	_name = "CompoundTrigger"
-	_next = get_next_action_node([ActionType.EVENT, ActionType.BRANCH])
-	assert(_next != null)
 	_find_sub_triggers()
 	_connect_sub_triggers()
 
