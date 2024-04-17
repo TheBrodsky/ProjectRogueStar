@@ -17,14 +17,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if _should_exist(delta):
+	if _should_exist():
 		queue_free()
-
-
-# used each tick to determine if the Persistant should free itself
-func _should_exist(delta: float) -> bool:
-	push_error("UNIMPLEMENTED ERROR: IPersistant._should_exist()")
-	return false
 
 
 # used by inheriting classes to perform additional setup during the do_action() call
@@ -71,3 +65,7 @@ func clone(flags: int = 15) -> IPersistant:
 
 func _copy_from(other: IPersistant) -> void:
 	is_blueprint = false # is_blueprint is NEVER passed on
+
+
+func _should_exist() -> bool:
+	return get_child_count() == 0

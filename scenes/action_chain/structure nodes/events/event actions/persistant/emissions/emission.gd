@@ -22,7 +22,3 @@ func add_entity(new_entity: Effect, index: int) -> void:
 
 func build_entity() -> Effect:
 	return entity.instantiate()
-
-
-func _should_exist(delta: float) -> bool:
-	return get_child_count() == 0
