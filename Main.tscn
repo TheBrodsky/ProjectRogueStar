@@ -15,12 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://be6r6kbleox2f" path="res://scenes/action_chain/modifiers/attachers/Boomerang.tscn" id="12_jkwxg"]
 [ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/action_chain/effects/projectiles/Bullet.tscn" id="12_uagey"]
 [ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/action_chain/structure nodes/events/event actions/persistant/emissions/Burst.tscn" id="13_2bnv8"]
-[ext_resource type="PackedScene" uid="uid://on2rmgdkngv3" path="res://scenes/action_chain/modifiers/stats/AccuracyChange.tscn" id="13_qo6hu"]
+[ext_resource type="PackedScene" uid="uid://byso0p33jwaeh" path="res://scenes/UI/Action Chain Builder/ActionChainBuilderMenu.tscn" id="16_b5cba"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
-
-[node name="Reticle" parent="." instance=ExtResource("2_icas4")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
 collision_mask = 24
@@ -28,17 +26,6 @@ Reticle = NodePath("../Reticle")
 
 [node name="ChainRoot" parent="Player" instance=ExtResource("4_j5ogy")]
 num_next = 2
-
-[node name="OnTimer" parent="Player/ChainRoot" instance=ExtResource("5_qqf3p")]
-activations_per_second = 8
-
-[node name="Event2" parent="Player/ChainRoot/OnTimer" instance=ExtResource("7_fqijc")]
-
-[node name="Emission" parent="Player/ChainRoot/OnTimer/Event2" instance=ExtResource("9_5s7cc")]
-entity = ExtResource("12_uagey")
-
-[node name="AccuracyChange" parent="Player/ChainRoot/OnTimer/Event2" instance=ExtResource("13_qo6hu")]
-accuracy_change = 25.0
 
 [node name="OnCompoundTrigger" parent="Player/ChainRoot" instance=ExtResource("4_7rgq0")]
 is_ordered = true
@@ -72,6 +59,8 @@ activations_per_second = 2
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 
+[node name="Reticle" parent="." instance=ExtResource("2_icas4")]
+
 [node name="Camera" parent="." node_paths=PackedStringArray("Player", "Reticle") instance=ExtResource("5_qx7nx")]
 Player = NodePath("../Player")
 Reticle = NodePath("../Reticle")
@@ -79,3 +68,6 @@ Reticle = NodePath("../Reticle")
 [node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
 z_index = -2
 scale = Vector2(4, 4)
+
+[node name="ActionChainBuilderMenu" parent="." instance=ExtResource("16_b5cba")]
+visible = false

@@ -1,0 +1,100 @@
+[gd_scene load_steps=4 format=3 uid="uid://byso0p33jwaeh"]
+
+[ext_resource type="Script" path="res://scenes/UI/Action Chain Builder/action_chain_builder_menu.gd" id="1_uwnod"]
+[ext_resource type="PackedScene" uid="uid://v3sduxnbsinv" path="res://scenes/UI/Action Chain Builder/Drag And Drop/BuilderRoot.tscn" id="2_vy1bt"]
+[ext_resource type="PackedScene" uid="uid://ca7kjfsy7itq3" path="res://scenes/UI/Action Chain Builder/Drag And Drop/Draggable.tscn" id="3_cola0"]
+
+[node name="ActionChainBuilderMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_uwnod")
+
+[node name="BG" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.270588, 0.270588, 0.270588, 1)
+
+[node name="RootContainer" type="VBoxContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="BuilderRoot" parent="RootContainer" instance=ExtResource("2_vy1bt")]
+layout_mode = 2
+
+[node name="BuilderRoot2" parent="RootContainer" instance=ExtResource("2_vy1bt")]
+layout_mode = 2
+
+[node name="DraggableScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -167.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="DraggableContainer" type="GridContainer" parent="DraggableScrollContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Draggable" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable2" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable3" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable4" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable5" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable6" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable7" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable8" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable9" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable10" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable11" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable12" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable13" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable14" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable15" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable16" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable17" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
+
+[node name="Draggable18" parent="DraggableScrollContainer/DraggableContainer" instance=ExtResource("3_cola0")]
+layout_mode = 2
