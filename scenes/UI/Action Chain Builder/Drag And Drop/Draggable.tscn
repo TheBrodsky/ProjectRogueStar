@@ -7,3 +7,5 @@ custom_minimum_size = Vector2(75, 75)
 mouse_filter = 1
 color = Color(0, 0.618405, 0.261295, 1)
 script = ExtResource("1_j2483")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

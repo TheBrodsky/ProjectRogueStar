@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bg7xsfepx8drp"]
-
-[ext_resource type="Script" path="res://scenes/action_chain/util/tags.gd" id="1_wqece"]
-
-[node name="Tags" type="Node"]
-script = ExtResource("1_wqece")

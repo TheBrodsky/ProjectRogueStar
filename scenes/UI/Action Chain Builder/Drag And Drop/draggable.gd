@@ -46,3 +46,7 @@ func _get_preview_control() -> Control:
 	"""
 	var preview: Control = self.duplicate()
 	return preview
+
+
+func _on_mouse_entered() -> void:
+	pass # Replace with function body.
