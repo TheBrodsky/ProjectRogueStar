@@ -19,8 +19,7 @@ extends Node2D
 enum ActionType {NONE, TRIGGER, EVENT} # used as workaround for type identification since types cannot be passed as parameters
 const ActionTypeLabels: Array[String] = ["NONE", "TRIGGER", "EVENT"] # used to map enum to labels
 
-@onready var inclusive_tags: Tags = $AddTags
-@onready var exclusive_tags: Tags = $SubTags
+@onready var scaling_tags: ScalingTags = $ScalingTags
 
 @export var num_next: int = 1
 @export var action_name: String
@@ -30,10 +29,9 @@ var _next: Array[ActionNode] = []
 
 
 func _ready() -> void:
-	if inclusive_tags == null:
-		inclusive_tags = Tags.get_empty_tags()
-	if exclusive_tags == null:
-		exclusive_tags = Tags.get_empty_tags()
+	add_to_group("taggable")
+	if scaling_tags == null:
+		scaling_tags = ScalingTags.get_empty_tags()
 
 
 # Top-level entry point of an ActionNode. Called by previous nodes to initiate next node.
@@ -49,7 +47,6 @@ func run_next(state: ActionState) -> void:
 
 func find_next_action_nodes(type_whitelist: Array[ActionType] = []) -> void:
 	_next = []
-	var next_node : Array[ActionNode]
 	for child: Node in get_children():
 		if _next.size() == num_next:
 			break
@@ -75,15 +72,14 @@ func copy_from(other: ActionNode) -> void:
 	action_name = other.action_name
 
 
-func merge_child_tags() -> Array[Tags]:
-	var cum_inc_tags: Tags = inclusive_tags
-	var cum_exc_tags: Tags = exclusive_tags
+func merge_child_tags() -> ScalingTags:
+	var cumulative_scaling_tags: ScalingTags = scaling_tags
 	for child in get_children():
-		if child is ActionNode:
-			var child_tags: Array[Tags] = (child as ActionNode).merge_child_tags()
-			cum_inc_tags = cum_inc_tags.add(child_tags[0])
-			cum_exc_tags = cum_exc_tags.add(child_tags[1])
-	return [cum_inc_tags, cum_exc_tags]
+		if child.is_in_group("taggable"):
+			@warning_ignore("unsafe_method_access")
+			var child_tags: ScalingTags = child.merge_child_tags()
+			cumulative_scaling_tags = cumulative_scaling_tags.add(child_tags)
+	return cumulative_scaling_tags
 
 
 # returns the next node, prioritizing _next

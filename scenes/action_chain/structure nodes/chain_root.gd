@@ -13,9 +13,7 @@ extends ActionNode
 
 
 func _ready() -> void:
-	var chain_tags: Array[Tags] = merge_child_tags()
-	inclusive_tags = chain_tags[0]
-	exclusive_tags = chain_tags[1]
+	scaling_tags = merge_child_tags()
 	find_next_action_nodes([ActionType.TRIGGER])
 	assert(_next.size() > 0)
 

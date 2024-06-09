@@ -1,4 +1,4 @@
-class_name Tags
+class_name ScalingTags
 extends Node
 
 
@@ -8,16 +8,16 @@ extends Node
 @export_flags("hit", "DoT", "buff", "debuff", "move") var effects : int = 0
 @export_flags("duration") var other_properties : int = 0
 
-static var TAG_BLUEPRINT: PackedScene = preload("res://scenes/action_chain/util/Tags.tscn")
+static var TAG_BLUEPRINT: PackedScene = preload("res://scenes/action_chain/util/ScalingTags.tscn")
 
 
-static func get_empty_tags() -> Tags:
+static func get_empty_tags() -> ScalingTags:
 	return TAG_BLUEPRINT.instantiate()
 
 
 ## Combines this Tags object and another Tags object by adding their flags together. Does not modify either Tags. Returns a new Tags object.
-func add(other: Tags) -> Tags:
-	var new_tags: Tags = get_empty_tags()
+func add(other: ScalingTags) -> ScalingTags:
+	var new_tags: ScalingTags = get_empty_tags()
 	new_tags.damage_types = damage_types | other.damage_types
 	new_tags.triggers = triggers | other.triggers
 	new_tags.shapes = shapes | other.shapes
@@ -27,8 +27,8 @@ func add(other: Tags) -> Tags:
 
 
 ## Removes flags in "other" from this Tags object. Does not modify either Tags. Returns a new Tags object.
-func subtract(other: Tags) -> Tags:
-	var new_tags: Tags = get_empty_tags()
+func subtract(other: ScalingTags) -> ScalingTags:
+	var new_tags: ScalingTags = get_empty_tags()
 	new_tags.damage_types = damage_types & ~other.damage_types
 	new_tags.triggers = triggers & ~other.triggers
 	new_tags.shapes = shapes & ~other.shapes
