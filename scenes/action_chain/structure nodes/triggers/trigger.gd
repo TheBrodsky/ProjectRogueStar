@@ -20,7 +20,7 @@ var _is_paused: bool = true # all triggers being disengaged. Either a ChainRoot 
 
 
 func _enter_tree() -> void:
-	actionType = ActionType.TRIGGER
+	action_type = ActionType.TRIGGER
 
 
 func _ready() -> void:

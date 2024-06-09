@@ -6,7 +6,7 @@ extends ActionNode
 
 
 func _enter_tree() -> void:
-	actionType = ActionType.EVENT
+	action_type = ActionType.EVENT
 
 
 func _ready() -> void:

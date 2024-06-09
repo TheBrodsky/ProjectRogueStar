@@ -8,21 +8,31 @@ extends ActionNode
 ## ChainRoots are important because Trigger nodes have no way of knowing if they're the start of the chain.
 
 
-
 @onready var parent_entity: Node2D = get_parent()
 @export var action_state_blueprint: PackedScene = preload("res://scenes/action_chain/util/ActionState.tscn")
 
 
 func _ready() -> void:
+	var chain_tags: Array[Tags] = merge_child_tags()
+	inclusive_tags = chain_tags[0]
+	exclusive_tags = chain_tags[1]
 	find_next_action_nodes([ActionType.TRIGGER])
 	assert(_next.size() > 0)
-	build_chain()
-	
 
-func build_chain() -> void:
+
+func _run(state: ActionState) -> void:
+	super._run(state)
+	run_chain(state)
+
+
+func run_chain(state: ActionState) -> void:
 	for trigger: Trigger in (_next as Array[Trigger]):
 		Logger.log_debug("ChainRoot hooked to %s" % trigger.get_action_name())
-		var action_state: ActionState = _build_action_state()
+		var action_state: ActionState
+		if state == null:
+			action_state = _build_action_state()
+		else:
+			action_state = state.clone()
 		trigger._run(action_state)
 
 

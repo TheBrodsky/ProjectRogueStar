@@ -8,7 +8,6 @@ extends Trigger
 
 func _ready() -> void:
 	super._ready()
-	_name = "TimerTrigger"
 	timer.wait_time = 1.0 / activations_per_second
 	timer.start()
 

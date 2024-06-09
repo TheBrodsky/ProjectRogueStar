@@ -4,3 +4,5 @@
 
 [node name="DebugEvent" type="Node2D"]
 script = ExtResource("1_q82ru")
+action_name = "DebugEvent"
+action_type = 2

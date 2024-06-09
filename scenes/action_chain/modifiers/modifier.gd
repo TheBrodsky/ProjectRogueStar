@@ -11,8 +11,5 @@ extends Node
 ## They affect how an entity behaves over its lifetime and do so by "attaching" to them.
 
 
-@export var tags: Tags
-
-
 func modify_state(state: ActionState) -> void:
 	push_error("UNIMPLEMENTED_ERROR: Modifier.modify_state()")

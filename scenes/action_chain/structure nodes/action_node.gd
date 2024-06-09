@@ -19,12 +19,21 @@ extends Node2D
 enum ActionType {NONE, TRIGGER, EVENT} # used as workaround for type identification since types cannot be passed as parameters
 const ActionTypeLabels: Array[String] = ["NONE", "TRIGGER", "EVENT"] # used to map enum to labels
 
-@export var num_next: int = 1
+@onready var inclusive_tags: Tags = $AddTags
+@onready var exclusive_tags: Tags = $SubTags
 
-var actionType: ActionType = ActionType.NONE
+@export var num_next: int = 1
+@export var action_name: String
+@export var action_type: ActionType = ActionType.NONE
 
 var _next: Array[ActionNode] = []
-var _name: String
+
+
+func _ready() -> void:
+	if inclusive_tags == null:
+		inclusive_tags = Tags.get_empty_tags()
+	if exclusive_tags == null:
+		exclusive_tags = Tags.get_empty_tags()
 
 
 # Top-level entry point of an ActionNode. Called by previous nodes to initiate next node.
@@ -46,13 +55,13 @@ func find_next_action_nodes(type_whitelist: Array[ActionType] = []) -> void:
 			break
 		
 		if child is ActionNode:
-			var is_in_whitelist: bool = type_whitelist.size() == 0 or (child as ActionNode).actionType in type_whitelist
+			var is_in_whitelist: bool = type_whitelist.size() == 0 or (child as ActionNode).action_type in type_whitelist
 			if is_in_whitelist:
 				_next.append(child)
 
 
 func get_action_name() -> String:
-	return _name if _name != null else ActionTypeLabels[actionType]
+	return action_name if action_name != null else ActionTypeLabels[action_type]
 	
 
 func clone() -> ActionNode:
@@ -62,8 +71,19 @@ func clone() -> ActionNode:
 
 
 func copy_from(other: ActionNode) -> void:
-	actionType = other.actionType
-	_name = other._name
+	action_type = other.action_type
+	action_name = other.action_name
+
+
+func merge_child_tags() -> Array[Tags]:
+	var cum_inc_tags: Tags = inclusive_tags
+	var cum_exc_tags: Tags = exclusive_tags
+	for child in get_children():
+		if child is ActionNode:
+			var child_tags: Array[Tags] = (child as ActionNode).merge_child_tags()
+			cum_inc_tags = cum_inc_tags.add(child_tags[0])
+			cum_exc_tags = cum_exc_tags.add(child_tags[1])
+	return [cum_inc_tags, cum_exc_tags]
 
 
 # returns the next node, prioritizing _next
@@ -77,4 +97,3 @@ func _apply_modifiers(state: ActionState) -> void:
 	for child: Node in get_children():
 		if child is Modifier:
 			(child as Modifier).modify_state(state)
-

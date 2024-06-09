@@ -3,7 +3,6 @@ extends Trigger
 
 func _ready() -> void:
 	super._ready()
-	_name = "InputTrigger"
 
 
 func _process(delta: float) -> void:

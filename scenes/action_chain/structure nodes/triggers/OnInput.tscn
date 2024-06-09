@@ -4,3 +4,5 @@
 
 [node name="OnInput" type="Node2D"]
 script = ExtResource("1_6uo3b")
+action_name = "InputTrigger"
+action_type = 1
