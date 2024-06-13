@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://pnx0e5cx516i"]
+
+[ext_resource type="Script" path="res://scenes/skills/action_chain/modifiers/attachers/attacher.gd" id="1_laoh5"]
+
+[node name="Attacher" type="Node"]
+script = ExtResource("1_laoh5")

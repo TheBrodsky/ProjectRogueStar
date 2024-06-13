@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ba6e3w7s44ohy"]
-
-[ext_resource type="Script" path="res://scenes/UI/Action Chain Builder/Drag And Drop/drop_area.gd" id="1_svur2"]
-
-[node name="DropArea" type="ColorRect"]
-custom_minimum_size = Vector2(75, 75)
-script = ExtResource("1_svur2")

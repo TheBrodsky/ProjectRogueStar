@@ -2,7 +2,7 @@ extends Trigger
 
 
 func _ready() -> void:
-	super._ready()
+	super()
 	_name = ""
 
 
