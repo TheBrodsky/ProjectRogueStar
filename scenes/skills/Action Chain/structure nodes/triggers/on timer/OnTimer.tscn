@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhv1n0nlkl1lf"]
+
+[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on timer/on_timer.gd" id="1_kmaec"]
+[ext_resource type="Script" path="res://scenes/Skills/scaling tags/scaling_tags.gd" id="2_ttk5s"]
+
+[node name="OnTimer" type="Node2D"]
+script = ExtResource("1_kmaec")
+action_name = "TimerTrigger"
+action_type = 1
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ScalingTags" type="Node" parent="."]
+script = ExtResource("2_ttk5s")
+triggers = 1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

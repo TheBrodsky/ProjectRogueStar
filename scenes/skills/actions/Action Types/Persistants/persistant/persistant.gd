@@ -6,7 +6,10 @@ extends IActionable
 ## setup_persistent_entities() is the main method.
 
 
-var state: ActionState
+var state: ActionState # usually null if is_blueprint is true
+	#set(value):
+		#state = value.duplicate(true)
+		#pass
 
 
 func _ready() -> void:
@@ -15,6 +18,7 @@ func _ready() -> void:
 		set_process(false)
 	else:
 		set_process(true)
+		state = state.duplicate()
 
 
 func _process(delta: float) -> void:
@@ -23,6 +27,7 @@ func _process(delta: float) -> void:
 
 
 func _pre_action(new_action: IActionable, new_state: ActionState, next_triggers: Array[Trigger]) -> void:
+	(new_action as IPersistant).state = new_state.duplicate()
 	super(new_action, new_state, next_triggers)
 
 
@@ -37,16 +42,13 @@ func _post_action(new_action: IActionable, new_state: ActionState, next_triggers
 
 func _set_trigger(trigger: Trigger) -> void:
 	for entity: Node in get_children():
-		var trigger_copy: Trigger = trigger.clone()
-		entity.add_child(trigger_copy)
-		var state_copy: ActionState = state.clone()
-		state_copy.source = entity
-		trigger_copy._run(state_copy)
+		if entity is PersistantEntity:
+			var persistent_entity: PersistantEntity = entity
+			persistent_entity.set_trigger(trigger, state)
 
 
 func _copy_from(other: IActionable) -> void:
 	super(other)
-	(other as IPersistant).state = state
 
 
 # used by inheriting classes to perform additional setup during the do_action() call

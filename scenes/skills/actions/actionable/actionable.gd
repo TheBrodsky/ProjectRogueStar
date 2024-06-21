@@ -7,12 +7,13 @@ extends Node2D
 
 @onready var scaling_tags: ScalingTags = $ScalingTags
 
-@export var effect: PackedScene # must be type Effect. This is the end result of an action.
+@export var effect: Effect
 
 var is_blueprint: bool = true # blueprints live in the action chain and serve as a blueprint to copy
 
 
 func _ready() -> void:
+	effect = effect.duplicate(true)
 	add_to_group("taggable")
 	if scaling_tags == null:
 		scaling_tags = ScalingTags.get_empty_tags()
@@ -22,6 +23,7 @@ func _ready() -> void:
 func _pre_action(new_action: IActionable, new_state: ActionState, next_triggers: Array[Trigger]) -> void:
 	get_tree().get_root().add_child(new_action)
 	new_action.position = new_state.source.global_position
+
 
 ## Overridable. Main component of the action
 func _main_action(new_action: IActionable, new_state: ActionState, next_triggers: Array[Trigger]) -> void:
@@ -50,8 +52,6 @@ func do_action(new_state: ActionState, next_triggers: Array[Trigger]) -> void:
 	_post_action(new_actionable, new_state, next_triggers)
 
 
-
-
 func merge_child_tags() -> ScalingTags:
 	var cumulative_scaling_tags: ScalingTags = scaling_tags
 	for child in get_children():
@@ -60,10 +60,6 @@ func merge_child_tags() -> ScalingTags:
 			var child_tags: ScalingTags = child.merge_child_tags()
 			cumulative_scaling_tags = cumulative_scaling_tags.add(child_tags)
 	return cumulative_scaling_tags
-
-
-func build_effect() -> Effect:
-	return effect.instantiate()
 
 
 func clone(flags: int = 15) -> IActionable:

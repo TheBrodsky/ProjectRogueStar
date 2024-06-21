@@ -3,7 +3,7 @@ extends Node
 
 
 @export_flags("physical", "elemental") var damage_types : int = 0
-@export_flags("cyclical") var triggers : int = 0
+@export_flags("cyclical", "hit") var triggers : int = 0
 @export_flags("projectile", "melee", "area", "minion", "mark") var shapes : int = 0
 @export_flags("hit", "DoT", "buff", "debuff", "move") var effects : int = 0
 @export_flags("duration") var other_properties : int = 0

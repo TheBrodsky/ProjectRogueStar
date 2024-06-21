@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsy75060xujlr"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Action Chain/modifiers/stats/speed_multiplier.gd" id="1_qbieb"]
-
-[node name="SpeedMultiplier" type="Node"]
-script = ExtResource("1_qbieb")

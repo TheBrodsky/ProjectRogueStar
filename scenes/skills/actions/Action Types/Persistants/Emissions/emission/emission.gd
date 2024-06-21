@@ -8,7 +8,7 @@ extends IPersistant
 @export var num_emissions: int = 1
 
 
-func setup_persistent_entities() -> void:
+func _setup_persistent_entities() -> void:
 	for i in num_emissions:
 		add_entity(build_projectile(), i)
 
@@ -20,4 +20,6 @@ func add_entity(new_entity: Projectile, index: int) -> void:
 
 
 func build_projectile() -> Projectile:
-	return projectile.instantiate()
+	var new_proj: Projectile = projectile.instantiate()
+	new_proj.effect = effect
+	return new_proj

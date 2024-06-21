@@ -1,5 +1,4 @@
-class_name Effect
-extends Resource
+extends Effect
 
 
 func modify_from_action_state(state: ActionState) -> void:
