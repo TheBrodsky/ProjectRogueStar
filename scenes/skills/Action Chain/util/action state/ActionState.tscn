@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhw1cnokhbtv6"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Util/action state/action_state.gd" id="1_sklyh"]
-
-[node name="ActionState" type="Node"]
-script = ExtResource("1_sklyh")

@@ -1,15 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbyndtv70vpwv"]
+[gd_scene load_steps=7 format=3 uid="uid://cbyndtv70vpwv"]
 
 [ext_resource type="Script" path="res://scenes/enemies/spawner/spawner.gd" id="1_48cu5"]
-[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/Skills/Action Chain/Structure Nodes/chain root/ChainRoot.tscn" id="1_i2flb"]
-[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on timer/OnTimer.tscn" id="2_siasl"]
-[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/Skills/Action Chain/Structure Nodes/Events/event/Event.tscn" id="3_fa0ee"]
+[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/Skills/Action Chain/ChainRoot.tscn" id="1_i2flb"]
+[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/Skills/Action Chain/Triggers/on timer/OnTimer.tscn" id="2_siasl"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/Skills/Action Chain/Event.tscn" id="3_fa0ee"]
 [ext_resource type="PackedScene" uid="uid://bkvyfec6n64gc" path="res://scenes/enemies/Enemy.tscn" id="5_w6rpg"]
 [ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/Skills/Actions/Action Types/MultiActions/burst/Burst.tscn" id="6_w6u0a"]
-[ext_resource type="Script" path="res://scenes/Skills/Actions/Effects/debug/debug_effect.gd" id="7_sjmgm"]
-
-[sub_resource type="Resource" id="Resource_kyspq"]
-script = ExtResource("7_sjmgm")
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_48cu5")
@@ -26,6 +22,4 @@ spread_distance = 100.0
 ignore_rotation = true
 head_start_distance = 100.0
 num_emissions = 4
-action_entity = ExtResource("5_w6rpg")
-effect = SubResource("Resource_kyspq")
 max_entities = 10

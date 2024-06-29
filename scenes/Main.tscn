@@ -1,21 +1,23 @@
-[gd_scene load_steps=18 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=20 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
-[ext_resource type="PackedScene" uid="uid://dpdrjydjk5aro" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on compound/OnCompoundTrigger.tscn" id="4_7rgq0"]
-[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/Skills/Action Chain/Structure Nodes/chain root/ChainRoot.tscn" id="4_j5ogy"]
-[ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on input/OnInput.tscn" id="4_vnxss"]
-[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on timer/OnTimer.tscn" id="5_qqf3p"]
+[ext_resource type="PackedScene" uid="uid://dpdrjydjk5aro" path="res://scenes/Skills/Action Chain/Triggers/on compound/OnCompoundTrigger.tscn" id="4_7rgq0"]
+[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/Skills/Action Chain/ChainRoot.tscn" id="4_j5ogy"]
+[ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/Skills/Action Chain/Triggers/on input/OnInput.tscn" id="4_vnxss"]
+[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/Skills/Action Chain/Triggers/on timer/OnTimer.tscn" id="5_qqf3p"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
-[ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on hit/OnHit.tscn" id="6_0cnlc"]
+[ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://scenes/Skills/Action Chain/Triggers/on hit/OnHit.tscn" id="6_0cnlc"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
 [ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/Skills/Actions/Action Types/MultiActions/burst/Burst.tscn" id="7_cxc7t"]
-[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/Skills/Action Chain/Structure Nodes/Events/event/Event.tscn" id="7_fqijc"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/Skills/Action Chain/Event.tscn" id="7_fqijc"]
 [ext_resource type="PackedScene" uid="uid://u3drgmd05sil" path="res://scenes/Skills/Actions/Actionable.tscn" id="7_h5sfl"]
-[ext_resource type="Resource" uid="uid://cmsqsvsmwwh44" path="res://scenes/Skills/Actions/Effects/debug/debug_effect_res.tres" id="9_53c57"]
-[ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/Skills/Action Chain/Modifiers/Stats/speed multi/SpeedMultiplier.tscn" id="10_624xo"]
-[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Structure Nodes/chain root/chain_root.gd" id="15_58oim"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/Skills/Actions/Action Shapes/Projectiles/projectile/Projectile.tscn" id="8_b6e1d"]
+[ext_resource type="PackedScene" uid="uid://0k8rubu87q28" path="res://scenes/Skills/Actions/Effects/damage/DamageEffect.tscn" id="9_x83xm"]
+[ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/Skills/Modifiers/Stats/speed multi/SpeedMultiplier.tscn" id="10_624xo"]
+[ext_resource type="Script" path="res://scenes/Skills/Action Chain/chain_root.gd" id="15_58oim"]
+[ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/Skills/Actions/Action Shapes/circle aoe/CircleAoE.tscn" id="15_rcust"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/enemies/spawner/Spawner.tscn" id="17_h3l5w"]
 
 [node name="Main" type="Node2D"]
@@ -41,9 +43,15 @@ num_next = 2
 [node name="Burst" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event" instance=ExtResource("7_cxc7t")]
 head_start_distance = 10.0
 num_emissions = 8
-effect = ExtResource("9_53c57")
+action_shape = ExtResource("8_b6e1d")
+
+[node name="DamageEffect" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event/Burst" instance=ExtResource("9_x83xm")]
 
 [node name="Actionable" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
+action_shape = ExtResource("8_b6e1d")
+
+[node name="DamageEffect" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/Actionable" instance=ExtResource("9_x83xm")]
+damage = 0
 
 [node name="SpeedMultiplier" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("10_624xo")]
 speed_mult = 0.5
@@ -64,6 +72,10 @@ is_ordered = true
 position = Vector2(7077.24, 4126.84)
 
 [node name="Actionable" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
+action_shape = ExtResource("15_rcust")
+
+[node name="DamageEffect" parent="Player/Right Click Weapon/OnCompoundTrigger/Event/Actionable" instance=ExtResource("9_x83xm")]
+damage = 3
 
 [node name="OnTimer" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
 activations_per_second = 2.0

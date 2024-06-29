@@ -18,8 +18,8 @@ var _group_name: String
 
 
 func _ready() -> void:
-	if effect != null:
-		effect = effect.duplicate(true)
+	if effect == null:
+		_find_effect()
 	
 	if is_blueprint:
 		_make_entity_group_name()
@@ -126,5 +126,11 @@ func _make_entity_group_name() -> void:
 		_id = _id_counter
 		_id_counter += 1
 		_group_name = "emission %s" % _id
+
+
+func _find_effect() -> void:
+	for node in get_children():
+		if node is Effect:
+			effect = node
 
 #endregion

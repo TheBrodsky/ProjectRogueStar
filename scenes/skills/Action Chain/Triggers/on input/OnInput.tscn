@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqyiioytljyyo"]
+
+[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Triggers/on input/on_input.gd" id="1_6uo3b"]
+
+[node name="OnInput" type="Node2D"]
+script = ExtResource("1_6uo3b")
+action_name = "InputTrigger"
+action_type = 1

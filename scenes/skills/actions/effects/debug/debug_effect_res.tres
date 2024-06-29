@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="DebugEffect" load_steps=2 format=3 uid="uid://cmsqsvsmwwh44"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Actions/Effects/debug/debug_effect.gd" id="1_4yk62"]
-
-[resource]
-script = ExtResource("1_4yk62")

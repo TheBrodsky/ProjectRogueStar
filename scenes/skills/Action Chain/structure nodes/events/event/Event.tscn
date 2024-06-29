@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2qi6c253udob"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Structure Nodes/Events/event/event.gd" id="1_krmtm"]
-
-[node name="Event" type="Node2D"]
-script = ExtResource("1_krmtm")
-action_name = "Event"
-action_type = 2

@@ -30,8 +30,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_hit_t_hook_register_hit(body: Node2D) -> void:
-	var enemy : Enemy = body
-	enemy.take_damage(damage)
+	effect.do_effect(body)
 	queue_free()
 
 

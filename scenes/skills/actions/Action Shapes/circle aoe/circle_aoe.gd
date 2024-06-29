@@ -11,12 +11,14 @@ class_name CircleAoe
 @onready var texture_scale: Vector2 = Vector2.ONE / (texture_size / (2*aoe_info.radius))
 
 @export var aoe_info: CircleAoeRes
+@export var effect: Effect ## This is what happens when the aoe hits something
 
 
 var _bodies_hit: Dictionary = {}
 
 
 func _ready() -> void:
+	effect = effect.duplicate()
 	hit_hook.hit_condition_method = Callable(self, "does_hit")
 	show()
 	do_animation()
@@ -41,5 +43,4 @@ func on_animation_complete() -> void:
 
 func _on_hit_t_hook_register_hit(body: Node2D) -> void:
 	_bodies_hit[body] = null
-	var enemy : Enemy = body
-	enemy.take_damage(1)
+	effect.do_effect(body)
