@@ -10,12 +10,10 @@ extends ActionNode
 
 @onready var parent_entity: Node2D = get_parent()
 
-var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/Skills/Action Chain/util/ActionState.tscn")
+var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/Skills/Action Chain/Util/action state/ActionState.tscn")
 
 
 func _ready() -> void:
-	super()
-	scaling_tags = merge_child_tags()
 	find_next_action_nodes([ActionType.TRIGGER])
 	assert(_next.size() > 0)
 	run_chain()
@@ -23,7 +21,7 @@ func _ready() -> void:
 
 func run_chain() -> void:
 	for trigger: Trigger in (_next as Array[Trigger]):
-		Logger.log_debug("ChainRoot hooked to %s" % trigger.get_action_name())
+		Logger.log_trace("ChainRoot hooked to %s" % trigger.get_action_name())
 		var action_state: ActionState = _build_action_state()
 		trigger._run(action_state)
 

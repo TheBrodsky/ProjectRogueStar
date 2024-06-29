@@ -13,6 +13,8 @@ signal triggered(origin: Trigger)
 ## which prevents nodes later in the chain from making unexpected modifications that propagate up the chain.
 
 
+enum TriggerType {Cyclical, Hit, Expiration, Compound}
+@export var trigger_type: TriggerType
 @export var is_one_shot: bool = false # one shot triggers will pause after triggering once. Once paused, they will not run until resumed.
 
 var action_state: ActionState
@@ -24,7 +26,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	super()
+	_add_trigger_type_tag()
 	find_next_action_nodes([ActionType.EVENT])
 	pause()
 
@@ -49,3 +51,11 @@ func _run(state: ActionState) -> void:
 	super._run(state)
 	action_state = state
 	resume()
+
+
+static func get_trigger_type_tag(type: TriggerType) -> String:
+	return "trigger_" + TriggerType.keys()[type]
+
+
+func _add_trigger_type_tag() -> void:
+	add_to_group(get_trigger_type_tag(trigger_type))

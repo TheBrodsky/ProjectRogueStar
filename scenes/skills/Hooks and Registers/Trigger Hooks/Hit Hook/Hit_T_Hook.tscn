@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://vahfo8404j2a"]
+
+[ext_resource type="Script" path="res://scenes/Skills/Hooks and Registers/Trigger Hooks/Hit Hook/hit_trigger_hook.gd" id="1_t72ln"]
+[ext_resource type="PackedScene" uid="uid://bgtgharcgeowt" path="res://scenes/Skills/Hooks and Registers/Registers/HitRegister.tscn" id="2_h54lf"]
+
+[node name="Hit_T_Hook" type="Node" node_paths=PackedStringArray("hit_register")]
+script = ExtResource("1_t72ln")
+hit_register = NodePath("HitRegister")
+trigger_type = 1
+
+[node name="HitRegister" parent="." instance=ExtResource("2_h54lf")]
+
+[connection signal="register_hit" from="HitRegister" to="." method="_on_hit_register_register_hit"]

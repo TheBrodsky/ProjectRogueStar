@@ -1,9 +1,15 @@
 extends Trigger
+class_name TimerTrigger
 
-
-@export var activations_per_second: float = 10
 
 @onready var timer: Timer = $Timer
+
+@export var activations_per_second: float = 10:
+	set(value):
+		activations_per_second = value
+		if timer != null:
+			timer.wait_time = 1.0 / activations_per_second
+			timer.start()
 
 
 func _ready() -> void:

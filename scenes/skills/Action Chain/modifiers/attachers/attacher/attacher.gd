@@ -2,8 +2,10 @@ class_name Attacher
 extends Modifier
 
 
-## Attachers are a class of modifiers that "attach" to persistant entities,
+## Attachers are a class of modifiers that "attach" to entities,
 ## modifying their behavior over their lifetime.
+## They're used for any kind of modification that isn't a simple stat change,
+## such as modifying how a projectile moves.
 
 
 var parent_entity: Node2D

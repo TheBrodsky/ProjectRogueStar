@@ -1,12 +1,8 @@
 class_name Enemy
 extends CharacterBody2D
-signal died(spawner_ID: int)
 
 
-@export var max_health: int = 5
-
-var cur_health: float = max_health
-var spawner_parent_ID: int
+@onready var health_bar: HealthBar = $HealthBar
 
 
 func _process(delta: float) -> void:
@@ -15,14 +11,10 @@ func _process(delta: float) -> void:
 
 
 func take_damage(damage: float) -> void:
-	cur_health -= damage
-	if cur_health <= 0:
-		die()
+	health_bar.reduce(damage)
 
 
 func die() -> void:
-	if spawner_parent_ID != null:
-		died.emit(spawner_parent_ID)
 	queue_free()
 
 
@@ -32,3 +24,7 @@ func _do_movement(delta: float) -> void:
 
 func _do_attack(delta: float) -> void:
 	pass
+
+
+func _on_health_bar_no_health() -> void:
+	die()

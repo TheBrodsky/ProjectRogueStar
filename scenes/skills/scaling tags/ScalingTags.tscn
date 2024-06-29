@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cw3kbhi8ijy7s"]
-
-[ext_resource type="Script" path="res://scenes/Skills/scaling tags/scaling_tags.gd" id="1_leqiv"]
-
-[node name="ScalingTags" type="Node"]
-script = ExtResource("1_leqiv")

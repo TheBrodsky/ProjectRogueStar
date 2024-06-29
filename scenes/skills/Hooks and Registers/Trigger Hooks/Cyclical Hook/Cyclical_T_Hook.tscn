@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr3qc8p6aniu0"]
+
+[ext_resource type="Script" path="res://scenes/Skills/Hooks and Registers/Trigger Hooks/trigger_hook.gd" id="1_0ys46"]
+
+[node name="CyclicalHook" type="Node"]
+script = ExtResource("1_0ys46")

@@ -3,7 +3,6 @@ extends Trigger
 
 func _ready() -> void:
 	super()
-	_name = ""
 
 
 func resume() -> void:

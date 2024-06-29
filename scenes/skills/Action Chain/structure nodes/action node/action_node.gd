@@ -19,19 +19,11 @@ extends Node2D
 enum ActionType {NONE, TRIGGER, EVENT} # used as workaround for type identification since types cannot be passed as parameters
 const ActionTypeLabels: Array[String] = ["NONE", "TRIGGER", "EVENT"] # used to map enum to labels
 
-@onready var scaling_tags: ScalingTags = $ScalingTags
-
 @export var num_next: int = 1
 @export var action_name: String
 @export var action_type: ActionType = ActionType.NONE
 
 var _next: Array[ActionNode] = []
-
-
-func _ready() -> void:
-	add_to_group("taggable")
-	if scaling_tags == null:
-		scaling_tags = ScalingTags.get_empty_tags()
 
 
 # Top-level entry point of an ActionNode. Called by previous nodes to initiate next node.
@@ -42,7 +34,7 @@ func _run(state: ActionState) -> void:
 
 func run_next(state: ActionState) -> void:
 	for child: ActionNode in _next:
-		Logger.log_debug("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
+		Logger.log_trace("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
 		var new_state: ActionState = state.duplicate()
 		child._run(new_state)
 
@@ -72,16 +64,6 @@ func clone() -> ActionNode:
 func copy_from(other: ActionNode) -> void:
 	action_type = other.action_type
 	action_name = other.action_name
-
-
-func merge_child_tags() -> ScalingTags:
-	var cumulative_scaling_tags: ScalingTags = scaling_tags
-	for child in get_children():
-		if child.is_in_group("taggable"):
-			@warning_ignore("unsafe_method_access")
-			var child_tags: ScalingTags = child.merge_child_tags()
-			cumulative_scaling_tags = cumulative_scaling_tags.add(child_tags)
-	return cumulative_scaling_tags
 
 
 # returns the next node, prioritizing _next

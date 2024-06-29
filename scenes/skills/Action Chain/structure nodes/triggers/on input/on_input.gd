@@ -1,10 +1,9 @@
 extends Trigger
 
 
-func _ready() -> void:
-	super()
+@export_enum("mouse_left", "mouse_right") var input_action: String
 
 
 func _process(delta: float) -> void:
-	if !_is_paused and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if !_is_paused and Input.is_action_pressed(input_action):
 		_do_trigger()

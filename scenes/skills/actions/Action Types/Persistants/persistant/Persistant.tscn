@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cel0ekh1imqwu"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Actions/Action Types/Persistants/persistant/persistant.gd" id="1_iahas"]
-
-[node name="Persistant" type="Node2D"]
-script = ExtResource("1_iahas")

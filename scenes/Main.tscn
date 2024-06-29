@@ -8,22 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on input/OnInput.tscn" id="4_vnxss"]
 [ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on timer/OnTimer.tscn" id="5_qqf3p"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
+[ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://scenes/Skills/Action Chain/Structure Nodes/Triggers/on hit/OnHit.tscn" id="6_0cnlc"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
+[ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/Skills/Actions/Action Types/MultiActions/burst/Burst.tscn" id="7_cxc7t"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/Skills/Action Chain/Structure Nodes/Events/event/Event.tscn" id="7_fqijc"]
-[ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/Skills/Actions/Action Types/Instantaneous/circle aoe/CircleAoE.tscn" id="7_qcvy5"]
-[ext_resource type="Script" path="res://scenes/Skills/Actions/Action Types/Instantaneous/circle aoe/circle_aoe_res.gd" id="8_ray4f"]
+[ext_resource type="PackedScene" uid="uid://u3drgmd05sil" path="res://scenes/Skills/Actions/Actionable.tscn" id="7_h5sfl"]
 [ext_resource type="Resource" uid="uid://cmsqsvsmwwh44" path="res://scenes/Skills/Actions/Effects/debug/debug_effect_res.tres" id="9_53c57"]
 [ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/Skills/Action Chain/Modifiers/Stats/speed multi/SpeedMultiplier.tscn" id="10_624xo"]
-[ext_resource type="PackedScene" uid="uid://dw0v82tted8bd" path="res://scenes/Skills/Actions/Action Types/Persistants/Emissions/fire cone/FireCone.tscn" id="10_p6x84"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/Skills/Actions/Action Types/Persistants/Persistant Entities/Projectiles/projectile/Projectile.tscn" id="12_uagey"]
-
-[sub_resource type="Resource" id="Resource_d4dsw"]
-resource_local_to_scene = true
-script = ExtResource("8_ray4f")
-radius = 200.0
-animation_time = 0.5
-animation_ease = 1
-animation_trans = 8
+[ext_resource type="Script" path="res://scenes/Skills/Action Chain/Structure Nodes/chain root/chain_root.gd" id="15_58oim"]
+[ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/enemies/spawner/Spawner.tscn" id="17_h3l5w"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -32,41 +25,51 @@ script = ExtResource("1_t0tca")
 collision_mask = 24
 Reticle = NodePath("../Reticle")
 
-[node name="ChainRoot" parent="Player" instance=ExtResource("4_j5ogy")]
+[node name="Left Click Weapon" parent="Player" instance=ExtResource("4_j5ogy")]
 num_next = 2
-action_name = null
-action_type = null
 
-[node name="OnCompoundTrigger" parent="Player/ChainRoot" instance=ExtResource("4_7rgq0")]
+[node name="OnCompoundTrigger" parent="Player/Left Click Weapon" instance=ExtResource("4_7rgq0")]
 is_ordered = true
 num_next = 2
 
-[node name="Event" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("7_fqijc")]
+[node name="Event" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("7_fqijc")]
 
-[node name="OnTimer" parent="Player/ChainRoot/OnCompoundTrigger/Event" instance=ExtResource("5_qqf3p")]
-activations_per_second = 1.0
+[node name="OnHit" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("6_0cnlc")]
 
-[node name="Event" parent="Player/ChainRoot/OnCompoundTrigger/Event/OnTimer" instance=ExtResource("7_fqijc")]
+[node name="Event" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit" instance=ExtResource("7_fqijc")]
 
-[node name="CircleAoE" parent="Player/ChainRoot/OnCompoundTrigger/Event/OnTimer/Event" instance=ExtResource("7_qcvy5")]
-position = Vector2(720.823, -118.242)
-aoe_info = SubResource("Resource_d4dsw")
+[node name="Burst" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event" instance=ExtResource("7_cxc7t")]
+head_start_distance = 10.0
+num_emissions = 8
 effect = ExtResource("9_53c57")
 
-[node name="FireCone" parent="Player/ChainRoot/OnCompoundTrigger/Event" instance=ExtResource("10_p6x84")]
-position = Vector2(720.823, -118.242)
-cone_angle = 60.0
-projectile = ExtResource("12_uagey")
-num_emissions = 5
-effect = ExtResource("9_53c57")
+[node name="Actionable" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
 
-[node name="SpeedMultiplier" parent="Player/ChainRoot/OnCompoundTrigger/Event" instance=ExtResource("10_624xo")]
+[node name="SpeedMultiplier" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("10_624xo")]
 speed_mult = 0.5
 
-[node name="OnTimer" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
-activations_per_second = 1.0
+[node name="OnTimer" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
+activations_per_second = 2.0
 
-[node name="OnInput" parent="Player/ChainRoot/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
+[node name="OnInput" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
+input_action = "mouse_left"
+
+[node name="Right Click Weapon" type="Node2D" parent="Player"]
+script = ExtResource("15_58oim")
+
+[node name="OnCompoundTrigger" parent="Player/Right Click Weapon" instance=ExtResource("4_7rgq0")]
+is_ordered = true
+
+[node name="Event" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("7_fqijc")]
+position = Vector2(7077.24, 4126.84)
+
+[node name="Actionable" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
+
+[node name="OnTimer" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
+activations_per_second = 2.0
+
+[node name="OnInput" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
+input_action = "mouse_right"
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 
@@ -79,3 +82,9 @@ Reticle = NodePath("../Reticle")
 [node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
 z_index = -2
 scale = Vector2(4, 4)
+
+[node name="Spawner" parent="." instance=ExtResource("17_h3l5w")]
+position = Vector2(-738, -693)
+max_entities = 8
+time_between_spawns = 3.0
+spread_distance = 50.0
