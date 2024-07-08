@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3j30vxjap476"]
+
+[ext_resource type="Script" path="res://scenes/skill building/Actions/Action Shapes/circle aoe/circle_aoe.gd" id="1_87x4x"]
+[ext_resource type="Resource" uid="uid://dy5wr23tnqt0w" path="res://scenes/skill building/Actions/Action Shapes/circle aoe/circle_aoe_res.tres" id="2_ntrnk"]
+[ext_resource type="Texture2D" uid="uid://bg17rucmyeo11" path="res://assets/aoe circle.png" id="2_vgd2d"]
+[ext_resource type="PackedScene" uid="uid://vahfo8404j2a" path="res://scenes/skill building/Hooks and Registers/Trigger Hooks/Hit Hook/Hit_T_Hook.tscn" id="4_x4pxr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5d0yo"]
+
+[node name="CircleAoE" type="Node2D"]
+script = ExtResource("1_87x4x")
+aoe_info = ExtResource("2_ntrnk")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_5d0yo")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture_filter = 1
+texture = ExtResource("2_vgd2d")
+
+[node name="Hit_T_Hook" parent="." node_paths=PackedStringArray("collision_node") instance=ExtResource("4_x4pxr")]
+collision_node = NodePath("../Area2D")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="register_hit" from="Hit_T_Hook" to="." method="_on_hit_t_hook_register_hit"]

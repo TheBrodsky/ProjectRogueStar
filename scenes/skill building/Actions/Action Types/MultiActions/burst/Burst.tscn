@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmlpayids6g80"]
+
+[ext_resource type="Script" path="res://scenes/skill building/Actions/Action Types/MultiActions/burst/burst.gd" id="1_8nmpu"]
+
+[node name="Burst" type="Node2D"]
+script = ExtResource("1_8nmpu")

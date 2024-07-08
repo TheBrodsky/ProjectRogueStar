@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0k8rubu87q28"]
+
+[ext_resource type="Script" path="res://scenes/skill building/Actions/Effects/damage/damage_effect.gd" id="1_68pb0"]
+
+[node name="DamageEffect" type="Node"]
+script = ExtResource("1_68pb0")

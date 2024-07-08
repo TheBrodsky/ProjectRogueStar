@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7x3upro0tumx"]
-
-[ext_resource type="Script" path="res://scenes/Skills/Modifiers/modifier/modifier.gd" id="1_udwyy"]
-
-[node name="Modifier" type="Node"]
-script = ExtResource("1_udwyy")
