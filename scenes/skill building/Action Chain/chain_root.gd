@@ -7,7 +7,7 @@ extends ActionNode
 ## ChainRoots dont do a whole lot on their own. They create a new ActionState and initiate the child Trigger node.
 ## ChainRoots are important because Trigger nodes have no way of knowing if they're the start of the chain.
 
-
+@export var _is_on: bool = true
 @onready var parent_entity: Node2D = get_parent()
 
 var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/skill building/Action Chain/ActionState.tscn")
@@ -16,7 +16,8 @@ var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/skill building/A
 func _ready() -> void:
 	find_next_action_nodes([ActionType.TRIGGER])
 	assert(_next.size() > 0)
-	run_chain()
+	if _is_on:
+		run_chain()
 
 
 func run_chain() -> void:

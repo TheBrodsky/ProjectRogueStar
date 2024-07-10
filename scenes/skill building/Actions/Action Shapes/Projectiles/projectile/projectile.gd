@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position += MovementTools.calcMoveVector(MovementTools.calcDirectionFromAngle(rotation), speed, delta)
+	#pass
 
 
 func modify_from_action_state(state: ActionState) -> void:
