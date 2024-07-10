@@ -8,7 +8,7 @@ extends Node2D
 @export var spread_distance: float = 50 ## num pixels from center of emission that spawns are spread out
 
 @onready var timer: TimerTrigger = $ChainRoot/OnTimer
-@onready var burst: BurstEmission = $ChainRoot/OnTimer/Event/Burst
+@onready var burst: ConeEmission = $ChainRoot/OnTimer/Event/FireCone
 
 
 func _ready() -> void:
