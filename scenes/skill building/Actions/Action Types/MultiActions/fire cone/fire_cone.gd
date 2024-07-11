@@ -3,6 +3,7 @@ class_name ConeEmission
 
 
 
+
 @export_range(1,360) var cone_angle: float = 0 ## in degrees
 @export var is_even_spread: bool = true ## same effect as angle_is_random from Burst
 @export var ignore_rotation: bool = false
@@ -19,16 +20,15 @@ func _ready() -> void:
 	super()
 	assert(num_emissions > 1) # prevents divide by 0 and special case where 1 bullet
 	_cone_angle_rad = cone_angle * (PI / 180)
+	_angle_offset = _cone_angle_rad / (num_emissions - 1)
 	set_angle_offset()
 	set_cone_rotation()
-
 func set_angle_offset() -> void:
 	var cone_angle_threshold: float = 360 - (360/num_emissions)
 	if (cone_angle > cone_angle_threshold):
 		_angle_offset = _cone_angle_rad / num_emissions
 	else:
 		_angle_offset = _cone_angle_rad / (num_emissions - 1)
-
 func set_cone_rotation() -> void:
 	if share_aimed_angle and not is_blueprint:
 		var aim_vector: Vector2 = state.target - state.source.position 
@@ -51,4 +51,3 @@ func rotate_entity(new_entity: Node2D, index: int) -> void:
 	elif share_aimed_angle: 
 		#rotate projectiles the opposite of the fire cone, so they travel in the direction we aim
 		new_entity.rotate(-rotation)
-		
