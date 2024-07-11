@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://scenes/skill building/Action Chain/Triggers/on hit/OnHit.tscn" id="6_0cnlc"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
+[ext_resource type="PackedScene" uid="uid://dmlpayids6g80" path="res://scenes/skill building/Actions/Action Types/MultiActions/burst/Burst.tscn" id="7_cxc7t"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/skill building/Action Chain/Event.tscn" id="7_fqijc"]
 [ext_resource type="PackedScene" uid="uid://u3drgmd05sil" path="res://scenes/skill building/Actions/Actionable.tscn" id="7_h5sfl"]
 [ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/skill building/Actions/Action Shapes/Projectiles/projectile/Projectile.tscn" id="8_b6e1d"]
@@ -17,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/skill building/Modifiers/Stats/speed multi/SpeedMultiplier.tscn" id="10_624xo"]
 [ext_resource type="Script" path="res://scenes/skill building/Action Chain/chain_root.gd" id="15_58oim"]
 [ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/skill building/Actions/Action Shapes/circle aoe/CircleAoE.tscn" id="15_rcust"]
-[ext_resource type="PackedScene" uid="uid://dw0v82tted8bd" path="res://scenes/skill building/Actions/Action Types/MultiActions/fire cone/FireCone.tscn" id="16_odakl"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/enemies/spawner/Spawner.tscn" id="17_h3l5w"]
 
 [node name="Main" type="Node2D"]
@@ -39,14 +39,12 @@ num_next = 2
 
 [node name="Event" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit" instance=ExtResource("7_fqijc")]
 
-[node name="FireCone" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event" node_paths=PackedStringArray("effect") instance=ExtResource("16_odakl")]
-cone_angle = 360.0
+[node name="Burst" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event" instance=ExtResource("7_cxc7t")]
 head_start_distance = 10.0
 num_emissions = 8
 action_shape = ExtResource("8_b6e1d")
-effect = NodePath("DamageEffect")
 
-[node name="DamageEffect" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event/FireCone" instance=ExtResource("9_x83xm")]
+[node name="DamageEffect" parent="Player/Left Click Weapon/OnCompoundTrigger/Event/OnHit/Event/Burst" instance=ExtResource("9_x83xm")]
 
 [node name="Actionable" parent="Player/Left Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
 action_shape = ExtResource("8_b6e1d")
@@ -71,22 +69,12 @@ is_ordered = true
 
 [node name="Event" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("7_fqijc")]
 position = Vector2(7077.24, 4126.84)
-action_name = ""
-action_type = 0
-
-[node name="FireCone" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("16_odakl")]
-cone_angle = 360.0
-ignore_rotation = true
-head_start_distance = 100.0
-share_aimed_angle = true
-num_emissions = 9
-action_shape = ExtResource("8_b6e1d")
-
-[node name="DamageEffect" parent="Player/Right Click Weapon/OnCompoundTrigger/Event/FireCone" instance=ExtResource("9_x83xm")]
 
 [node name="Actionable" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
-visible = false
 action_shape = ExtResource("15_rcust")
+
+[node name="DamageEffect" parent="Player/Right Click Weapon/OnCompoundTrigger/Event/Actionable" instance=ExtResource("9_x83xm")]
+damage = 3
 
 [node name="OnTimer" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
 activations_per_second = 2.0
@@ -107,7 +95,7 @@ z_index = -2
 scale = Vector2(4, 4)
 
 [node name="Spawner" parent="." instance=ExtResource("17_h3l5w")]
-visible = false
 position = Vector2(-738, -693)
 max_entities = 8
 time_between_spawns = 3.0
+spread_distance = 50.0
