@@ -15,20 +15,20 @@ var _cone_angle_rad: float
 var _angle_offset: float
 
 
-
 func _ready() -> void:
 	super()
 	assert(num_emissions > 1) # prevents divide by 0 and special case where 1 bullet
 	_cone_angle_rad = cone_angle * (PI / 180)
-	_angle_offset = _cone_angle_rad / (num_emissions - 1)
 	set_angle_offset()
 	set_cone_rotation()
+
 func set_angle_offset() -> void:
 	var cone_angle_threshold: float = 360 - (360/num_emissions)
 	if (cone_angle > cone_angle_threshold):
 		_angle_offset = _cone_angle_rad / num_emissions
 	else:
 		_angle_offset = _cone_angle_rad / (num_emissions - 1)
+
 func set_cone_rotation() -> void:
 	if share_aimed_angle and not is_blueprint:
 		var aim_vector: Vector2 = state.target - state.source.position 

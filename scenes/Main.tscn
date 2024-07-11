@@ -83,6 +83,7 @@ num_emissions = 9
 action_shape = ExtResource("8_b6e1d")
 
 [node name="DamageEffect" parent="Player/Right Click Weapon/OnCompoundTrigger/Event/FireCone" instance=ExtResource("9_x83xm")]
+
 [node name="Actionable" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("7_h5sfl")]
 visible = false
 action_shape = ExtResource("15_rcust")
