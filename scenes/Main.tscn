@@ -75,7 +75,7 @@ action_name = ""
 action_type = 0
 
 [node name="FireCone" parent="Player/Right Click Weapon/OnCompoundTrigger/Event" instance=ExtResource("16_odakl")]
-cone_angle = 90.0
+cone_angle = 360.0
 ignore_rotation = true
 head_start_distance = 100.0
 share_aimed_angle = true
