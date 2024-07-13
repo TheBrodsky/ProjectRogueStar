@@ -13,7 +13,6 @@ spawn_entity = ExtResource("5_w6rpg")
 spread_distance = 100.0
 
 [node name="ChainRoot" parent="." instance=ExtResource("1_i2flb")]
-_is_on = false
 
 [node name="OnTimer" parent="ChainRoot" instance=ExtResource("2_siasl")]
 

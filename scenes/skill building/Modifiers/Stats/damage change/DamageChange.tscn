@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cg6wr026llt4o"]
+
+[ext_resource type="Script" path="res://scenes/skill building/Modifiers/Stats/damage change/damage_change.gd" id="1_1midp"]
+
+[node name="DamageChange" type="Node"]
+script = ExtResource("1_1midp")
