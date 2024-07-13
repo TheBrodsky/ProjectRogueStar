@@ -1,3 +1,4 @@
+@icon("res://assets/editor_icons/modifier.png")
 class_name Modifier
 extends Node
 

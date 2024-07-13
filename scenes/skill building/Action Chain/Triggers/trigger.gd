@@ -1,3 +1,4 @@
+@icon("res://assets/editor_icons/trigger.png")
 class_name Trigger
 extends ActionNode
 signal triggered(origin: Trigger)

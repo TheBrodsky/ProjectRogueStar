@@ -1,3 +1,4 @@
+@icon("res://assets/editor_icons/actionable.png")
 class_name Actionable
 extends Node2D
 

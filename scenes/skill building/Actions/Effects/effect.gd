@@ -1,3 +1,4 @@
+@icon("res://assets/editor_icons/effect.png")
 class_name Effect
 extends Node
 
