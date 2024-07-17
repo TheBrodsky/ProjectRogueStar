@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 func modify_from_action_state(state: ActionState) -> void:
 	var new_rotation: float = state.calc_aim_to_target(state.source.global_position)
 	rotation = new_rotation
-	speed *= state.speed_mult
+	speed = (speed + state.speed_base) * state.speed_mult
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

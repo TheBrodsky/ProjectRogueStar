@@ -6,7 +6,7 @@ class_name DamageEffect
 
 
 func modify_from_action_state(state: ActionState) -> void:
-	pass
+	damage = state.damage_base * state.damage_multi
 
 
 func do_effect(effect_body: Node2D) -> void:

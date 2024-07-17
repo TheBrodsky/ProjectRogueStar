@@ -33,6 +33,9 @@ func set_cone_rotation() -> void:
 	if share_aimed_angle and not is_blueprint:
 		var aim_vector: Vector2 = state.target - state.source.position 
 		var aim_angle_rad: float = aim_vector.angle()
+		#TODO
+		#var accuracy: float = state.group_deviation_base * state.group_deviation_mult
+		#aim_angle_rad += deg_to_rad(randf_range(-accuracy, accuracy))
 		rotate(aim_angle_rad)
 
 func add_indexed_entity(new_entity: Node2D, index: int) -> void:
