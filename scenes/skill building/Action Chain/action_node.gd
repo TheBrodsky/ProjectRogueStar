@@ -29,7 +29,7 @@ var _next: Array[ActionNode] = []
 # Top-level entry point of an ActionNode. Called by previous nodes to initiate next node.
 func _run(state: ActionState) -> void:
 	state.target = get_global_mouse_position()
-	_apply_modifiers(state)
+	_apply_quant_modifiers(state)
 
 
 func run_next(state: ActionState) -> void:
@@ -73,7 +73,7 @@ func _get_next() -> Array[ActionNode]:
 	return _next
 
 
-func _apply_modifiers(state: ActionState) -> void:
+func _apply_quant_modifiers(state: ActionState) -> void:
 	for child: Node in get_children():
-		if child is Modifier:
-			(child as Modifier).modify_state(state)
+		if child is QuantitativeModifier:
+			(child as QuantitativeModifier).modify_state(state)

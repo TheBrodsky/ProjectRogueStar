@@ -8,12 +8,14 @@ extends Node2D
 @export var spread_distance: float = 50 ## num pixels from center of emission that spawns are spread out
 
 @onready var timer: TimerTrigger = $ChainRoot/OnTimer
-@onready var burst: ConeEmission = $ChainRoot/OnTimer/Event/FireCone
+@onready var spawn_event: Event = $ChainRoot/OnTimer/Event
+@onready var firecone_mod: FireconeMod = $ChainRoot/OnTimer/Event/Firecone
 
 
 func _ready() -> void:
-	burst.num_emissions = num_spawns
-	burst.max_entities = max_entities
-	burst.action_shape = spawn_entity
+	firecone_mod.num_actions = num_spawns
+	firecone_mod.head_start_distance = spread_distance
+	spawn_event.max_entities = max_entities
+	spawn_event.action = spawn_entity
 	timer.activations_per_second = 1 / time_between_spawns
-	burst.head_start_distance = spread_distance
+	
