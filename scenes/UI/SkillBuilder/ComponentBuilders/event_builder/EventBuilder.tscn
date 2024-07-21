@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cllkeihe1vbuj"]
+
+[ext_resource type="Script" path="res://scenes/UI/SkillBuilder/ComponentBuilders/event_builder/event_builder.gd" id="1_mcufb"]
+[ext_resource type="PackedScene" uid="uid://ctvj004erck63" path="res://scenes/UI/SkillBuilder/ComponentSelectors/component_selector/ActionComponentSelector.tscn" id="2_v3rr2"]
+[ext_resource type="PackedScene" uid="uid://fvt4bxdopiix" path="res://scenes/UI/SkillBuilder/ComponentSelectors/multicomponent_selector/MulticomponentSelector.tscn" id="3_vi08v"]
+
+[node name="EventSelector" type="VBoxContainer"]
+script = ExtResource("1_mcufb")
+
+[node name="ActionSelector" parent="." instance=ExtResource("2_v3rr2")]
+layout_mode = 2
+action_chain_resource_type = 0
+
+[node name="EffectSelector" parent="." instance=ExtResource("2_v3rr2")]
+layout_mode = 2
+action_chain_resource_type = 1
+
+[node name="QuantModSelector" parent="." instance=ExtResource("3_vi08v")]
+layout_mode = 2
+action_chain_resource_type = 3
+
+[node name="ContainerModSelector" parent="." instance=ExtResource("3_vi08v")]
+layout_mode = 2
+
+[node name="ActionModSelector" parent="." instance=ExtResource("3_vi08v")]
+layout_mode = 2
+action_chain_resource_type = 5

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwcybe1impcc3"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChain/Triggers/on_compound_cooldown/on_compound_cooldown.gd" id="1_5ftm5"]
+[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/SkillBuilding/ActionChain/Triggers/on_timer/OnTimer.tscn" id="2_e5tpc"]
+
+[node name="OnCompoundCooldown" type="Node2D"]
+script = ExtResource("1_5ftm5")
+is_ordered = true
+trigger_type = 3
+action_name = "OnCooldown"
+action_type = 1
+
+[node name="OnTimer" parent="." instance=ExtResource("2_e5tpc")]

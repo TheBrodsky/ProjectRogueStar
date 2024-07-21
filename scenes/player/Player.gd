@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 
 enum {IDLE, RUN, DODGE, DODGE_RECOVER}
@@ -12,7 +13,8 @@ var state: int = IDLE
 
 var _dodge_direction: Vector2
 
-@onready var Weapon: ChainRoot = $ChainRoot
+@onready var SkillOne: ChainRoot = $"Left Click Weapon"
+@onready var SkillTwo: ChainRoot = $"Right Click Weapon"
 @onready var DodgeTimer: Timer = $DodgeTimer
 @onready var _dodge_speed: float = DODGE_DISTANCE / DodgeTimer.wait_time
 

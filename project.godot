@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://lib/Globals.tscn"
 Logger="*res://lib/Logger.tscn"
+Globals="*res://lib/global/Globals.tscn"
 
 [debug]
 

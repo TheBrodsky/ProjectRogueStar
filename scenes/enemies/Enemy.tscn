@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_0qba5"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="2_0mieg"]
-[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://scenes/UI/health bar/HealthBar.tscn" id="3_eearr"]
+[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://scenes/UI/health_bar/HealthBar.tscn" id="3_eearr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03wld"]
 radius = 834.869

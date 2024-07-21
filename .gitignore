@@ -5,6 +5,7 @@
 .import/
 export.cfg
 export_presets.cfg
+saved_chains
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -13,5 +14,6 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
 # No temp files
 *.tmp

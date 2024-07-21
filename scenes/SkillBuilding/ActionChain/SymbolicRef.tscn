@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb8tm3vt5iyh3"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChain/symbolic_ref.gd" id="1_a5vp0"]
+
+[node name="SymbolicRef" type="Node2D"]
+script = ExtResource("1_a5vp0")

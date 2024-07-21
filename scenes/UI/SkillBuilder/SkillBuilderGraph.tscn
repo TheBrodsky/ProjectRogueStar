@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd6accu57r5mt"]
+
+[ext_resource type="Script" path="res://scenes/UI/SkillBuilder/skill_builder_graph.gd" id="1_p11ik"]
+[ext_resource type="PackedScene" uid="uid://dxo74srjougav" path="res://scenes/UI/SkillBuilder/skill_node/SkillNode.tscn" id="2_mb1sg"]
+
+[node name="SkillBuilderGraph" type="GraphEdit"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+right_disconnects = true
+show_menu = false
+script = ExtResource("1_p11ik")
+metadata/_edit_lock_ = true
+
+[node name="Root" parent="." instance=ExtResource("2_mb1sg")]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 67.0
+offset_right = 397.0
+offset_bottom = 316.0
+mouse_filter = 1
+position_offset = Vector2(75, 67)
+skill_node_type = 2
+trigger_color = Color(1, 0.498039, 0.313726, 1)
+event_color = Color(0.27451, 0.509804, 0.705882, 1)
+root_color = Color(0.333333, 0.419608, 0.184314, 1)
+
+[connection signal="connection_request" from="." to="." method="_on_connection_request"]
+[connection signal="connection_to_empty" from="." to="." method="_on_connection_to_empty"]
+[connection signal="disconnection_request" from="." to="." method="_on_disconnection_request"]

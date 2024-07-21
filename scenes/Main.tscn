@@ -1,62 +1,31 @@
-[gd_scene load_steps=15 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
-[ext_resource type="PackedScene" uid="uid://dpdrjydjk5aro" path="res://scenes/skill building/Action Chain/Triggers/on compound/OnCompoundTrigger.tscn" id="4_7rgq0"]
-[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/skill building/Action Chain/ChainRoot.tscn" id="4_j5ogy"]
-[ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/skill building/Action Chain/Triggers/on input/OnInput.tscn" id="4_vnxss"]
-[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/skill building/Action Chain/event/Event.tscn" id="5_g88k2"]
-[ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://scenes/skill building/Action Chain/Triggers/on timer/OnTimer.tscn" id="5_qqf3p"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/skill building/Actions/Projectiles/projectile/Projectile.tscn" id="6_c57ju"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
-[ext_resource type="PackedScene" uid="uid://0k8rubu87q28" path="res://scenes/skill building/Effects/damage/DamageEffect.tscn" id="7_3bxou"]
-[ext_resource type="Script" path="res://scenes/skill building/Action Chain/chain_root.gd" id="15_58oim"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/enemies/spawner/Spawner.tscn" id="17_h3l5w"]
+[ext_resource type="PackedScene" uid="uid://v0ghg53i3ob1" path="res://scenes/UI/SkillBuilder/SkillBuilder.tscn" id="18_r0kmr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
 
-[node name="Player" parent="." node_paths=PackedStringArray("Reticle") instance=ExtResource("3_pusd5")]
+[node name="Player" parent="." instance=ExtResource("3_pusd5")]
 collision_mask = 24
-Reticle = NodePath("../Reticle")
-
-[node name="Left Click Weapon" parent="Player" instance=ExtResource("4_j5ogy")]
-
-[node name="OnCompoundTrigger" parent="Player/Left Click Weapon" instance=ExtResource("4_7rgq0")]
-is_ordered = true
-num_next = 2
-
-[node name="Event" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("5_g88k2")]
-action = ExtResource("6_c57ju")
-effect = ExtResource("7_3bxou")
-
-[node name="OnTimer" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
-activations_per_second = 2.0
-
-[node name="OnInput" parent="Player/Left Click Weapon/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
-input_action = "mouse_left"
-
-[node name="Right Click Weapon" type="Node2D" parent="Player"]
-script = ExtResource("15_58oim")
-
-[node name="OnCompoundTrigger" parent="Player/Right Click Weapon" instance=ExtResource("4_7rgq0")]
-is_ordered = true
-
-[node name="OnTimer" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("5_qqf3p")]
-activations_per_second = 2.0
-
-[node name="OnInput" parent="Player/Right Click Weapon/OnCompoundTrigger" instance=ExtResource("4_vnxss")]
-input_action = "mouse_right"
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 
 [node name="Reticle" parent="." instance=ExtResource("2_icas4")]
+process_mode = 3
 
 [node name="Camera" parent="." node_paths=PackedStringArray("Player", "Reticle") instance=ExtResource("5_qx7nx")]
 Player = NodePath("../Player")
 Reticle = NodePath("../Reticle")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
+
+[node name="SkillBuilder" parent="Camera/CanvasLayer" instance=ExtResource("18_r0kmr")]
 
 [node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
 z_index = -2

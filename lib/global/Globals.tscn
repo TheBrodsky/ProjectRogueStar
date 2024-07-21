@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://4ai76jun2n72"]
+
+[ext_resource type="Script" path="res://lib/global/globals.gd" id="1_atel1"]
+[ext_resource type="Script" path="res://lib/global/directory_resource_loader.gd" id="2_1tqvv"]
+
+[node name="Globals" type="Node"]
+script = ExtResource("1_atel1")
+
+[node name="ActionList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/Actions/"
+
+[node name="EffectList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/Effects/"
+
+[node name="TriggerList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/ActionChain/Triggers/"
+
+[node name="QuantModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/"
+
+[node name="ContainerModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/"
+
+[node name="ActionModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_1tqvv")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ActionModifiers/"

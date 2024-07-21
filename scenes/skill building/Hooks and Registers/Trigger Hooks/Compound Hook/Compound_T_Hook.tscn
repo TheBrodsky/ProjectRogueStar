@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwgx3u81l0ugt"]
-
-[ext_resource type="Script" path="res://scenes/skill building/Hooks and Registers/Trigger Hooks/trigger_hook.gd" id="1_yjep2"]
-
-[node name="CompoundTHook" type="Node"]
-script = ExtResource("1_yjep2")
-trigger_type = 3
