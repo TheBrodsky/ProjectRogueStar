@@ -1,4 +1,4 @@
-extends Modifier
+extends QuantitativeModifier
 
 
 @export var aim_deviation_addend: float = 0 

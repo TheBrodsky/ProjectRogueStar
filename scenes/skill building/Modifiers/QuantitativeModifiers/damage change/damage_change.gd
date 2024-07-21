@@ -1,4 +1,4 @@
-extends Modifier
+extends QuantitativeModifier
 
 
 @export var damage_addend: float = 0 ##value to add to damage_base

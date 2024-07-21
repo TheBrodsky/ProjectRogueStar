@@ -9,7 +9,7 @@ func modify_parent(delta: float) -> void:
 	parent_entity.set("speed", cur_speed - (delta * decceleration_rate))
 
 
-func is_attachable(action: Action) -> bool:
+func is_attachable(action: Node2D) -> bool:
 	return action.is_in_group("projectile")
 
 

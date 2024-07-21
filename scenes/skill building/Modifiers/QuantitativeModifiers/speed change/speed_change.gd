@@ -1,4 +1,4 @@
-extends Modifier
+extends QuantitativeModifier
 
 
 @export_range(.01,100) var speed_mult: float = 1
