@@ -39,16 +39,12 @@ func close_graph() -> void:
 
 func save_graphs() -> void:
 	var packed_chains: Array[PackedScene] = _pack_chains()
-	var packed_graphs: Array[PackedScene] = _pack_graphs()
 	for i in packed_chains.size():
-		var dir: String = graph_save_directory.path_join(str(i))
-		ScenePacker.savePackedScene(packed_chains[i], dir, "chain_%s.tscn" % i)
-		ScenePacker.savePackedScene(packed_graphs[i], dir, "graph_%s.tscn" % i)
+		ScenePacker.savePackedScene(packed_chains[i], graph_save_directory, "chain_%s.tscn" % i)
 
 
 func load_graphs() -> void:
-	var graph: PackedScene = load("res://saved_chains/0/graph_0.tscn")
-	graph_container.add_child(graph.instantiate())
+	pass
 
 
 func _pack_chains() -> Array[PackedScene]:
@@ -56,13 +52,6 @@ func _pack_chains() -> Array[PackedScene]:
 	for chain in build_chains():
 		packed_chains.append(ScenePacker.packScene(chain))
 	return packed_chains
-
-
-func _pack_graphs() -> Array[PackedScene]:
-	var packed_graphs: Array[PackedScene] = []
-	for graph in graph_container.get_children():
-		packed_graphs.append(ScenePacker.packScene(graph))
-	return packed_graphs
 
 
 func _on_save_button_pressed() -> void:
