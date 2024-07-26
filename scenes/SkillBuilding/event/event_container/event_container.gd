@@ -70,8 +70,10 @@ func _build_action() -> Node2D:
 		new_action = action.instantiate()
 		new_action.add_to_group(entity_group_name)
 		if "effect" in new_action:
+			var new_effect: Effect = effect.instantiate()
+			new_effect.modify_from_action_state(state)
 			@warning_ignore("unsafe_property_access")
-			new_action.effect = effect.instantiate()
+			new_action.effect = new_effect
 	return new_action
 
 
