@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2brtxhvptj1d"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/follower.gd" id="1_mfhgj"]
+
+[node name="Follower" type="Node2D"]
+script = ExtResource("1_mfhgj")

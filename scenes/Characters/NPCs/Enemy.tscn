@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkvyfec6n64gc"]
+
+[ext_resource type="Script" path="res://scenes/Characters/NPCs/enemy.gd" id="1_0qba5"]
+[ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="2_0mieg"]
+[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://scenes/UI/health_bar/HealthBar.tscn" id="3_eearr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03wld"]
+radius = 834.869
+height = 1669.74
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+scale = Vector2(0.03, 0.03)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_0qba5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.211765, 0.290196, 1)
+texture = ExtResource("2_0mieg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.05046, 1.09262)
+shape = SubResource("CapsuleShape2D_03wld")
+
+[node name="HealthBar" parent="." instance=ExtResource("3_eearr")]
+offset_left = -800.0
+offset_top = -1300.0
+offset_right = 806.0
+offset_bottom = -1100.0
+max_hp = 5
+
+[connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]

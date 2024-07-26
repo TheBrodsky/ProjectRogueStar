@@ -56,10 +56,10 @@ func build() -> void:
 
 
 func _add_action(new_action: Node2D) -> void:
-	add_child(new_action)
 	if "modify_from_action_state" in new_action:
 		@warning_ignore("unsafe_method_access")
 		new_action.modify_from_action_state(state)
+	add_child(new_action)
 
 
 func _build_action() -> Node2D:
@@ -75,14 +75,14 @@ func _build_action() -> Node2D:
 	return new_action
 
 
-## THIS NEEDS TO BE LOOKED AT
+## TODO THIS NEEDS TO BE LOOKED AT
 func _set_single_trigger(trigger: Trigger) -> void:
 	for entity: Node in get_children():
 		for entity_child in entity.get_children():
 			if entity_child is TriggerHook:
 				(entity_child as TriggerHook).set_trigger(trigger, state)
 
-## THIS NEEDS TO BE LOOKED AT
+## TODO THIS NEEDS TO BE LOOKED AT
 func _set_triggers(next_triggers: Array[Trigger]) -> void:
 	for trigger: Trigger in next_triggers:
 		_set_single_trigger(trigger)
@@ -117,6 +117,5 @@ func _modify_action_from_container_mods(action: Node2D, action_index: int) -> vo
 ## Allows any ActionModifiers to modify Actions
 func _modify_action_from_action_mods(action: Node2D) -> void:
 	for modifier: ActionModifier in action_modifiers:
-		modifier.attach(action)
-
+		modifier.attach(action, state)
 #endregion

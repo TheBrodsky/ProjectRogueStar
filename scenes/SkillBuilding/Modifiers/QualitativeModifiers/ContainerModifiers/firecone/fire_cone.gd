@@ -45,7 +45,7 @@ func _rotate_action(container: EventContainer, action: Node2D, index: int) -> vo
 
 func _set_cone_rotation(state: ActionState, container: EventContainer) -> void:
 	if share_aimed_angle:
-		var aim_vector: Vector2 = state.target - state.source.position 
+		var aim_vector: Vector2 = state.target.get_target(get_tree()) - state.source.position 
 		var aim_angle_rad: float = aim_vector.angle()
 		#TODO
 		#var accuracy: float = state.group_deviation_base * state.group_deviation_mult

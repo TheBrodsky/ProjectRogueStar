@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbqjmhmclioqv"]
+[gd_scene load_steps=9 format=3 uid="uid://bbqjmhmclioqv"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile/projectile.gd" id="1_hqwwq"]
 [ext_resource type="Texture2D" uid="uid://xr2dxir45u8p" path="res://assets/basic_bullet.png" id="2_wwoiw"]
-[ext_resource type="PackedScene" uid="uid://bwgx3u81l0ugt" path="res://scenes/SkillBuilding/Hooks and Registers/Trigger Hooks/Compound Hook/Compound_T_Hook.tscn" id="3_ol1bm"]
-[ext_resource type="PackedScene" uid="uid://cr3qc8p6aniu0" path="res://scenes/SkillBuilding/Hooks and Registers/Trigger Hooks/Cyclical Hook/Cyclical_T_Hook.tscn" id="4_xyju5"]
-[ext_resource type="PackedScene" uid="uid://vahfo8404j2a" path="res://scenes/SkillBuilding/Hooks and Registers/Trigger Hooks/Hit Hook/Hit_T_Hook.tscn" id="5_j5e3h"]
-[ext_resource type="PackedScene" uid="uid://bgtgharcgeowt" path="res://scenes/SkillBuilding/Hooks and Registers/Registers/HitRegister.tscn" id="6_4ehpb"]
+[ext_resource type="PackedScene" uid="uid://bwgx3u81l0ugt" path="res://scenes/BehaviorComponents/Hooks and Registers/Trigger Hooks/Compound Hook/Compound_T_Hook.tscn" id="3_ol1bm"]
+[ext_resource type="PackedScene" uid="uid://cr3qc8p6aniu0" path="res://scenes/BehaviorComponents/Hooks and Registers/Trigger Hooks/Cyclical Hook/Cyclical_T_Hook.tscn" id="4_xyju5"]
+[ext_resource type="PackedScene" uid="uid://vahfo8404j2a" path="res://scenes/BehaviorComponents/Hooks and Registers/Trigger Hooks/Hit Hook/Hit_T_Hook.tscn" id="5_j5e3h"]
+[ext_resource type="PackedScene" uid="uid://bgtgharcgeowt" path="res://scenes/BehaviorComponents/Hooks and Registers/Registers/HitRegister.tscn" id="6_4ehpb"]
+[ext_resource type="PackedScene" uid="uid://qs4f1n024ei2" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/aim_at/AimAt.tscn" id="7_jeoor"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ayb4j"]
 radius = 50.0899
@@ -39,6 +40,9 @@ group_whitelist = Array[String](["Enemy"])
 [node name="HitRegister" parent="." node_paths=PackedStringArray("collision_node") instance=ExtResource("6_4ehpb")]
 collision_node = NodePath("../Area2D")
 group_blacklist = Array[String](["Enemy"])
+
+[node name="AimAt" parent="." node_paths=PackedStringArray("parent_entity") instance=ExtResource("7_jeoor")]
+parent_entity = NodePath("..")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="register_hit" from="Hit_T_Hook" to="." method="_on_hit_t_hook_register_hit"]

@@ -28,7 +28,6 @@ var _next: Array[ActionNode] = []
 
 # Top-level entry point of an ActionNode. Called by previous nodes to initiate next node.
 func _run(state: ActionState) -> void:
-	state.target = get_global_mouse_position()
 	_apply_quant_modifiers(state)
 
 

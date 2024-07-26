@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn1ebbm0egekl"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/orbit_at/orbit_at.gd" id="1_iy24i"]
+
+[node name="OrbitAt" type="Node2D"]
+script = ExtResource("1_iy24i")
+orbit_distance = null
+speed = null
+aim_deviation = null

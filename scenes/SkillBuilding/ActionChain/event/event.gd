@@ -17,6 +17,7 @@ class_name Event
 
 @export var action: PackedScene ## Determines what the event does/how it behaves. ie "cause"
 @export var effect: PackedScene ## Determines how the action interacts with other things
+@export var target: Target = AtReticle.new()
 @export var max_entities: int = -1 ## -1 is no max
 
 @onready var GroupIdGen: GroupIdGenerator = $GroupIdGenerator
@@ -36,6 +37,7 @@ func _ready() -> void:
 
 func _run(state: ActionState) -> void:
 	super._run(state)
+	state.target = target
 	var container: EventContainer = EventContainer.new()
 	get_tree().get_root().add_child(container)
 	container.initialize(action, effect, max_entities, _event_group_name, state, _get_qualt_modifiers(), _get_next_triggers())

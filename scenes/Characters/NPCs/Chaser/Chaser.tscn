@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5uxj4w0eay7j"]
+
+[ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="1_su4im"]
+[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://scenes/UI/health_bar/HealthBar.tscn" id="2_d5n4s"]
+[ext_resource type="PackedScene" uid="uid://cdp4kw1nclq4q" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/home_at/HomeAt.tscn" id="3_lltns"]
+[ext_resource type="Resource" uid="uid://cb3gu77yyavu7" path="res://scenes/BehaviorComponents/Targets and Followers/Targets/AtPlayer/AtPlayer.tres" id="4_uq5by"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dedkn"]
+radius = 834.869
+height = 1669.74
+
+[node name="Chaser" type="CharacterBody2D"]
+scale = Vector2(0.03, 0.03)
+collision_layer = 2
+collision_mask = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.211765, 0.290196, 1)
+texture = ExtResource("1_su4im")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.05046, 1.09262)
+shape = SubResource("CapsuleShape2D_dedkn")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_d5n4s")]
+offset_left = -800.0
+offset_top = -1300.0
+offset_right = 806.0
+offset_bottom = -1100.0
+max_hp = 5
+
+[node name="HomeAt" parent="." node_paths=PackedStringArray("parent_entity") instance=ExtResource("3_lltns")]
+parent_entity = NodePath("..")
+target = ExtResource("4_uq5by")

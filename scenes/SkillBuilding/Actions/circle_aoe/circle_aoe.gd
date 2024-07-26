@@ -1,4 +1,4 @@
-extends Action
+extends Node2D
 class_name CircleAoe
 
 

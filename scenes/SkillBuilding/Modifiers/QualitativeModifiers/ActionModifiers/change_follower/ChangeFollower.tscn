@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dge1qd4kow6o6"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ActionModifiers/change_follower/change_follower.gd" id="1_8ur2t"]
+
+[node name="ChangeFollower" type="Node"]
+script = ExtResource("1_8ur2t")

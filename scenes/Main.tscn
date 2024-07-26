@@ -1,11 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=20 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
-[ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/player/Reticle.tscn" id="2_icas4"]
-[ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/player/Player.tscn" id="3_pusd5"]
+[ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/UI/reticle/Reticle.tscn" id="2_icas4"]
+[ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://scenes/Characters/player/Player.tscn" id="3_pusd5"]
+[ext_resource type="PackedScene" uid="uid://cwcybe1impcc3" path="res://scenes/SkillBuilding/ActionChain/Triggers/on_compound_cooldown/OnCompoundCooldown.tscn" id="4_4enqp"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
-[ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/objects/ProtoTiles.tscn" id="6_ydiao"]
-[ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/enemies/spawner/Spawner.tscn" id="17_h3l5w"]
+[ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/ProtoTiles.tscn" id="6_ydiao"]
+[ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/SkillBuilding/ActionChain/Triggers/on_input/OnInput.tscn" id="8_11g4m"]
+[ext_resource type="PackedScene" uid="uid://c5uxj4w0eay7j" path="res://scenes/Characters/NPCs/Chaser/Chaser.tscn" id="8_j5m8e"]
+[ext_resource type="PackedScene" uid="uid://dge1qd4kow6o6" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ActionModifiers/change_follower/ChangeFollower.tscn" id="8_jwsax"]
+[ext_resource type="Resource" uid="uid://cb3gu77yyavu7" path="res://scenes/BehaviorComponents/Targets and Followers/Targets/AtPlayer/AtPlayer.tres" id="8_sbl6g"]
+[ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/SkillBuilding/ActionChain/ChainRoot.tscn" id="9_2jmg5"]
+[ext_resource type="PackedScene" uid="uid://cn1ebbm0egekl" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/orbit_at/OrbitAt.tscn" id="9_lij8k"]
+[ext_resource type="PackedScene" uid="uid://dxdaks6pbprxl" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/radius change/RadiusChange.tscn" id="10_i1jrl"]
+[ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/speed change/SpeedChange.tscn" id="11_8sq8u"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/ActionChain/event/Event.tscn" id="11_brn3d"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile/Projectile.tscn" id="12_yjmug"]
+[ext_resource type="PackedScene" uid="uid://0k8rubu87q28" path="res://scenes/SkillBuilding/Effects/damage/DamageEffect.tscn" id="13_vrwdm"]
+[ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/Characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
 [ext_resource type="PackedScene" uid="uid://v0ghg53i3ob1" path="res://scenes/UI/SkillBuilder/SkillBuilder.tscn" id="18_r0kmr"]
 
 [node name="Main" type="Node2D"]
@@ -13,6 +25,29 @@ script = ExtResource("1_t0tca")
 
 [node name="Player" parent="." instance=ExtResource("3_pusd5")]
 collision_mask = 24
+
+[node name="ChainRoot" parent="Player" instance=ExtResource("9_2jmg5")]
+scale = Vector2(41.6667, 41.6667)
+
+[node name="OnCompoundCooldown" parent="Player/ChainRoot" instance=ExtResource("4_4enqp")]
+cooldown = 0.25
+
+[node name="Event" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("11_brn3d")]
+action = ExtResource("12_yjmug")
+effect = ExtResource("13_vrwdm")
+target = ExtResource("8_sbl6g")
+
+[node name="RadiusChange" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("10_i1jrl")]
+radius_add = 50.0
+
+[node name="SpeedChange" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("11_8sq8u")]
+speed_addend = 600.0
+
+[node name="ChangeFollower" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("8_jwsax")]
+new_follower_packed = ExtResource("9_lij8k")
+
+[node name="OnInput" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("8_11g4m")]
+input_action = 1
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 
@@ -34,5 +69,7 @@ scale = Vector2(4, 4)
 [node name="Spawner" parent="." instance=ExtResource("17_h3l5w")]
 visible = false
 position = Vector2(-738, -693)
-max_entities = 8
+spawn_entity = ExtResource("8_j5m8e")
+max_entities = 1
 time_between_spawns = 3.0
+enabled = false

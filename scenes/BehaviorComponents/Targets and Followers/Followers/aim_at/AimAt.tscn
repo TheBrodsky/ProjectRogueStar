@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://qs4f1n024ei2"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/aim_at/aim_at.gd" id="1_061p3"]
+
+[node name="AimAt" type="Node2D"]
+script = ExtResource("1_061p3")
+speed = null
+rotate_in_move_direction = null
+home_on_target = null

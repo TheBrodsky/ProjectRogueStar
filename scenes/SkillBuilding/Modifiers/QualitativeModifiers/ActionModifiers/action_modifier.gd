@@ -8,7 +8,14 @@ class_name ActionModifier
 ## ActionModifiers will "attach" to an instance of an Action and continually modify it.
 
 
+@export var is_pre_attached: bool = false
+
 var parent_entity: Node2D
+
+
+func _ready() -> void:
+	if is_pre_attached:
+		parent_entity = get_parent()
 
 
 func _process(delta: float) -> void:
@@ -17,10 +24,10 @@ func _process(delta: float) -> void:
 
 
 func _modify_parent(delta: float) -> void:
-	push_error("UNIMPLEMENTED_ERROR: Modifier.modify_state()")
+	push_error("UNIMPLEMENTED_ERROR: ActionModifier.modify_parent()")
 
 
-func attach(action: Node2D) -> void:
+func attach(action: Node2D, state: ActionState) -> void:
 	if is_attachable(action):
 		var cloned_modifier: ActionModifier = clone()
 		cloned_modifier.parent_entity = action
