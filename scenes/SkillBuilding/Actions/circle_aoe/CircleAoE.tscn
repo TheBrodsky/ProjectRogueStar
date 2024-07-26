@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3j30vxjap476"]
+[gd_scene load_steps=5 format=3 uid="uid://b3j30vxjap476"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/circle_aoe/circle_aoe.gd" id="1_87x4x"]
 [ext_resource type="Texture2D" uid="uid://bg17rucmyeo11" path="res://assets/aoe circle.png" id="2_vgd2d"]
@@ -23,5 +23,6 @@ texture = ExtResource("2_vgd2d")
 
 [node name="Hit_T_Hook" parent="." node_paths=PackedStringArray("collision_node") instance=ExtResource("4_x4pxr")]
 collision_node = NodePath("../Area2D")
+collision_mask = 2
 
 [connection signal="register_hit" from="Hit_T_Hook" to="." method="_on_hit_t_hook_register_hit"]

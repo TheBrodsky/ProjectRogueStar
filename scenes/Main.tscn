@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=19 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/UI/reticle/Reticle.tscn" id="2_icas4"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://scenes/UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/ProtoTiles.tscn" id="6_ydiao"]
 [ext_resource type="PackedScene" uid="uid://dqyiioytljyyo" path="res://scenes/SkillBuilding/Triggers/on_input/OnInput.tscn" id="8_11g4m"]
-[ext_resource type="PackedScene" uid="uid://c5uxj4w0eay7j" path="res://scenes/Characters/NPCs/Chaser/Chaser.tscn" id="8_j5m8e"]
 [ext_resource type="PackedScene" uid="uid://dge1qd4kow6o6" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ActionModifiers/change_follower/ChangeFollower.tscn" id="8_jwsax"]
 [ext_resource type="Resource" uid="uid://cb3gu77yyavu7" path="res://scenes/BehaviorComponents/Targets and Followers/Targets/AtPlayer/AtPlayer.tres" id="8_sbl6g"]
 [ext_resource type="PackedScene" uid="uid://bel34pxwtixdf" path="res://scenes/SkillBuilding/ActionChainUtils/ChainRoot.tscn" id="9_2jmg5"]
@@ -69,7 +68,5 @@ scale = Vector2(4, 4)
 [node name="Spawner" parent="." instance=ExtResource("17_h3l5w")]
 visible = false
 position = Vector2(-738, -693)
-spawn_entity = ExtResource("8_j5m8e")
 max_entities = 1
 time_between_spawns = 3.0
-enabled = false

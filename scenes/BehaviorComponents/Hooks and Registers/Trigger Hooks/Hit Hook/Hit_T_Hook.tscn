@@ -9,5 +9,6 @@ hit_register = NodePath("HitRegister")
 trigger_type = 1
 
 [node name="HitRegister" parent="." instance=ExtResource("2_h54lf")]
+collision_mask = 0
 
 [connection signal="register_hit" from="HitRegister" to="." method="_on_hit_register_register_hit"]

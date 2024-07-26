@@ -3,27 +3,34 @@ class_name HitTriggerHook
 signal register_hit(body: Node2D)
 
 
-@export var hit_register: HitRegister
-
+#region mirrored hit register setters
 @export var collision_node: Area2D:
 	set(value):
 		collision_node = value
 		hit_register.collision_node = value
 
-@export var group_whitelist: Array[String]:
+@export_flags_2d_physics var collision_mask: int:
 	set(value):
-		group_whitelist = value
-		hit_register.group_whitelist = value
+		collision_mask = value
+		hit_register.collision_mask = value
 
-@export var group_blacklist: Array[String]:
+@export var mask_is_blacklist: bool = false:
 	set(value):
-		group_blacklist = value
-		hit_register.group_blacklist = value
+		mask_is_blacklist = value
+		hit_register.mask_is_blacklist
+
+@export var include_tilemaps: bool = false:
+	set(value):
+		include_tilemaps = value
+		hit_register.include_tilemaps = value
 
 @export var hit_condition_method: Callable:
 	set(value):
 		hit_condition_method = value
 		hit_register.hit_condition_method = value
+#endregion
+
+@export var hit_register: HitRegister ## Probably just leave this alone unless you know what you're doing
 
 
 func perform_additional_setup(trigger: Trigger, state: ActionState) -> void:
