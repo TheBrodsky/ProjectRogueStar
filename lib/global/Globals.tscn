@@ -16,7 +16,7 @@ dir_path = "res://scenes/SkillBuilding/Effects/"
 
 [node name="TriggerList" type="ResourcePreloader" parent="."]
 script = ExtResource("2_1tqvv")
-dir_path = "res://scenes/SkillBuilding/ActionChain/Triggers/"
+dir_path = "res://scenes/SkillBuilding/Triggers/"
 
 [node name="QuantModList" type="ResourcePreloader" parent="."]
 script = ExtResource("2_1tqvv")

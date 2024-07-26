@@ -1,5 +1,5 @@
 class_name ActionNode
-extends Node2D
+extends Node
 
 
 ## The foundational class of the Action Chain

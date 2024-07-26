@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2qi6c253udob"]
 
-[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChain/event/event.gd" id="1_krmtm"]
-[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChain/event/group_id_tracker.gd" id="2_pkyh6"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/event/event.gd" id="1_krmtm"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/event/group_id_tracker.gd" id="2_pkyh6"]
 
 [node name="Event" type="Node2D"]
 script = ExtResource("1_krmtm")

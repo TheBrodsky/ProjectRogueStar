@@ -10,7 +10,7 @@ extends ActionNode
 @export var input_type: OnInputTrigger.InputTriggerButtonInputs
 @onready var parent_entity: Node2D = get_parent()
 
-var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/SkillBuilding/ActionChain/ActionState.tscn")
+var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/SkillBuilding/ActionChainUtils/ActionState.tscn")
 
 
 func _ready() -> void:

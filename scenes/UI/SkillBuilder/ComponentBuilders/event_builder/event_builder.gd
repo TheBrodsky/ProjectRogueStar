@@ -8,7 +8,7 @@ class_name EventBuilder
 @onready var container_mod_list: MultiComponentSelector = $ContainerModSelector
 @onready var action_mod_list: MultiComponentSelector = $ActionModSelector
 
-@onready var event_packed: PackedScene = preload("res://scenes/SkillBuilding/ActionChain/event/Event.tscn")
+@onready var event_packed: PackedScene = preload("res://scenes/SkillBuilding/event/Event.tscn")
 
 func assemble_event_node() -> Event:
 	var event: Event = event_packed.instantiate()

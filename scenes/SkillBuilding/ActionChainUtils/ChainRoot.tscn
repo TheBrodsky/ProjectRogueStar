@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bel34pxwtixdf"]
 
-[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChain/chain_root.gd" id="1_ss1wu"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/chain_root.gd" id="1_ss1wu"]
 
 [node name="ChainRoot" type="Node2D"]
 script = ExtResource("1_ss1wu")
