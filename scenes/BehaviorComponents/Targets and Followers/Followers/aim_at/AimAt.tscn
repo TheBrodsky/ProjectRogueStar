@@ -4,6 +4,3 @@
 
 [node name="AimAt" type="Node2D"]
 script = ExtResource("1_061p3")
-speed = null
-rotate_in_move_direction = null
-home_on_target = null

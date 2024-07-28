@@ -6,7 +6,11 @@ extends Node2D
 @export var max_entities: int = 10
 @export var time_between_spawns: float = 5 ## in seconds
 @export var spread_distance: float = 50 ## num pixels from center of emission that spawns are spread out
-@export var enabled: bool = true
+@export var enabled: bool = true:
+	set(value):
+		enabled = value
+		if root != null:
+			root.enabled = value
 
 @onready var timer: TimerTrigger = $ChainRoot/OnTimer
 @onready var spawn_event: Event = $ChainRoot/OnTimer/Event

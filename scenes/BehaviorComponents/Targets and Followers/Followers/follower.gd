@@ -10,9 +10,9 @@ class_name Follower
 
 
 @export var parent_entity: Node2D ## The object moved by the follower
-var target: Target ## Determines the destination of a follower
-var speed: float = 0 ## In pixels/second
-var aim_deviation: float = 0 ## in degrees
+@export var target: Target ## Determines the destination of a follower
+@export var speed: float = 0 ## In pixels/second
+@export var aim_deviation: float = 0 ## in degrees
 
 
 func _ready() -> void:

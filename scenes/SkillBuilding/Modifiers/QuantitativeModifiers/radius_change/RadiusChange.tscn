@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxdaks6pbprxl"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/radius_change/radius_change.gd" id="1_fgvf0"]
+
+[node name="RadiusChange" type="Node"]
+script = ExtResource("1_fgvf0")

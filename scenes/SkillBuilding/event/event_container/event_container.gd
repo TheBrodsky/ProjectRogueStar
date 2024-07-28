@@ -53,6 +53,7 @@ func build() -> void:
 		#_set_triggers(new_action)
 		_modify_action_from_container_mods(new_action, i)
 		_modify_action_from_action_mods(new_action)
+	_modify_build()
 
 
 func _add_action(new_action: Node2D) -> void:
@@ -120,4 +121,9 @@ func _modify_action_from_container_mods(action: Node2D, action_index: int) -> vo
 func _modify_action_from_action_mods(action: Node2D) -> void:
 	for modifier: ActionModifier in action_modifiers:
 		modifier.attach(action, state)
+
+
+func _modify_build() -> void:
+	for modifier: ContainerModifier in container_modifiers:
+		modifier.modify_build(state, self)
 #endregion

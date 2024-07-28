@@ -43,3 +43,6 @@ func get_damage() -> float: return damage_base * damage_multi
 @export var aoe_radius_multi: float = 1 # AOE radius multiplier 
 func get_aoe_radius() -> float: return aoe_radius_base * aoe_radius_multi
 
+@export var homing_rate_base: float = 0
+@export var homing_rate_multi: float = 1
+func get_homing_rate() -> float: return homing_rate_base * homing_rate_multi

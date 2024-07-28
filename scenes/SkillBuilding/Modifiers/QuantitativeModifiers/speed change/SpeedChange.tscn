@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsy75060xujlr"]
-
-[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/speed change/speed_change.gd" id="1_qbieb"]
-
-[node name="SpeedChange" type="Node"]
-script = ExtResource("1_qbieb")

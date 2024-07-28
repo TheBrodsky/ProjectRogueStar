@@ -4,11 +4,12 @@ class_name FireconeMod
 
 @export var num_actions: int = 2
 @export_range(1,360) var cone_angle: float = 0 ## in degrees
-@export var is_even_spread: bool = true ## same effect as angle_is_random from Burst
-@export var ignore_rotation: bool = false
-@export var head_start_distance: float = 0 ## use this to set the radius for the arc of grouped projectiles
-@export var share_aimed_angle: bool = false ## if true, the cone will be centered in direction of cursor even when ignore_rotation is true
+@export var is_even_spread: bool = true ## whether the angle between each entity is equal
+@export var head_start_distance: float = 0 ## how far along an object's flight path it starts
+@export var group_spread: float = 0 ## ONLY RELEVANT FOR GROUP_ROTATED; how much the group is spread out
 
+enum RotationMode {INDIVIDUAL_ROTATED, GROUP_ROTATED, NON_ROTATED}
+@export var rotation_mode: RotationMode
 
 var _cone_angle_rad: float
 var _angle_offset: float
@@ -29,28 +30,39 @@ func modify_action(state: ActionState, container: EventContainer, action: Node2D
 	_rotate_action(container, action, action_index)
 
 
+func modify_build(state: ActionState, container: EventContainer) -> void:
+	if rotation_mode == RotationMode.GROUP_ROTATED:
+		container.position += head_start_distance * MovementTools.calcDirectionFromAngle(container.rotation)
+
+
 func _rotate_action(container: EventContainer, action: Node2D, index: int) -> void:
-	var rotation_angle: float
-	if is_even_spread:
-		rotation_angle = (_angle_offset * index) - (_cone_angle_rad / 2)
-	else:
-		rotation_angle = randf_range(-1, 1) * (_cone_angle_rad / 2)
-	action.position += head_start_distance * MovementTools.calcDirectionFromAngle(rotation_angle)
-	if not ignore_rotation:
+	var rotation_angle: float = _get_rotation_angle(index)
+	
+	if rotation_mode == RotationMode.INDIVIDUAL_ROTATED:
 		action.rotate(rotation_angle)
-	elif share_aimed_angle: 
+		action.position += head_start_distance * MovementTools.calcDirectionFromAngle(action.rotation)
+	elif rotation_mode == RotationMode.GROUP_ROTATED:
 		#rotate projectiles the opposite of the fire cone, so they travel in the direction we aim
 		action.rotate(-container.rotation)
+		action.position += group_spread * MovementTools.calcDirectionFromAngle(rotation_angle)
+	elif rotation_mode == RotationMode.NON_ROTATED:
+		action.position += head_start_distance * MovementTools.calcDirectionFromAngle(rotation_angle)
 
 
 func _set_cone_rotation(state: ActionState, container: EventContainer) -> void:
-	if share_aimed_angle:
-		var aim_vector: Vector2 = state.target.get_target(get_tree()) - state.source.position 
-		var aim_angle_rad: float = aim_vector.angle()
-		#TODO
+	if rotation_mode == RotationMode.GROUP_ROTATED:
+		var aim_vector: Vector2 = state.source.position.direction_to(state.target.get_target(get_tree())) 
+		#TODO aim deviation on group rotated
 		#var accuracy: float = state.group_deviation_base * state.group_deviation_mult
 		#aim_angle_rad += deg_to_rad(randf_range(-accuracy, accuracy))
-		container.rotate(aim_angle_rad)
+		container.rotate(aim_vector.angle())
+
+
+func _get_rotation_angle(index: int) -> float:
+	if is_even_spread:
+		return (_angle_offset * index) - (_cone_angle_rad / 2)
+	else:
+		return randf_range(-1, 1) * (_cone_angle_rad / 2)
 
 
 func _set_angle_offset() -> void:

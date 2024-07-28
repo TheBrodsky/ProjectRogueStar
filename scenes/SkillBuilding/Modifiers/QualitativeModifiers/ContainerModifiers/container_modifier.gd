@@ -13,6 +13,7 @@ class_name ContainerModifier
 ## methods in their default, non-modifying states.
 
 
+## Modifications that need to happen BEFORE other things in the container
 func modify_initialization(state: ActionState, container: EventContainer) -> void:
 	pass
 
@@ -20,4 +21,9 @@ func modify_initialization(state: ActionState, container: EventContainer) -> voi
 ## Some Container modifications happen on the Actions within those Containers.
 ## The distinction between this and an ActionModifier is that this modification depends on information only the Container knows.
 func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_index: int) -> void:
+	pass
+
+
+## Modifications that need to happen AFTER other things in the container
+func modify_build(state: ActionState, container: EventContainer) -> void:
 	pass
