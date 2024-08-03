@@ -44,7 +44,7 @@ func initialize(action: PackedScene, effect: PackedScene, max_entities: int, ent
 
 
 func build() -> void:
-	position = state.source.position
+	global_position = state.source.global_position
 	for i: int in num_actions:
 		var new_action: Node2D = _build_action()
 		if new_action == null: # null new_action means we're at entity limit, so we break
@@ -80,13 +80,14 @@ func _build_action() -> Node2D:
 
 func _set_triggers(action_entity: Node2D, next_triggers: Array[Trigger]) -> void:
 	# find SupportedTriggers node, if any
-	for child in action_entity.get_children():
-		if child is SupportedTriggers:
-			# add triggers to SupportedTriggers node. It will handle compatibility
-			var trigger_hook: SupportedTriggers = child
-			for trigger: Trigger in next_triggers:
-				trigger_hook.set_trigger(trigger, state)
-			break
+	if next_triggers.size() > 0:
+		for child in action_entity.get_children():
+			if child is SupportedTriggers:
+				# add triggers to SupportedTriggers node. It will handle compatibility
+				var trigger_hook: SupportedTriggers = child
+				for trigger: Trigger in next_triggers:
+					trigger_hook.set_trigger(trigger, state)
+				break
 
 
 func _should_exist() -> bool:

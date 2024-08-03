@@ -9,10 +9,10 @@ signal register_hit(body: Node2D)
 @onready var texture_size: Vector2 = sprite.texture.get_size()
 @onready var texture_scale: Vector2 = Vector2.ONE / (texture_size / (2*radius))
 
-@export var animation_time: float = 5 # in seconds
+@export var animation_time: float = 1 # in seconds
 @export var animation_ease: Tween.EaseType = Tween.EASE_OUT
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CIRC
-@export var radius: float = 500
+@export var radius: float = 100
 @export var effect: Effect ## This is what happens when the aoe hits something
 @export var area_node: Area2D
 

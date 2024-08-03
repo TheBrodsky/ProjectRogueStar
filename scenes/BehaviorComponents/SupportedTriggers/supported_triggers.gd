@@ -63,7 +63,7 @@ func _set_trigger_helper(trigger: Trigger, state: ActionState) -> Trigger:
 	var cloned_trigger: Trigger = trigger.clone()
 	var cloned_state: ActionState = state.duplicate()
 	
-	state.source = get_parent()
+	cloned_state.source = get_parent()
 	add_child(cloned_trigger)
 	cloned_trigger._run(cloned_state)
 	return cloned_trigger
