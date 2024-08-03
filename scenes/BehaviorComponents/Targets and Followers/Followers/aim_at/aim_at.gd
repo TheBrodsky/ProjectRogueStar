@@ -9,7 +9,6 @@ extends Follower
 func _ready() -> void:
 	super()
 	parent_entity.rotation = _get_direction_vector().angle()
-		
 
 
 func _process(delta: float) -> void:

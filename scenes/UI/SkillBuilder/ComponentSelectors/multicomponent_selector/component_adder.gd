@@ -21,10 +21,10 @@ func get_selected_resource_name() -> String:
 
 
 func get_selected_resource() -> PackedScene:
-	return Globals.get_resource(get_selected_resource_name(), action_chain_resource_type)
+	return ComponentLoader.get_resource(get_selected_resource_name(), action_chain_resource_type)
 
 
 func _populate_item_selections() -> void:
-	for resource_name: String in Globals.get_resource_list(action_chain_resource_type):
+	for resource_name: String in ComponentLoader.get_resource_list(action_chain_resource_type):
 		component_list.add_item(resource_name)
 

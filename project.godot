@@ -17,8 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Logger="*res://lib/Logger.tscn"
+Logger="*res://lib/global/Logger.tscn"
 Globals="*res://lib/global/Globals.tscn"
+SignalBus="*res://lib/global/signal_bus/SignalBus.tscn"
+ComponentLoader="*res://lib/global/component_loader/ComponentLoader.tscn"
 
 [debug]
 
@@ -79,8 +81,10 @@ mouse_right={
 [layer_names]
 
 2d_physics/layer_1="Player"
-2d_physics/layer_2="Enemies"
-2d_physics/layer_3="Player Projectile"
-2d_physics/layer_4="Walls"
-2d_physics/layer_5="Player Barrier"
+2d_physics/layer_2="Player Effect"
+2d_physics/layer_3="Player Barrier"
+2d_physics/layer_4="Global Barrier"
+2d_physics/layer_5="Enemy"
+2d_physics/layer_6="Enemy Effect"
+2d_physics/layer_7="Enemy Barrier"
 2d_physics/layer_8="UI"

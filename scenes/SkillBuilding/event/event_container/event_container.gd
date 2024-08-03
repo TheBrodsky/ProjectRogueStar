@@ -44,13 +44,13 @@ func initialize(action: PackedScene, effect: PackedScene, max_entities: int, ent
 
 
 func build() -> void:
-	position = state.source.global_position
+	position = state.source.position
 	for i: int in num_actions:
 		var new_action: Node2D = _build_action()
 		if new_action == null: # null new_action means we're at entity limit, so we break
 			break
 		_add_action(new_action)
-		#_set_triggers(new_action)
+		_set_triggers(new_action, triggers)
 		_modify_action_from_container_mods(new_action, i)
 		_modify_action_from_action_mods(new_action)
 	_modify_build()
@@ -78,17 +78,15 @@ func _build_action() -> Node2D:
 	return new_action
 
 
-## TODO THIS NEEDS TO BE LOOKED AT
-func _set_single_trigger(trigger: Trigger) -> void:
-	for entity: Node in get_children():
-		for entity_child in entity.get_children():
-			if entity_child is TriggerHook:
-				(entity_child as TriggerHook).set_trigger(trigger, state)
-
-## TODO THIS NEEDS TO BE LOOKED AT
-func _set_triggers(next_triggers: Array[Trigger]) -> void:
-	for trigger: Trigger in next_triggers:
-		_set_single_trigger(trigger)
+func _set_triggers(action_entity: Node2D, next_triggers: Array[Trigger]) -> void:
+	# find SupportedTriggers node, if any
+	for child in action_entity.get_children():
+		if child is SupportedTriggers:
+			# add triggers to SupportedTriggers node. It will handle compatibility
+			var trigger_hook: SupportedTriggers = child
+			for trigger: Trigger in next_triggers:
+				trigger_hook.set_trigger(trigger, state)
+			break
 
 
 func _should_exist() -> bool:
@@ -112,15 +110,15 @@ func _modify_initialization() -> void:
 
 
 ## Allows any ContainerModifiers to modify Actions within the Container as it's relevant to the Container itself.
-func _modify_action_from_container_mods(action: Node2D, action_index: int) -> void:
+func _modify_action_from_container_mods(action_entity: Node2D, action_index: int) -> void:
 	for modifier: ContainerModifier in container_modifiers:
-		modifier.modify_action(state, self, action, action_index)
+		modifier.modify_action(state, self, action_entity, action_index)
 
 
 ## Allows any ActionModifiers to modify Actions
-func _modify_action_from_action_mods(action: Node2D) -> void:
+func _modify_action_from_action_mods(action_entity: Node2D) -> void:
 	for modifier: ActionModifier in action_modifiers:
-		modifier.attach(action, state)
+		modifier.attach(action_entity, state)
 
 
 func _modify_build() -> void:

@@ -5,6 +5,14 @@ extends CharacterBody2D
 @onready var health_bar: HealthBar = $HealthBar
 
 
+func _ready() -> void:
+	add_to_group("Enemey")
+	add_to_group("Hittable")
+	collision_layer = Globals.enemy_collision_layer
+	collision_mask = Globals.enemy_collision_mask
+	
+
+
 func _process(delta: float) -> void:
 	_do_movement(delta)
 	_do_attack(delta)

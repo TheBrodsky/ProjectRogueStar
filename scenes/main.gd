@@ -28,4 +28,4 @@ func _on_skill_builder_visibility_changed() -> void:
 		var action_chains: Array[ChainRoot] = Skill_Builder.build_chains()
 		for chain: ChainRoot in action_chains:
 			add_child(chain)
-			
+

@@ -1,9 +1,8 @@
 extends Node2D
 class_name CircleAoe
+signal register_hit(body: Node2D)
 
 
-@onready var hit_hook: HitTriggerHook = $Hit_T_Hook
-@onready var area_node: Area2D = $Area2D
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
 @onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var circle: CircleShape2D = collision_shape.shape
@@ -15,6 +14,7 @@ class_name CircleAoe
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CIRC
 @export var radius: float = 500
 @export var effect: Effect ## This is what happens when the aoe hits something
+@export var area_node: Area2D
 
 
 var _bodies_hit: Dictionary = {}
@@ -22,9 +22,14 @@ var _bodies_hit: Dictionary = {}
 
 func _ready() -> void:
 	effect = effect.duplicate()
-	hit_hook.hit_condition_method = Callable(self, "does_hit")
 	show()
 	do_animation()
+
+
+func modify_from_action_state(state: ActionState) -> void:
+	var collision_masks: Array[int] = state.get_effect_collision()
+	area_node.collision_layer = collision_masks[0]
+	area_node.collision_mask = collision_masks[1]
 
 
 func does_hit(body: Node2D) -> bool:
@@ -44,6 +49,8 @@ func on_animation_complete() -> void:
 	queue_free()
 
 
-func _on_hit_t_hook_register_hit(body: Node2D) -> void:
+func _on_area_2d_body_entered(body: Node2D) -> void:
 	_bodies_hit[body] = null
-	effect.do_effect(body)
+	if body.is_in_group("Hittable") and does_hit(body):
+		register_hit.emit(body)
+		effect.do_effect(body)

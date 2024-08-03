@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyfbb30ubgl86"]
+
+[ext_resource type="Script" path="res://lib/global/component_loader/component_loader.gd" id="1_sd010"]
+[ext_resource type="Script" path="res://lib/global/component_loader/directory_resource_loader.gd" id="2_5en7x"]
+
+[node name="ComponentLoader" type="Node"]
+script = ExtResource("1_sd010")
+
+[node name="ActionList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Actions/"
+
+[node name="EffectList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Effects/"
+
+[node name="TriggerList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Triggers/"
+
+[node name="QuantModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/"
+
+[node name="ContainerModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/"
+
+[node name="ActionModList" type="ResourcePreloader" parent="."]
+script = ExtResource("2_5en7x")
+dir_path = "res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ActionModifiers/"

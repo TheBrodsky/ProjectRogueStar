@@ -13,12 +13,12 @@ signal triggered(origin: Trigger)
 ## Because Triggers keep a persistent reference of the ActionState, triggers clone the ActionState when running the next node,
 ## which prevents nodes later in the chain from making unexpected modifications that propagate up the chain.
 
+# coupled with supported_triggers.gd and trigger_hook.gd
+@export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration") var trigger_type: int = 0
 
-enum TriggerType {Cyclical, Hit, Expiration, Compound}
-@export var trigger_type: TriggerType
 @export var is_one_shot: bool = false # one shot triggers will pause after triggering once. Once paused, they will not run until resumed.
 
-var action_state: ActionState
+var state: ActionState
 var _is_paused: bool = true # all triggers begin disengaged. Either a ChainRoot or preceding Event must engage it.
 
 
@@ -27,7 +27,6 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	_add_trigger_type_tag()
 	find_next_action_nodes([ActionType.EVENT])
 	pause()
 
@@ -40,7 +39,7 @@ func pause() -> void:
 	_is_paused = true
 
 
-func run_next(state: ActionState) -> void:
+func _run_next() -> void:
 	for child: ActionNode in _next:
 		Logger.log_trace("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
 		var new_state: ActionState = state.duplicate()
@@ -52,18 +51,10 @@ func _do_trigger() -> void:
 		if is_one_shot:
 			pause()
 		triggered.emit(self)
-		run_next(action_state)
+		_run_next()
 
 
 func _run(state: ActionState) -> void:
 	super._run(state)
-	action_state = state
+	self.state = state
 	resume()
-
-
-static func get_trigger_type_tag(type: TriggerType) -> String:
-	return "trigger_" + TriggerType.keys()[type]
-
-
-func _add_trigger_type_tag() -> void:
-	add_to_group(get_trigger_type_tag(trigger_type))

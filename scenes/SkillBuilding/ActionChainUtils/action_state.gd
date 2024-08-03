@@ -14,12 +14,23 @@ extends Node
 
 func reset() -> ActionState:
 	var blank_state: ActionState = ActionState.new()
-	blank_state.chain_owner = chain_owner
+	blank_state.owner_type = owner_type
 	blank_state.source = source
 	return blank_state
 
 
-@export var chain_owner: Node # who initially kicked off the chain. Used for determining bullet/effect interactions, e.g. a Player shouldnt be able to hurt themselves
+func get_effect_collision() -> Array[int]:
+	match owner_type:
+		OwnerType.PLAYER:
+			return [Globals.player_effect_collision_layer, Globals.player_effect_collision_mask]
+		OwnerType.ENEMY:
+			return [Globals.enemy_effect_collision_layer, Globals.enemy_effect_collision_mask]
+		_:
+			return []
+
+
+enum OwnerType {PLAYER, ENEMY}
+@export var owner_type: OwnerType # who initially kicked off the chain. Used for determining collision, e.g. a Player shouldnt be able to hurt themselves
 @export var source: Node2D # origin of an event, e.g. from a Player, from an Enemy
 @export var target: Target # determines where events/actions are aimed.
 

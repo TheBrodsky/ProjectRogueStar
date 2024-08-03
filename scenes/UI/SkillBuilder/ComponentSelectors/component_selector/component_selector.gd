@@ -43,7 +43,7 @@ func _set_label() -> void:
 
 
 func _populate_item_selections() -> void:
-	for resource_name: String in Globals.get_resource_list(action_chain_resource_type):
+	for resource_name: String in ComponentLoader.get_resource_list(action_chain_resource_type):
 		component_list.add_item(resource_name)
 
 
@@ -57,7 +57,7 @@ func _on_item_selected(index: int) -> void:
 
 
 func _get_resource(index: int) -> PackedScene:
-	return Globals.get_resource(component_list.get_item_text(index), action_chain_resource_type)
+	return ComponentLoader.get_resource(component_list.get_item_text(index), action_chain_resource_type)
 
 
 func _open_node_property_editor() -> void:

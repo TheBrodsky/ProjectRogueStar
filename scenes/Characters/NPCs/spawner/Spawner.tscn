@@ -22,5 +22,5 @@ action = ExtResource("5_w6rpg")
 [node name="Firecone" parent="ChainRoot/OnTimer/Event" instance=ExtResource("6_m5gdy")]
 num_actions = 4
 cone_angle = 360.0
-ignore_rotation = true
 head_start_distance = 100.0
+rotation_mode = 2

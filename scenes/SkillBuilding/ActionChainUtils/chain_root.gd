@@ -8,7 +8,7 @@ extends ActionNode
 
 @export var enabled: bool = true
 @export var input_type: OnInputTrigger.InputTriggerButtonInputs
-@onready var parent_entity: Node2D = get_parent()
+@export var owner_type: ActionState.OwnerType
 
 var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/SkillBuilding/ActionChainUtils/ActionState.tscn")
 
@@ -29,8 +29,9 @@ func run_chain() -> void:
 
 func _build_action_state() -> ActionState:
 	var action_state: ActionState = ACTION_STATE_BLUEPRINT.instantiate()
-	action_state.chain_owner = parent_entity
-	action_state.source = parent_entity
+	action_state.owner_type = owner_type
+	if get_parent() is Node2D:
+		action_state.source = get_parent()
 	return action_state
 
 

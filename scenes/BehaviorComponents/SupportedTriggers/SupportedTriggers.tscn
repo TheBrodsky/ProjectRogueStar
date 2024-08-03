@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf0j2vwxdjiju"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/SupportedTriggers/supported_triggers.gd" id="1_400kw"]
+
+[node name="SupportedTriggers" type="Node"]
+script = ExtResource("1_400kw")
