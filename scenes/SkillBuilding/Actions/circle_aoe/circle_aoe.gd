@@ -17,6 +17,7 @@ signal register_hit(body: Node2D)
 @export var area_node: Area2D
 
 
+var state: ActionState
 var _bodies_hit: Dictionary = {}
 
 
@@ -27,6 +28,8 @@ func _ready() -> void:
 
 
 func modify_from_action_state(state: ActionState) -> void:
+	self.state = state
+	radius = state.get_aoe_radius()
 	var collision_masks: Array[int] = state.get_effect_collision()
 	area_node.collision_layer = collision_masks[0]
 	area_node.collision_mask = collision_masks[1]
@@ -50,7 +53,7 @@ func on_animation_complete() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	_bodies_hit[body] = null
 	if body.is_in_group("Hittable") and does_hit(body):
 		register_hit.emit(body)
-		effect.do_effect(body)
+		effect.do_effect(body, state)
+	_bodies_hit[body] = null

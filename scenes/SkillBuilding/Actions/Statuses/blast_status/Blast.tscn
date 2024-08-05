@@ -1,0 +1,41 @@
+[gd_scene load_steps=11 format=3 uid="uid://8b8i2vqopbq0"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Statuses/blast_status/blast_status.gd" id="1_ygmis"]
+[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="2_dum32"]
+[ext_resource type="PackedScene" uid="uid://cymo1skj4pmaq" path="res://scenes/SkillBuilding/Triggers/on_expiration/OnExpiration.tscn" id="3_rxby3"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="4_28eb6"]
+[ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="5_ph5ij"]
+[ext_resource type="PackedScene" uid="uid://dxdaks6pbprxl" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/radius_change/RadiusChange.tscn" id="6_3k64f"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Effects/damage/damage_effect.gd" id="6_nvcev"]
+[ext_resource type="PackedScene" uid="uid://cg6wr026llt4o" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/damage_change/DamageChange.tscn" id="7_7thog"]
+
+[sub_resource type="Resource" id="Resource_l5f6t"]
+script = ExtResource("6_nvcev")
+
+[sub_resource type="Resource" id="Resource_ywx5v"]
+script = ExtResource("6_nvcev")
+
+[node name="BlastStatus" type="Node" node_paths=PackedStringArray("supported_triggers", "expiration_trigger", "radius_mod")]
+script = ExtResource("1_ygmis")
+supported_triggers = NodePath("SupportedTriggers")
+expiration_trigger = NodePath("OnExpiration")
+radius_mod = NodePath("OnExpiration/Event/RadiusChange")
+status_type = 1
+proc_time = 3.0
+duration = 3.0
+effect = SubResource("Resource_l5f6t")
+stack_efficiency = 3.0
+
+[node name="SupportedTriggers" parent="." instance=ExtResource("2_dum32")]
+supported_types = 193
+
+[node name="OnExpiration" parent="." instance=ExtResource("3_rxby3")]
+
+[node name="Event" parent="OnExpiration" instance=ExtResource("4_28eb6")]
+action = ExtResource("5_ph5ij")
+effect = SubResource("Resource_ywx5v")
+
+[node name="RadiusChange" parent="OnExpiration/Event" instance=ExtResource("6_3k64f")]
+
+[node name="DamageChange" parent="OnExpiration/Event" instance=ExtResource("7_7thog")]
+damage_multiplier = 2.5

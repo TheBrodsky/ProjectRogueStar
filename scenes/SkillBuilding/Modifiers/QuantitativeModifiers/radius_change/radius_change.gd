@@ -1,4 +1,5 @@
 extends QuantitativeModifier
+class_name RadiusModifier
 
 
 @export var radius_add: float = 100

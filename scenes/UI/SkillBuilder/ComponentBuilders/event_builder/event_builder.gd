@@ -13,7 +13,7 @@ class_name EventBuilder
 func assemble_event_node() -> Event:
 	var event: Event = event_packed.instantiate()
 	event.action = action_list.get_packed_component()
-	event.effect = effect_list.get_packed_component()
+	#event.effect = effect_list.get_packed_component() # TODO effect is a resource now. It cant be modified except through modifiers.
 	return add_mods(event)
 
 

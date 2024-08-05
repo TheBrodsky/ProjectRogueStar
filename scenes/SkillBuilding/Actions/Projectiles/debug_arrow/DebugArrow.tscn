@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dsdyinehxpo5p"]
 
-[ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile/projectile.gd" id="1_urs01"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile.gd" id="1_urs01"]
 [ext_resource type="Texture2D" uid="uid://b3v5pmgs25b4a" path="res://assets/debug arrow.png" id="2_wxyuv"]
 [ext_resource type="PackedScene" uid="uid://qs4f1n024ei2" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/aim_at/AimAt.tscn" id="7_rndo3"]
 

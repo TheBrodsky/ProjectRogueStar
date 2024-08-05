@@ -1,6 +1,7 @@
 extends Trigger
-class_name HitTrigger
+class_name OnHit
 
 
-func hit(body: Node2D) -> void:
+func on_hit(body: Node2D) -> void:
+	state.source = body
 	_do_trigger()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7v3whie8cpex"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/event/status_manager/status_manager.gd" id="1_rvpsm"]
+
+[node name="StatusManager" type="Node"]
+script = ExtResource("1_rvpsm")

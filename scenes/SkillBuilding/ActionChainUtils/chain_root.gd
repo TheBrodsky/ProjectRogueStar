@@ -7,7 +7,7 @@ extends ActionNode
 ## ChainRoots are important because Trigger nodes have no way of knowing if they're the start of the chain.
 
 @export var enabled: bool = true
-@export var input_type: OnInputTrigger.InputTriggerButtonInputs
+@export var input_type: OnInput.InputTriggerButtonInputs
 @export var owner_type: ActionState.OwnerType
 
 var ACTION_STATE_BLUEPRINT: PackedScene = preload("res://scenes/SkillBuilding/ActionChainUtils/ActionState.tscn")
@@ -36,9 +36,9 @@ func _build_action_state() -> ActionState:
 
 
 #region special case trigger methods
-## It's often the case that action chains begin with a compound trigger that ends in an OnInputTrigger. This automates that and helps with skill building
+## It's often the case that action chains begin with a compound trigger that ends in an OnInput. This automates that and helps with skill building
 func _add_input_trigger() -> void:
-	if input_type != OnInputTrigger.InputTriggerButtonInputs.AUTOMATIC:
+	if input_type != OnInput.InputTriggerButtonInputs.AUTOMATIC:
 		for trigger: Trigger in _next:
 			if trigger is OnCompoundTrigger:
 				trigger.add_child(_make_input_trigger())
@@ -54,8 +54,8 @@ func _make_ordered_compound_trigger() -> OnCompoundTrigger:
 	return trigger
 
 
-func _make_input_trigger() -> OnInputTrigger:
-	var trigger: OnInputTrigger = OnInputTrigger.new()
+func _make_input_trigger() -> OnInput:
+	var trigger: OnInput = OnInput.new()
 	trigger.input_action = input_type
 	return trigger
 #endregion

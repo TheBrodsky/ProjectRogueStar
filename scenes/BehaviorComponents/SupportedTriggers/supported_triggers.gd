@@ -14,9 +14,10 @@ const KILL = 2**3
 const DEATH = 2**4
 const CREATION = 2**5
 const EXPIRATION = 2**6
+const PROC = 2**7
 
-# coupled with trigger.gd and trigger_hook.gd
-@export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration") var supported_types: int = 0
+# coupled with trigger.gd
+@export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var supported_types: int = 0
 
 
 func _ready() -> void:
@@ -39,7 +40,9 @@ func set_trigger(trigger: Trigger, state: ActionState) -> void:
 		if cloned_trigger.trigger_type & CREATION:
 			pass
 		if cloned_trigger.trigger_type & EXPIRATION:
-			pass
+			OnExpireHook.set_trigger(get_parent(), cloned_trigger, state)
+		if cloned_trigger.trigger_type & PROC:
+			OnProcHook.set_trigger(get_parent(), cloned_trigger, state)
 
 
 func _verify_type_requirements() -> void:
@@ -56,15 +59,13 @@ func _verify_type_requirements() -> void:
 	if supported_types & CREATION:
 		pass
 	if supported_types & EXPIRATION:
-		pass
+		assert(OnExpireHook.is_compatible(get_parent()))
+	if supported_types & PROC:
+		assert(OnProcHook.is_compatible(get_parent()))
 
 
 func _set_trigger_helper(trigger: Trigger, state: ActionState) -> Trigger:
 	var cloned_trigger: Trigger = trigger.clone()
-	var cloned_state: ActionState = state.duplicate()
-	
-	cloned_state.source = get_parent()
 	add_child(cloned_trigger)
-	cloned_trigger._run(cloned_state)
 	return cloned_trigger
 	

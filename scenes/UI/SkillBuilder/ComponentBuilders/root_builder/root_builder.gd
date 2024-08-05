@@ -27,5 +27,5 @@ func add_mods(root: ChainRoot) -> ChainRoot:
 
 
 func _set_input_options() -> void:
-	for input_label: String in OnInputTrigger.InputTriggerButtonInputsLabels:
+	for input_label: String in OnInput.InputTriggerButtonInputsLabels:
 		input_selector.add_item(input_label)

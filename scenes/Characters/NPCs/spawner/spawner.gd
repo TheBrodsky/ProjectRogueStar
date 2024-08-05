@@ -12,7 +12,7 @@ extends Node2D
 		if root != null:
 			root.enabled = value
 
-@onready var timer: TimerTrigger = $ChainRoot/OnTimer
+@onready var timer: OnTimer = $ChainRoot/OnTimer
 @onready var spawn_event: Event = $ChainRoot/OnTimer/Event
 @onready var firecone_mod: FireconeMod = $ChainRoot/OnTimer/Event/Firecone
 

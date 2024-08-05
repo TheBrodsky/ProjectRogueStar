@@ -13,7 +13,7 @@ class_name EventContainer
 
 # data/objects passed in via Event. See Event for more info.
 var action: PackedScene
-var effect: PackedScene
+var effect: Effect
 var max_entities: int
 var entity_group_name: String
 var state: ActionState
@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 		queue_free()
 
 
-func initialize(action: PackedScene, effect: PackedScene, max_entities: int, entity_group_name: String, 
+func initialize(action: PackedScene, effect: Effect, max_entities: int, entity_group_name: String, 
 	state: ActionState, modifiers: Array[QualitativeModifier], triggers: Array[Trigger]) -> void:
 	self.action = action
 	self.effect = effect
@@ -64,17 +64,15 @@ func _add_action(new_action: Node2D) -> void:
 
 
 func _build_action() -> Node2D:
-	var new_action: Node2D = null # most of the time this will be of type Action
+	var new_action: Node2D = null
 	if max_entities > -1 and get_tree().get_nodes_in_group(entity_group_name).size() >= max_entities:
-		Logger.log_debug("Actionable hit maximum entities")
+		Logger.log_debug("Event hit maximum entities")
 	else:
 		new_action = action.instantiate()
 		new_action.add_to_group(entity_group_name)
 		if "effect" in new_action:
-			var new_effect: Effect = effect.instantiate()
-			new_effect.modify_from_action_state(state)
 			@warning_ignore("unsafe_property_access")
-			new_action.effect = new_effect
+			new_action.effect = effect
 	return new_action
 
 

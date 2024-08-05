@@ -27,6 +27,6 @@ offset_left = -800.0
 offset_top = -1300.0
 offset_right = 806.0
 offset_bottom = -1100.0
-max_hp = 5
+max_hp = 100
 
 [connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]

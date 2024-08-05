@@ -1,5 +1,5 @@
 extends Trigger
-class_name OnInputTrigger
+class_name OnInput
 
 
 enum InputTriggerButtonInputs {AUTOMATIC, MOUSE_LEFT, MOUSE_RIGHT}

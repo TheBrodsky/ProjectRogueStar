@@ -19,6 +19,14 @@ func reset() -> ActionState:
 	return blank_state
 
 
+## Checks node groups to determine whether the owner of this chain is a player or enemy
+func set_owner_type_from_node(owner: Node2D) -> void:
+	if owner.is_in_group("Enemy"):
+		owner_type = OwnerType.ENEMY
+	else:
+		owner_type = OwnerType.PLAYER
+
+
 func get_effect_collision() -> Array[int]:
 	match owner_type:
 		OwnerType.PLAYER:
@@ -31,8 +39,16 @@ func get_effect_collision() -> Array[int]:
 
 enum OwnerType {PLAYER, ENEMY}
 @export var owner_type: OwnerType # who initially kicked off the chain. Used for determining collision, e.g. a Player shouldnt be able to hurt themselves
-@export var source: Node2D # origin of an event, e.g. from a Player, from an Enemy
+@export var source: Node2D: # origin of an event, e.g. from a Player, from an Enemy
+	set(value):
+		if value is Node2D:
+			source = value
+		else:
+			Logger.log_debug("Attempted to assign non-2D source to action state")
 @export var target: Target # determines where events/actions are aimed.
+
+@export var stacks: int = 0 # used by actions that can "stack", multiplying Effect by the number of stacks
+func get_stacks() -> int: return stacks if stacks > 0 else 1
 
 @export var aim_deviation_base: float = 0 # angle of error from aiming line, in degrees
 @export var aim_deviation_mult: float = 1 # aim deviation multiplier

@@ -1,5 +1,5 @@
 extends Trigger
-class_name TimerTrigger
+class_name OnTimer
 
 
 @onready var timer: Timer = $Timer

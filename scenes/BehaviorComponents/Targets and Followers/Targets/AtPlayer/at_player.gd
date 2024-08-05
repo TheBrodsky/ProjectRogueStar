@@ -2,7 +2,7 @@ extends Target
 class_name AtPlayer
 
 
-var PLAYER_GROUP_NAME: String = "player"
+var PLAYER_GROUP_NAME: String = "Player"
 
 
 func get_target(scene_tree: SceneTree) -> Vector2:

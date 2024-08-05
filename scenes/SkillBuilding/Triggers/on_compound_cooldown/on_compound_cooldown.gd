@@ -12,7 +12,7 @@ extends OnCompoundTrigger
 		if timer != null:
 			timer.activations_per_second = 1/cooldown
 
-@onready var timer: TimerTrigger = $OnTimer
+@onready var timer: OnTimer = $OnTimer
 
 
 func _ready() -> void:
