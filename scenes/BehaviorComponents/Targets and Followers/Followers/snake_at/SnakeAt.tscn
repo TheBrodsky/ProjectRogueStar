@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwmqqajd57wde"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/snake_at/snake_at.gd" id="1_yw8fw"]
+
+[node name="SnakeAt" type="Node2D"]
+script = ExtResource("1_yw8fw")

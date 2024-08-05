@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfryweiqg8pkv"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/snaking_change/snaking_change.gd" id="1_w1bj0"]
+
+[node name="SnakingChange" type="Node"]
+script = ExtResource("1_w1bj0")

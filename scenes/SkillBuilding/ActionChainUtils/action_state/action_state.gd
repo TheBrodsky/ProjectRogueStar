@@ -73,3 +73,11 @@ func get_aoe_radius() -> float: return aoe_radius_base * aoe_radius_multi
 @export var homing_rate_base: float = 0
 @export var homing_rate_multi: float = 1
 func get_homing_rate() -> float: return homing_rate_base * homing_rate_multi
+
+@export var snaking_frequency_base: float = 0
+@export var snaking_frequency_multi: float = 1
+func get_snaking_frequency() -> float: return snaking_frequency_base * snaking_frequency_multi
+
+@export var snaking_amplitude_base: float = 0
+@export var snaking_amplitude_multi: float = 1
+func get_snaking_amplitude() -> float: return snaking_amplitude_base * snaking_amplitude_multi
