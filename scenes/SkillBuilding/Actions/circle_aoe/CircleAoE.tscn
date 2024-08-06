@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3j30vxjap476"]
+[gd_scene load_steps=5 format=3 uid="uid://b3j30vxjap476"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/circle_aoe/circle_aoe.gd" id="1_87x4x"]
 [ext_resource type="Texture2D" uid="uid://bg17rucmyeo11" path="res://assets/aoe circle.png" id="2_vgd2d"]
+[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="3_418ny"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d0yo"]
 resource_local_to_scene = true
 
-[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node")]
+[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("trigger_hook", "area_node")]
 script = ExtResource("1_87x4x")
+trigger_hook = NodePath("SupportedTriggers")
 area_node = NodePath("Area2D")
 metadata/_edit_group_ = true
 
@@ -21,5 +23,8 @@ shape = SubResource("CircleShape2D_5d0yo")
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture_filter = 1
 texture = ExtResource("2_vgd2d")
+
+[node name="SupportedTriggers" parent="." instance=ExtResource("3_418ny")]
+supported_types = 42
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

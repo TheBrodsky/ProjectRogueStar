@@ -15,6 +15,7 @@ enum StatusType {
 @export var max_stacks: int = -1 ## -1 is no limit. Be careful about no limit or high limits for SEPARATE_STACK type
 @export var proc_time: float = 1 ## Number of seconds between each proc
 @export var duration: float = 1 ## Time (in seconds) before stack(s) expire
+@export var trigger_hook: SupportedTriggers
 @export var effect: Effect
 @export var affected_entity: Node2D
 @export var stack_efficiency: float = 1 ## How effective stacks are, as a multiplier 
@@ -33,6 +34,7 @@ func _ready() -> void:
 
 
 func initialize(state: ActionState, effect: Effect) -> void:
+	self.affected_entity = state.source
 	self.effect = effect
 	modify_from_action_state(state)
 

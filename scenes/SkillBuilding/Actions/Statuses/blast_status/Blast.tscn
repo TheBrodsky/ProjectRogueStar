@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://8b8i2vqopbq0"]
+[gd_scene load_steps=12 format=3 uid="uid://8b8i2vqopbq0"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Statuses/blast_status/blast_status.gd" id="1_ygmis"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Effects/debug/debug_effect.gd" id="2_15odw"]
 [ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="2_dum32"]
 [ext_resource type="PackedScene" uid="uid://cymo1skj4pmaq" path="res://scenes/SkillBuilding/Triggers/on_expiration/OnExpiration.tscn" id="3_rxby3"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="4_28eb6"]
@@ -9,13 +10,13 @@
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Effects/damage/damage_effect.gd" id="6_nvcev"]
 [ext_resource type="PackedScene" uid="uid://cg6wr026llt4o" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/damage_change/DamageChange.tscn" id="7_7thog"]
 
-[sub_resource type="Resource" id="Resource_l5f6t"]
-script = ExtResource("6_nvcev")
+[sub_resource type="Resource" id="Resource_5ffri"]
+script = ExtResource("2_15odw")
 
 [sub_resource type="Resource" id="Resource_ywx5v"]
 script = ExtResource("6_nvcev")
 
-[node name="BlastStatus" type="Node" node_paths=PackedStringArray("supported_triggers", "expiration_trigger", "radius_mod")]
+[node name="BlastStatus" type="Node" node_paths=PackedStringArray("supported_triggers", "expiration_trigger", "radius_mod", "trigger_hook")]
 script = ExtResource("1_ygmis")
 supported_triggers = NodePath("SupportedTriggers")
 expiration_trigger = NodePath("OnExpiration")
@@ -23,11 +24,16 @@ radius_mod = NodePath("OnExpiration/Event/RadiusChange")
 status_type = 1
 proc_time = 3.0
 duration = 3.0
-effect = SubResource("Resource_l5f6t")
+trigger_hook = NodePath("SupportedTriggers")
+effect = SubResource("Resource_5ffri")
 stack_efficiency = 3.0
 
-[node name="SupportedTriggers" parent="." instance=ExtResource("2_dum32")]
+[node name="SupportedTriggers" parent="." node_paths=PackedStringArray("deferred_events") instance=ExtResource("2_dum32")]
 supported_types = 193
+deferred_types = 10
+add_flags = null
+deferred_flags = Array[int]([10])
+deferred_events = [NodePath("../OnExpiration/Event")]
 
 [node name="OnExpiration" parent="." instance=ExtResource("3_rxby3")]
 

@@ -13,7 +13,8 @@ signal register_hit(body: Node2D)
 @export var animation_ease: Tween.EaseType = Tween.EASE_OUT
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CIRC
 @export var radius: float = 100
-@export var effect: Effect ## This is what happens when the aoe hits something
+@export var trigger_hook: SupportedTriggers
+@export var effect: Effect
 @export var area_node: Area2D
 
 

@@ -59,7 +59,7 @@ func build() -> void:
 func _add_action(new_action: Node2D) -> void:
 	if "modify_from_action_state" in new_action:
 		@warning_ignore("unsafe_method_access")
-		new_action.modify_from_action_state(state)
+		new_action.modify_from_action_state(state.duplicate()) # Event -> Action state duplication
 	add_child(new_action)
 
 
@@ -77,15 +77,11 @@ func _build_action() -> Node2D:
 
 
 func _set_triggers(action_entity: Node2D, next_triggers: Array[Trigger]) -> void:
-	# find SupportedTriggers node, if any
-	if next_triggers.size() > 0:
-		for child in action_entity.get_children():
-			if child is SupportedTriggers:
-				# add triggers to SupportedTriggers node. It will handle compatibility
-				var trigger_hook: SupportedTriggers = child
-				for trigger: Trigger in next_triggers:
-					trigger_hook.set_trigger(trigger, state)
-				break
+	if triggers.size() > 0 and "trigger_hook" in action_entity:
+		@warning_ignore("unsafe_property_access")
+		var trigger_hook: SupportedTriggers = action_entity.trigger_hook
+		for trigger: Trigger in triggers:
+			trigger_hook.set_trigger(trigger, state)
 
 
 func _should_exist() -> bool:

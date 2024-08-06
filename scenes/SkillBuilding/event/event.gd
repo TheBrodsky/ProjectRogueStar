@@ -21,8 +21,9 @@ class_name Event
 
 @onready var GroupIdGen: GroupIdGenerator = $GroupIdGenerator
 
-var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
-var _is_status_action: bool
+# these are supposed to be private but export makes them get duplicated correctly, so /shrug
+@export var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
+@export var _is_status_action: bool
 
 
 func _enter_tree() -> void:
@@ -81,7 +82,7 @@ func _build_status_manager(state: ActionState) -> void:
 		status_manager = StatusManager.new()
 		affected_entity.add_child(status_manager)
 	
-	status_manager.add_status(action.instantiate() as Status, effect, state)
+	status_manager.add_status(action.instantiate() as Status, effect, state, _event_group_name, _get_qualt_modifiers(), _get_next_triggers())
 
 
 func _determine_action_type() -> void:

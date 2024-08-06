@@ -1,7 +1,9 @@
 extends Node
 
 
-var effect: Effect
+@export var trigger_hook: SupportedTriggers
+@export var effect: Effect
+
 var state: ActionState
 
 

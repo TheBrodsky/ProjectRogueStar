@@ -3,8 +3,9 @@
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Statuses/status.gd" id="1_yxuhe"]
 [ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="2_cnrjb"]
 
-[node name="Status" type="Node"]
+[node name="Status" type="Node" node_paths=PackedStringArray("trigger_hook")]
 script = ExtResource("1_yxuhe")
+trigger_hook = NodePath("SupportedTriggers")
 
 [node name="SupportedTriggers" parent="." instance=ExtResource("2_cnrjb")]
 supported_types = 193

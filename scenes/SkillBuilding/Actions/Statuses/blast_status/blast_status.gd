@@ -8,6 +8,7 @@ class_name BlastStatus
 
 
 func initialize(state: ActionState, effect: Effect) -> void:
+	self.affected_entity = state.source
 	modify_from_action_state(state)
 	OnExpireHook.set_trigger(self, expiration_trigger, state)
 	#supported_triggers.set_trigger(expiration_trigger, self.state)

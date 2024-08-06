@@ -2,8 +2,8 @@ class_name Projectile
 extends Node2D
 signal register_hit(body: Node2D)
 
-
-@export var effect: Effect ## This is what happens when the projectile hits something
+@export var trigger_hook: SupportedTriggers
+@export var effect: Effect
 @export var area: Area2D
 
 var state: ActionState

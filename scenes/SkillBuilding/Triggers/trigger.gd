@@ -53,7 +53,7 @@ func pause() -> void:
 func _run_next() -> void:
 	for child: ActionNode in _next:
 		Logger.log_trace("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
-		var new_state: ActionState = state.duplicate()
+		var new_state: ActionState = state.duplicate() # Trigger -> Event state duplication
 		child._run(new_state)
 	
 
