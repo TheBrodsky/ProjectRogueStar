@@ -31,7 +31,6 @@ stack_efficiency = 3.0
 [node name="SupportedTriggers" parent="." node_paths=PackedStringArray("deferred_events") instance=ExtResource("2_dum32")]
 supported_types = 193
 deferred_types = 10
-add_flags = null
 deferred_flags = Array[int]([10])
 deferred_events = [NodePath("../OnExpiration/Event")]
 

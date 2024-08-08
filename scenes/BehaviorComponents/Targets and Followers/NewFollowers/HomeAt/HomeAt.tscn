@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj8tshriqiang"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/HomeAt/home_at.gd" id="1_l6mpy"]
+
+[node name="HomeAt" type="Node2D"]
+script = ExtResource("1_l6mpy")

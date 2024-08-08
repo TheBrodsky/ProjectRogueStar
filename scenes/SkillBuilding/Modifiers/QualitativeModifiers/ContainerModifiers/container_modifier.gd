@@ -20,7 +20,7 @@ func modify_initialization(state: ActionState, container: EventContainer) -> voi
 
 ## Some Container modifications happen on the Actions within those Containers.
 ## The distinction between this and an ActionModifier is that this modification depends on information only the Container knows.
-func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_index: int) -> void:
+func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_follower: Follower, action_index: int) -> void:
 	pass
 
 

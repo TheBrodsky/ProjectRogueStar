@@ -27,7 +27,7 @@ const PROC = 2**7
 
 ## Allows unsupported triggers to be deferred to a supporting child event
 ## BE CAREFUL: deferring the same trigger flag to multiple events may produce more triggers than intended.
-@export_category("Deferrance") 
+@export_group("Deferrance") 
 @export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var deferred_types: int = 0
 @export var add_flags: bool = false: ## When clicked, saves the value of deferred_types to deferred_flags array
 	set(value):

@@ -13,12 +13,12 @@ signal triggered(origin: Trigger)
 ## Because Triggers keep a persistent reference of the ActionState, triggers clone the ActionState when running the next node,
 ## which prevents nodes later in the chain from making unexpected modifications that propagate up the chain.
 
-@export_category("Base Trigger Properties")
+@export_group("Base Trigger Properties")
 # coupled with supported_triggers.gd
 @export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var trigger_type: int = 0
 @export var is_one_shot: bool = false ## one shot triggers will pause after triggering once. Once paused, they will not run until resumed.
 
-@export_category("Root Trigger Properties")
+@export_group("Root Trigger Properties")
 @export var is_root: bool = false ## If this is the highest trigger node in the chain, this should be true
 @export var source_node: Node2D ## The node that acts as both the chain owner and the source of the chain
 

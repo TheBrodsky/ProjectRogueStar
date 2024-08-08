@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile.gd" id="1_urs01"]
 [ext_resource type="Texture2D" uid="uid://b3v5pmgs25b4a" path="res://assets/debug arrow.png" id="2_wxyuv"]
-[ext_resource type="PackedScene" uid="uid://qs4f1n024ei2" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/aim_at/AimAt.tscn" id="7_rndo3"]
+[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="3_2ss6k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ayb4j"]
 radius = 50.0899
 
-[node name="Projectile" type="Node2D" node_paths=PackedStringArray("area") groups=["projectile"]]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("trigger_hook", "area") groups=["projectile"]]
 z_index = -1
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_urs01")
+trigger_hook = NodePath("SupportedTriggers")
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -27,7 +28,7 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_ayb4j")
 
-[node name="AimAt" parent="." node_paths=PackedStringArray("parent_entity") instance=ExtResource("7_rndo3")]
-parent_entity = NodePath("..")
+[node name="SupportedTriggers" parent="." instance=ExtResource("3_2ss6k")]
+supported_types = 43
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

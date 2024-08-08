@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dieydw573v1db"]
+
+[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/OrbitAt/orbit_at.gd" id="1_rm6qd"]
+[ext_resource type="Texture2D" uid="uid://xr2dxir45u8p" path="res://assets/basic_bullet.png" id="2_br78i"]
+
+[node name="OrbitAt" type="Node2D" node_paths=PackedStringArray("bottom_node")]
+script = ExtResource("1_rm6qd")
+bottom_node = NodePath("Orbitor")
+
+[node name="Orbitor" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0.721569, 0.647059, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_br78i")

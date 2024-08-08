@@ -22,6 +22,7 @@ class_name Event
 @onready var GroupIdGen: GroupIdGenerator = $GroupIdGenerator
 
 # these are supposed to be private but export makes them get duplicated correctly, so /shrug
+@export_group(Globals.PRIVATE_CATEGORY)
 @export var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
 @export var _is_status_action: bool
 

@@ -26,8 +26,8 @@ func modify_initialization(state: ActionState, container: EventContainer) -> voi
 	_set_cone_rotation(state, container)
 
 
-func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_index: int) -> void:
-	_rotate_action(container, action, action_index)
+func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_follower: Follower, action_index: int) -> void:
+	_rotate_action(container, action_follower, action_index)
 
 
 func modify_build(state: ActionState, container: EventContainer) -> void:
@@ -35,18 +35,18 @@ func modify_build(state: ActionState, container: EventContainer) -> void:
 		container.position += head_start_distance * MovementTools.calcDirectionFromAngle(container.rotation)
 
 
-func _rotate_action(container: EventContainer, action: Node2D, index: int) -> void:
+func _rotate_action(container: EventContainer, action_follower: Follower, index: int) -> void:
 	var rotation_angle: float = _get_rotation_angle(index)
 	
 	if rotation_mode == RotationMode.INDIVIDUAL_ROTATED:
-		action.rotate(rotation_angle)
-		action.position += head_start_distance * MovementTools.calcDirectionFromAngle(action.rotation)
+		action_follower.rotate(rotation_angle)
+		action_follower.position += head_start_distance * MovementTools.calcDirectionFromAngle(action_follower.rotation)
 	elif rotation_mode == RotationMode.GROUP_ROTATED:
 		#rotate projectiles the opposite of the fire cone, so they travel in the direction we aim
-		action.rotate(-container.rotation)
-		action.position += group_spread * MovementTools.calcDirectionFromAngle(rotation_angle)
+		action_follower.rotate(-container.rotation)
+		action_follower.position += group_spread * MovementTools.calcDirectionFromAngle(rotation_angle)
 	elif rotation_mode == RotationMode.NON_ROTATED:
-		action.position += head_start_distance * MovementTools.calcDirectionFromAngle(rotation_angle)
+		action_follower.position += head_start_distance * MovementTools.calcDirectionFromAngle(rotation_angle)
 
 
 func _set_cone_rotation(state: ActionState, container: EventContainer) -> void:
