@@ -11,5 +11,6 @@ straight = NodePath("OrbitAt/StraightAt")
 bottom_node = NodePath("OrbitAt/StraightAt")
 
 [node name="OrbitAt" parent="." instance=ExtResource("2_7reem")]
+chases_target = false
 
 [node name="StraightAt" parent="OrbitAt" instance=ExtResource("3_40840")]

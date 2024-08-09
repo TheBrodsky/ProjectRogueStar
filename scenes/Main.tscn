@@ -18,8 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="11_brn3d"]
 [ext_resource type="PackedScene" uid="uid://cg6wr026llt4o" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/damage_change/DamageChange.tscn" id="13_5d77t"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="15_5otsj"]
-[ext_resource type="PackedScene" uid="uid://bj8tshriqiang" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/HomeAt/HomeAt.tscn" id="15_p51qe"]
 [ext_resource type="PackedScene" uid="uid://cpatadaoxv6ll" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/homing_rate_change/HomingRateChange.tscn" id="16_k7pe1"]
+[ext_resource type="PackedScene" uid="uid://bioaoptlqtgok" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/SnakeAt/SnakeAt.tscn" id="16_qsipg"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/Characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
 
 [sub_resource type="Resource" id="Resource_dquvo"]
@@ -81,7 +81,7 @@ cone_angle = 360.0
 head_start_distance = 100.0
 
 [node name="SetActionFollower" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("15_5otsj")]
-follower = ExtResource("15_p51qe")
+follower = ExtResource("16_qsipg")
 
 [node name="OnInput" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("8_11g4m")]
 input_action = 1
