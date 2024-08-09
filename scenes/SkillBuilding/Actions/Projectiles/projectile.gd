@@ -1,30 +1,16 @@
+extends Action
 class_name Projectile
-extends Node2D
 signal register_hit(body: Node2D)
 
-@export var trigger_hook: SupportedTriggers
-@export var effect: Effect
+
+@export_group(Globals.INSPECTOR_CATEGORY)
 @export var area: Area2D
 
-var state: ActionState
 
-
-func _ready() -> void:
-	effect = effect.duplicate()
-
-
-func modify_from_action_state(state: ActionState) -> void:
-	self.state = modify_action_state(state)
+func _modify_from_action_state(state: ActionState) -> void:
 	var collision_masks: Array[int] = state.get_effect_collision()
 	area.collision_layer |= collision_masks[0]
 	area.collision_mask |= collision_masks[1]
-
-
-func modify_action_state(state: ActionState) -> ActionState:
-	for child in get_children():
-		if child is QuantitativeModifier:
-			(child as QuantitativeModifier).modify_state(state)
-	return state
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

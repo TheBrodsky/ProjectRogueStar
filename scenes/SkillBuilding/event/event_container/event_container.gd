@@ -21,8 +21,8 @@ var triggers: Array[Trigger]
 # follower properties
 enum ContainerPosition {FROM_SOURCE, FROM_TARGET}
 var container_position: ContainerPosition = ContainerPosition.FROM_SOURCE
-var action_follower: PackedScene = preload("res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/StaticFollower.tscn")
-var container_follower: PackedScene = null # has no default because it's uncommon to use this
+var action_follower: PackedScene = null
+var container_follower: PackedScene = null
 
 # entity quantity properties
 var max_entities: int
@@ -34,6 +34,9 @@ var remaining_actions: int
 var modifiers: Array[QualitativeModifier]
 var container_modifiers: Array[ContainerModifier] = []
 var action_modifiers: Array[ActionModifier] = []
+
+const _ACTION_KEY: String = "action"
+const _FOLLWER_KEY: String = "follower"
 #endregion
 
 
@@ -58,27 +61,46 @@ func initialize(action: PackedScene, effect: Effect, max_entities: int, entity_g
 func build() -> void:
 	_add_follower_to_container()
 	for i: int in num_actions:
-		var new_action: Node2D = _build_action()
+		# get action and follower
+		var action_dict: Dictionary = _build_action()
+		var new_action: Node2D = action_dict[_ACTION_KEY]
+		var new_follower: Follower = action_dict[_FOLLWER_KEY]
 		if new_action == null: # null new_action means we're at entity limit, so we break
 			break
-		var follower: Follower = _add_follower_to_action(new_action)
+		add_child(new_follower)
+		
+		# inc actions and connect exit signal to maintain count
+		remaining_actions += 1
 		new_action.tree_exited.connect(_on_action_exited_tree) # this must be set AFTER the followers, because followers reparent actions (reparent triggers tree_exit)
-		_set_triggers(new_action, triggers)
-		_modify_action_from_container_mods(new_action, follower, i)
+		
+		# perform per-action modifications
+		_modify_action_from_container_mods(new_action, new_follower, i)
 		_modify_action_from_action_mods(new_action)
 	_modify_build()
 
 
+func _build_action() -> Dictionary:
+	var return_dict: Dictionary = {_ACTION_KEY : null, _FOLLWER_KEY : null}
+	
+	# check if max entities hit
+	if max_entities > -1 and get_tree().get_nodes_in_group(entity_group_name).size() >= max_entities: # check 
+		Logger.log_debug("Event hit maximum entities")
+	else:
+		# create action
+		var new_action: Node2D = action.instantiate()
+		new_action.add_to_group(entity_group_name)
+		assert(new_action is Action or new_action is Enemy) # TODO this should eventually be changed to use typed variables, pending more action types
+		@warning_ignore("unsafe_method_access") # duck-typed method
+		new_action.initialize(state, effect, triggers)
+		@warning_ignore("unsafe_method_access") # duck-typed method
+		var new_follower: Follower = new_action.set_follower(action_follower)
+		return_dict[_ACTION_KEY] = new_action
+		return_dict[_FOLLWER_KEY] = new_follower
+
+	return return_dict
+
+
 #region position, rotation, followers
-func _add_follower_to_action(new_action: Node2D) -> Follower:
-	var follower: Follower = action_follower.instantiate()
-	follower.modify_from_state(state)
-	follower.add_child(new_action)
-	add_child(follower)
-	follower.rotation = (state.target.get_target(get_tree()) - state.source.global_position).angle()
-	return follower
-
-
 func _add_follower_to_container() -> void:
 	var container_pos: Vector2 = _get_container_pos()
 	if container_follower != null:
@@ -90,7 +112,7 @@ func _add_follower_to_container() -> void:
 		parent.add_child(follower)
 		follower.global_position = container_pos
 		
-		tree_exited.connect(Callable(follower, "queue_free")) # makes sure follower gets cleaned up when event is freed
+		tree_exited.connect(follower.queue_free) # makes sure follower gets cleaned up when event is freed
 	else:
 		global_position = container_pos
 
@@ -100,40 +122,6 @@ func _get_container_pos() -> Vector2:
 		return state.source.global_position
 	else:
 		return state.target.get_target(get_tree())
-#endregion
-
-
-#region action methods
-func _build_action() -> Node2D:
-	var new_action: Node2D = null
-	
-	# check if max entities hit
-	if max_entities > -1 and get_tree().get_nodes_in_group(entity_group_name).size() >= max_entities: # check 
-		Logger.log_debug("Event hit maximum entities")
-	else:
-		# create action
-		new_action = action.instantiate()
-		new_action.add_to_group(entity_group_name)
-		remaining_actions += 1
-	
-	if new_action != null:
-		if "effect" in new_action:
-				@warning_ignore("unsafe_property_access")
-				new_action.effect = effect
-		
-		if "modify_from_action_state" in new_action:
-			@warning_ignore("unsafe_method_access")
-			new_action.modify_from_action_state(state.duplicate()) # Event -> Action state duplication
-
-	return new_action
-
-
-func _set_triggers(action_entity: Node2D, next_triggers: Array[Trigger]) -> void:
-	if triggers.size() > 0 and "trigger_hook" in action_entity:
-		@warning_ignore("unsafe_property_access")
-		var trigger_hook: SupportedTriggers = action_entity.trigger_hook
-		for trigger: Trigger in triggers:
-			trigger_hook.set_trigger(trigger, state)
 #endregion
 
 

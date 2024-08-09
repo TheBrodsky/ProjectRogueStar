@@ -7,12 +7,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ayb4j"]
 radius = 50.0899
 
-[node name="Projectile" type="Node2D" node_paths=PackedStringArray("trigger_hook", "area") groups=["projectile"]]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("area", "trigger_hook") groups=["projectile"]]
 z_index = -1
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_urs01")
-trigger_hook = NodePath("SupportedTriggers")
 area = NodePath("Area2D")
+trigger_hook = NodePath("SupportedTriggers")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708

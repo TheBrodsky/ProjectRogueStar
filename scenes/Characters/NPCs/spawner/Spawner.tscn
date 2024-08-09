@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bkvyfec6n64gc" path="res://scenes/Characters/NPCs/Enemy.tscn" id="5_w6rpg"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="6_m5gdy"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="7_qqvb0"]
-[ext_resource type="PackedScene" uid="uid://6u7hhe25e7kh" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/StaticFollower.tscn" id="8_ba1jc"]
+[ext_resource type="PackedScene" uid="uid://6u7hhe25e7kh" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/StaticFollower.tscn" id="8_ba1jc"]
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_48cu5")

@@ -1,10 +1,7 @@
-extends CharacterBody2D
-class_name Enemy
+extends Node2D
+class_name Action
 
 
-@onready var health_bar: HealthBar = $HealthBar
-
-@export_group(Globals.INSPECTOR_CATEGORY)
 #region action type properties
 @export var trigger_hook: SupportedTriggers
 @export var default_follower_packed: PackedScene = preload("res://scenes/BehaviorComponents/Targets and Followers/Followers/StaticFollower.tscn")
@@ -13,24 +10,6 @@ var effect: Effect
 var state: ActionState
 var follower: Follower # the follower at the top
 #endregion
-
-func _ready() -> void:
-	add_to_group("Enemy")
-	add_to_group("Hittable")
-	collision_layer = Globals.enemy_collision_layer
-	collision_mask = Globals.enemy_collision_mask
-
-
-func take_damage(damage: float) -> void:
-	health_bar.reduce(damage)
-
-
-func die() -> void:
-	queue_free()
-
-
-func _on_health_bar_no_health() -> void:
-	die()
 
 
 #region action type methods
@@ -83,4 +62,3 @@ func _set_triggers(triggers: Array[Trigger]) -> void:
 func _modify_action_state(state: ActionState) -> void:
 	pass
 #endregion
-

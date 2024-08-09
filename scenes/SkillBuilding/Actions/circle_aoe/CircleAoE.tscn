@@ -7,9 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d0yo"]
 resource_local_to_scene = true
 
-[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("trigger_hook", "area_node")]
+[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node")]
 script = ExtResource("1_87x4x")
-trigger_hook = NodePath("SupportedTriggers")
 area_node = NodePath("Area2D")
 metadata/_edit_group_ = true
 
@@ -25,6 +24,6 @@ texture_filter = 1
 texture = ExtResource("2_vgd2d")
 
 [node name="SupportedTriggers" parent="." instance=ExtResource("3_418ny")]
-supported_types = 42
+supported_types = 106
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
