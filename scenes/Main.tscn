@@ -18,10 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="11_brn3d"]
 [ext_resource type="PackedScene" uid="uid://cg6wr026llt4o" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/damage_change/DamageChange.tscn" id="13_5d77t"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="15_5otsj"]
-<<<<<<< HEAD
-=======
 [ext_resource type="PackedScene" uid="uid://bj8tshriqiang" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/HomeAt/HomeAt.tscn" id="15_p51qe"]
->>>>>>> 73615aa (inc check of further follower refinement and separation of responsibilities to action)
 [ext_resource type="PackedScene" uid="uid://cpatadaoxv6ll" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/homing_rate_change/HomingRateChange.tscn" id="16_k7pe1"]
 [ext_resource type="PackedScene" uid="uid://bioaoptlqtgok" path="res://scenes/BehaviorComponents/Targets and Followers/NewFollowers/SnakeAt/SnakeAt.tscn" id="16_qsipg"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/Characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
