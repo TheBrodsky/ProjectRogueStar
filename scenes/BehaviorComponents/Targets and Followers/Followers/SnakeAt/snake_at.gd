@@ -9,11 +9,6 @@ class_name SnakeAt
 @export var pendulum: PendulumAt
 @export var straight: StraightAt
 
-#func _ready() -> void:
-#	pendulum.period_duration = period_duration
-#	pendulum.magnitude = magnitude
-#	straight.speed = speed
-#	straight.aim_deviation = aim_deviation
 
 func _enter_tree() -> void:
 	super()

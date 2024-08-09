@@ -12,6 +12,7 @@ class_name SpiralAt
 
 
 func _enter_tree() -> void:
+	super()
 	orbit.target = target
 	orbit.orbital_speed = orbital_speed
 	orbit.orbital_distance = orbital_distance
