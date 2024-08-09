@@ -16,6 +16,7 @@ class_name SnakeAt
 #	straight.aim_deviation = aim_deviation
 
 func _enter_tree() -> void:
+	super()
 	pendulum.period_duration = period_duration
 	pendulum.magnitude = magnitude
 	straight.speed = speed
