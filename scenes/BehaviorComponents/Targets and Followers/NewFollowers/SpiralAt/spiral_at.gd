@@ -11,7 +11,7 @@ class_name SpiralAt
 @export var straight: StraightAt
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	orbit.target = target
 	orbit.orbital_speed = orbital_speed
 	orbit.orbital_distance = orbital_distance
