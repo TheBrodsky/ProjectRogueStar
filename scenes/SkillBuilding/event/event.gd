@@ -15,6 +15,7 @@ class_name Event
 ## - using a unique group name to keep track of all entities which originated from this event
 
 @export var action: PackedScene ## Determines what the event does/how it behaves. ie "cause"
+@export var is_status_action: bool
 @export var effect: Effect = DebugEffect.new() ## Determines how the action interacts with other things
 @export var target: Target = AtReticle.new()
 @export var max_entities: int = -1 ## -1 is no max
@@ -24,7 +25,6 @@ class_name Event
 # these are supposed to be private but export makes them get duplicated correctly, so /shrug
 @export_group(Globals.PRIVATE_CATEGORY)
 @export var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
-@export var _is_status_action: bool
 
 
 func _enter_tree() -> void:
@@ -33,7 +33,6 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	find_next_action_nodes([ActionType.TRIGGER])
-	_determine_action_type()
 	if _event_group_name.is_empty():
 		_event_group_name = GroupIdGen.make_group_name()
 
@@ -41,7 +40,7 @@ func _ready() -> void:
 func _run(state: ActionState) -> void:
 	super._run(state)
 	state.target = target
-	if _is_status_action:
+	if is_status_action:
 		_build_status_manager(state)
 	else:
 		_build_event_container(state)
@@ -84,11 +83,6 @@ func _build_status_manager(state: ActionState) -> void:
 		affected_entity.add_child(status_manager)
 	
 	status_manager.add_status(action.instantiate() as Status, effect, state, _event_group_name, _get_qualt_modifiers(), _get_next_triggers())
-
-
-func _determine_action_type() -> void:
-	var action_type_name: String = action.get_state().get_node_type(0)
-	_is_status_action = action_type_name == "Node"
 
 
 func copy_from(other: ActionNode) -> void:

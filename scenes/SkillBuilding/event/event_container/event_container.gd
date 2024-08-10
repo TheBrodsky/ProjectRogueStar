@@ -28,7 +28,6 @@ var container_follower: PackedScene = null
 var max_entities: int
 var entity_group_name: String
 var num_actions: int = 1
-var remaining_actions: int
 
 # modifier properties
 var modifiers: Array[QualitativeModifier]
@@ -69,13 +68,11 @@ func build() -> void:
 			break
 		add_child(new_follower)
 		
-		# inc actions and connect exit signal to maintain count
-		remaining_actions += 1
-		new_action.tree_exited.connect(_on_action_exited_tree) # this must be set AFTER the followers, because followers reparent actions (reparent triggers tree_exit)
-		
 		# perform per-action modifications
 		_modify_action_from_container_mods(new_action, new_follower, i)
 		_modify_action_from_action_mods(new_action)
+		@warning_ignore("unsafe_method_access")
+		new_action.post_tree_initialize(triggers)
 	_modify_build()
 
 
@@ -91,9 +88,10 @@ func _build_action() -> Dictionary:
 		new_action.add_to_group(entity_group_name)
 		assert(new_action is Action or new_action is Enemy) # TODO this should eventually be changed to use typed variables, pending more action types
 		@warning_ignore("unsafe_method_access") # duck-typed method
-		new_action.initialize(state, effect, triggers)
+		new_action.pre_tree_initialize(state, effect)
 		@warning_ignore("unsafe_method_access") # duck-typed method
 		var new_follower: Follower = new_action.set_follower(action_follower)
+		new_follower.rotation = (state.target.get_target(get_tree()) - state.source.global_position).angle()
 		return_dict[_ACTION_KEY] = new_action
 		return_dict[_FOLLWER_KEY] = new_follower
 
@@ -159,9 +157,5 @@ func _modify_build() -> void:
 #endregion
 
 
-func _on_action_exited_tree() -> void:
-	remaining_actions -= 1
-
-
 func _should_exist() -> bool:
-	return remaining_actions <= 0
+	return get_child_count() == 0

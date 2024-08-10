@@ -13,10 +13,10 @@ signal expire(transient: Node)
 @export var animation_ease: Tween.EaseType = Tween.EASE_OUT
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CIRC
 
-@onready var texture_size: Vector2 = sprite.texture.get_size()
-@onready var texture_scale: Vector2 = Vector2.ONE / (texture_size / (2*radius))
 @onready var sprite: Sprite2D = $Area2D/Sprite2D
 @onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var texture_size: Vector2 = sprite.texture.get_size()
+@onready var texture_scale: Vector2 = Vector2.ONE / (texture_size / (2*radius))
 @onready var circle: CircleShape2D = collision_shape.shape
 
 var _bodies_hit: Dictionary = {}

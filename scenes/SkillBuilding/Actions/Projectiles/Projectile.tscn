@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbqjmhmclioqv"]
+[gd_scene load_steps=6 format=3 uid="uid://bbqjmhmclioqv"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Projectiles/projectile.gd" id="1_hqwwq"]
+[ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/StraightAt/StraightAt.tscn" id="2_f0rqb"]
 [ext_resource type="Texture2D" uid="uid://xr2dxir45u8p" path="res://assets/basic_bullet.png" id="2_wwoiw"]
 [ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="4_m0sdw"]
 
@@ -13,6 +14,7 @@ scale = Vector2(0.2, 0.2)
 script = ExtResource("1_hqwwq")
 area = NodePath("Area2D")
 trigger_hook = NodePath("SupportedTriggers")
+default_follower_packed = ExtResource("2_f0rqb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_wwoiw")

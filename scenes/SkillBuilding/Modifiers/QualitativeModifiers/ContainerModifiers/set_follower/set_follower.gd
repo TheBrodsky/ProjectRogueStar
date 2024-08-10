@@ -17,5 +17,4 @@ func modify_initialization(state: ActionState, container: EventContainer) -> voi
 		state.disable_rotation = disable_rotation
 	else:
 		container.container_follower = follower
-	
 	container.container_position = container_pos

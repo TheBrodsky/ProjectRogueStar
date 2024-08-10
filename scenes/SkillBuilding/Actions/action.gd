@@ -13,35 +13,37 @@ var follower: Follower # the follower at the top
 
 
 #region action type methods
-func initialize(state: ActionState, effect: Effect, triggers: Array[Trigger]) -> void:
+func pre_tree_initialize(state: ActionState, effect: Effect) -> void:
 	self.state = state
 	self.effect = effect.duplicate()
 	
 	_modify_action_state(self.state)
 	_modify_from_action_state(self.state)
+
+
+func post_tree_initialize(triggers: Array[Trigger]) -> void:
+	follower.initialize(state)
 	_set_triggers(triggers)
 
 
 ## Reparents action under followers, returns follower at the top
 func set_follower(follower_packed: PackedScene) -> Follower:
+	# build the follower
 	var new_follower: Follower = null
 	if follower_packed != null:
 		new_follower = follower_packed.instantiate()
 	else:
 		new_follower = default_follower_packed.instantiate()
+	
+	# initialize and connect
+	new_follower.assemble_chain(state, self)
 	tree_exited.connect(new_follower.queue_free)
-	new_follower.modify_from_state(state)
 	
-	# add action to follower as child
-	if get_parent() != null:
-		reparent(new_follower)
-	else:
-		new_follower.add_child(self)
-	
+	# cleanup
 	if follower != null:
 		follower.queue_free()
-	
 	follower = new_follower
+	
 	return follower
 
 
@@ -59,6 +61,7 @@ func _set_triggers(triggers: Array[Trigger]) -> void:
 		trigger_hook.set_trigger(trigger, state)
 
 
+## Modifies action state IN PLACE
 func _modify_action_state(state: ActionState) -> void:
 	pass
 #endregion

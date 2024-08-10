@@ -7,9 +7,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d0yo"]
 resource_local_to_scene = true
 
-[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node")]
+[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node", "trigger_hook")]
 script = ExtResource("1_87x4x")
 area_node = NodePath("Area2D")
+trigger_hook = NodePath("SupportedTriggers")
 metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
