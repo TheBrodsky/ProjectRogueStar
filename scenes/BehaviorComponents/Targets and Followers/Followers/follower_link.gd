@@ -44,7 +44,7 @@ func _reparent_children_to_next_link(state: ActionState, moved_entity: Node2D) -
 
 
 func _add_moved_entity_to_bottom_of_chain(state: ActionState, moved_entity: Node2D) -> void:
-	if state.is_rotation_disabled():
+	if state.follower.is_rotation_disabled():
 		var gyroscope: Gyroscope = Gyroscope.new()
 		add_child(gyroscope)
 		_add_moved_entity(moved_entity, gyroscope)

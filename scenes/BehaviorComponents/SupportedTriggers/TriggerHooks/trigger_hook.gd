@@ -8,7 +8,7 @@ class_name TriggerHook
 
 ## Performs any setup needed to "activate" the trigger on the triggering node
 static func set_trigger(triggering_node: Node, trigger: Trigger, state: ActionState) -> void:
-	var cloned_state: ActionState = state.duplicate() # Action -> Trigger state duplication
+	var cloned_state: ActionState = state.clone() # Action -> Trigger state duplication
 	cloned_state.source = triggering_node
 	trigger._run(cloned_state)
 

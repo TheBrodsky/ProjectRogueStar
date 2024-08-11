@@ -4,7 +4,6 @@ class_name BlastStatus
 
 @export var supported_triggers: SupportedTriggers
 @export var expiration_trigger: OnExpiration
-@export var radius_mod: RadiusModifier
 
 
 func initialize(state: ActionState, effect: Effect) -> void:
@@ -16,7 +15,7 @@ func initialize(state: ActionState, effect: Effect) -> void:
 
 func _update_stack_count() -> void:
 	super()
-	radius_mod.radius_mult = 1 + (state.stacks * .05)
+	#radius_mod.radius_mult = 1 + (state.status.stacks * .05)
 	#print(radius_mod.radius_mult)
 
 

@@ -78,7 +78,7 @@ func _build_new_tracker(num_stacks: int) -> StackTracker:
 
 
 func _update_stack_count() -> void:
-	state.stacks = _total_stacks * stack_efficiency
+	state.status.stacks = _total_stacks * stack_efficiency
 
 
 func _on_proc(tracker: StackTracker) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=29 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/UI/reticle/Reticle.tscn" id="2_icas4"]
@@ -14,15 +14,15 @@
 [ext_resource type="PackedScene" uid="uid://8b8i2vqopbq0" path="res://scenes/SkillBuilding/Actions/Statuses/blast_status/BlastStatus.tscn" id="9_6k78g"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="9_m1uu5"]
 [ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="10_pvlpw"]
-[ext_resource type="PackedScene" uid="uid://dsy75060xujlr" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/speed_change/SpeedChange.tscn" id="11_8sq8u"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="11_brn3d"]
-[ext_resource type="PackedScene" uid="uid://cg6wr026llt4o" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/damage_change/DamageChange.tscn" id="13_5d77t"]
 [ext_resource type="PackedScene" uid="uid://drw1uyyrhlus7" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/build_follower/BuildFollower.tscn" id="14_6ujpu"]
 [ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/StraightAt/StraightAt.tscn" id="15_4euk7"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="15_5otsj"]
+[ext_resource type="PackedScene" uid="uid://cin5tqx275gpg" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/StatModifier.tscn" id="15_hjr3a"]
 [ext_resource type="PackedScene" uid="uid://dieydw573v1db" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/OrbitAt/OrbitAt.tscn" id="15_wtxkg"]
-[ext_resource type="PackedScene" uid="uid://cpatadaoxv6ll" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/homing_rate_change/HomingRateChange.tscn" id="16_k7pe1"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/sub_states/damage_state.gd" id="16_d4iik"]
 [ext_resource type="PackedScene" uid="uid://bycxpvc2oatsp" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/SpiralAt/SpiralAt.tscn" id="16_pftxv"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/sub_states/follower_state.gd" id="17_2uwvv"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/Characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
 
 [sub_resource type="Resource" id="Resource_dquvo"]
@@ -30,6 +30,30 @@ script = ExtResource("7_ebomw")
 
 [sub_resource type="Resource" id="Resource_hl6vn"]
 script = ExtResource("7_ebomw")
+
+[sub_resource type="Resource" id="Resource_e38cs"]
+resource_local_to_scene = true
+script = ExtResource("16_d4iik")
+damage_base = 1.0
+damage_multi = 1.0
+
+[sub_resource type="Resource" id="Resource_1ar7x"]
+resource_local_to_scene = true
+script = ExtResource("17_2uwvv")
+disable_rotation = false
+speed_base = 300.0
+speed_mult = 1.0
+aim_deviation_base = 0.0
+aim_deviation_mult = 1.0
+group_deviation_base = 0.0
+group_deviation_mult = 1.0
+orbit_speed_base = 1.571
+orbit_speed_multi = 1.0
+orbit_distance_base = 50.0
+orbit_distance_multi = 1.0
+orbit_chases_target = true
+homing_rate_base = 0.0
+homing_rate_multi = 1.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -58,15 +82,6 @@ is_status_action = true
 action = ExtResource("10_pvlpw")
 effect = SubResource("Resource_hl6vn")
 
-[node name="SpeedChange" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("11_8sq8u")]
-speed_addend = 300.0
-
-[node name="DamageChange" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("13_5d77t")]
-damage_addend = 1.0
-
-[node name="HomingRateChange" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("16_k7pe1")]
-homing_rate_add = 360.0
-
 [node name="BuildFollower" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("14_6ujpu")]
 followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")])
 
@@ -74,6 +89,12 @@ followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")
 num_actions = 12
 cone_angle = 360.0
 head_start_distance = 100.0
+
+[node name="StatModifier" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("15_hjr3a")]
+modifies_damage = true
+damage_stats = SubResource("Resource_e38cs")
+modifies_follower = true
+follower_stats = SubResource("Resource_1ar7x")
 
 [node name="OnInput" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("8_11g4m")]
 input_action = 1

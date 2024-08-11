@@ -39,7 +39,7 @@ func _ready() -> void:
 
 func _run(state: ActionState) -> void:
 	super._run(state)
-	state.target = target
+	state.follower.target = target
 	if is_status_action:
 		_build_status_manager(state)
 	else:

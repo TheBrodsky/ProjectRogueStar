@@ -12,11 +12,37 @@ extends Node
 ## A blank ActionState is instantiated at the beginning of a chain. See ChainRoot for more info.
 
 
+enum OwnerType {PLAYER, ENEMY}
+@export var owner_type: OwnerType # who initially kicked off the chain. Used for determining collision, e.g. a Player shouldnt be able to hurt themselves
+@export var source: Node2D: # origin of an event, e.g. from a Player, from an Enemy
+	set(value):
+		if value is Node2D:
+			source = value
+		else:
+			Logger.log_debug("Attempted to assign non-2D source to action state")
+
+@export var trigger: TriggerState = TriggerState.get_state()
+@export var status: StatusState = StatusState.get_state()
+@export var follower: FollowerState = FollowerState.get_state()
+@export var entity: EntityState = EntityState.get_state()
+@export var damage: DamageState = DamageState.get_state()
+
+
 func reset() -> ActionState:
 	var blank_state: ActionState = ActionState.new()
 	blank_state.owner_type = owner_type
 	blank_state.source = source
 	return blank_state
+
+
+func clone() -> ActionState:
+	var cloned_state: ActionState = self.duplicate()
+	cloned_state.trigger = trigger.duplicate()
+	cloned_state.status = status.duplicate()
+	cloned_state.follower = follower.duplicate()
+	cloned_state.entity = entity.duplicate()
+	cloned_state.damage = damage.duplicate()
+	return cloned_state
 
 
 ## Checks node groups to determine whether the owner of this chain is a player or enemy
@@ -36,56 +62,3 @@ func get_effect_collision() -> Array[int]:
 		_:
 			return []
 
-
-enum OwnerType {PLAYER, ENEMY}
-@export var owner_type: OwnerType # who initially kicked off the chain. Used for determining collision, e.g. a Player shouldnt be able to hurt themselves
-@export var source: Node2D: # origin of an event, e.g. from a Player, from an Enemy
-	set(value):
-		if value is Node2D:
-			source = value
-		else:
-			Logger.log_debug("Attempted to assign non-2D source to action state")
-@export var target: Target # determines where events/actions are aimed.
-
-@export var stacks: int = 0 # used by actions that can "stack", multiplying Effect by the number of stacks
-func get_stacks() -> int: return stacks if stacks > 0 else 1
-
-@export var aim_deviation_base: float = 0 # angle of error from aiming line, in degrees
-@export var aim_deviation_mult: float = 1 # aim deviation multiplier
-func get_aim_deviation() -> float: return aim_deviation_base * aim_deviation_mult
-
-@export var group_deviation_base: float = 0 # specifically for the share aim angle firecone (for now)
-@export var group_deviation_mult: float = 1 # group deviation multiplier
-func get_group_deviation() -> float: return group_deviation_base * group_deviation_mult
-
-@export var damage_base: float = 0 # additive base damage value (add additive damage increases to this one)
-@export var damage_multi: float = 1 # damage multiplier (multiply other multipliers to this one)
-func get_damage() -> float: return damage_base * damage_multi
-
-@export var aoe_radius_base: float = 0 # AOE radius addend
-@export var aoe_radius_multi: float = 1 # AOE radius multiplier 
-func get_aoe_radius() -> float: return aoe_radius_base * aoe_radius_multi
-
-@export_category("Follower Props")
-@export var speed_base: float = 0 # additive base speed value to any entities that move
-@export var speed_mult: float = 1 # speed multiplier to any entities that move
-func get_speed() -> float: return speed_base * speed_mult
-
-@export var homing_rate_base: float = 0
-@export var homing_rate_multi: float = 1
-func get_homing_rate() -> float: return homing_rate_base * homing_rate_multi
-
-@export var disable_rotation: bool = false
-func is_rotation_disabled() -> bool: return disable_rotation
-
-@export_group("Orbit Props")
-@export var orbit_speed_base: float = PI/2
-@export var orbit_speed_multi: float = 1
-func get_orbit_speed() -> float: return orbit_speed_base * orbit_speed_multi
-
-@export var orbit_distance_base: float = 50
-@export var orbit_distance_multi: float = 1
-func get_orbit_distance() -> float: return orbit_distance_base * orbit_distance_multi
-
-@export var orbit_chases_target: bool = true
-func does_orbit_chase_target() -> bool: return orbit_chases_target

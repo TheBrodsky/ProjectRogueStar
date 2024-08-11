@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpatadaoxv6ll"]
-
-[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/homing_rate_change/homing_rate_change.gd" id="1_3aicc"]
-
-[node name="HomingRateChange" type="Node"]
-script = ExtResource("1_3aicc")
