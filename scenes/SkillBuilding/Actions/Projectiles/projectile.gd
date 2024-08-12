@@ -7,7 +7,7 @@ signal register_hit(body: Node2D)
 @export var area: Area2D
 
 
-func _modify_from_action_state(state: ActionState) -> void:
+func _modify_from_action_state() -> void:
 	var collision_masks: Array[int] = state.get_effect_collision()
 	area.collision_layer |= collision_masks[0]
 	area.collision_mask |= collision_masks[1]

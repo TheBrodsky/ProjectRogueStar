@@ -14,7 +14,7 @@ enum FollowOf {ACTION, CONTAINER}
 func modify_initialization(state: ActionState, container: EventContainer) -> void:
 	if follower_of == FollowOf.ACTION:
 		container.action_follower = follower
-		state.follower.disable_rotation = disable_rotation
+		state.stats.follower.disable_rotation = disable_rotation
 	else:
 		container.container_follower = follower
 	container.container_position = container_pos

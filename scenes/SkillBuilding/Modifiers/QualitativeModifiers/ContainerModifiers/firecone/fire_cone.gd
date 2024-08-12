@@ -51,7 +51,7 @@ func _rotate_action(container: EventContainer, action_follower: Follower, index:
 
 func _set_cone_rotation(state: ActionState, container: EventContainer) -> void:
 	if rotation_mode == RotationMode.GROUP_ROTATED:
-		var aim_vector: Vector2 = state.source.position.direction_to(state.follower.target.get_target(get_tree())) 
+		var aim_vector: Vector2 = state.source.position.direction_to(state.stats.follower.target.get_target(get_tree())) 
 		#TODO aim deviation on group rotated
 		#var accuracy: float = state.group_deviation_base * state.group_deviation_mult
 		#aim_angle_rad += deg_to_rad(randf_range(-accuracy, accuracy))

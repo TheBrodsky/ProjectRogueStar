@@ -45,8 +45,8 @@ func on_animation_complete() -> void:
 	queue_free()
 
 
-func _modify_from_action_state(state: ActionState) -> void:
-	radius = state.entity.get_aoe_radius()
+func _modify_from_action_state() -> void:
+	radius = state.stats.entity.aoe_radius.val()
 	var collision_masks: Array[int] = state.get_effect_collision()
 	area_node.collision_layer = collision_masks[0]
 	area_node.collision_mask = collision_masks[1]

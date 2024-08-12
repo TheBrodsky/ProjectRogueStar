@@ -17,6 +17,7 @@ signal triggered(origin: Trigger)
 # coupled with supported_triggers.gd
 @export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var trigger_type: int = 0
 @export var is_one_shot: bool = false ## one shot triggers will pause after triggering once. Once paused, they will not run until resumed.
+@export var preserves_state: bool = false ## if true, the ActionState is not reset as it passes to the Trigger. Be careful with this, it can be very powerful.
 
 @export_group("Root Trigger Properties")
 @export var is_root: bool = false ## If this is the highest trigger node in the chain, this should be true
@@ -34,7 +35,7 @@ func _ready() -> void:
 	find_next_action_nodes([ActionType.EVENT])
 	if is_root:
 		assert(source_node != null)
-		var new_state: ActionState = ActionState.new()
+		var new_state: ActionState = ActionState.get_state()
 		new_state.set_owner_type_from_node(source_node)
 		new_state.source = source_node
 		_run(new_state)
@@ -66,6 +67,8 @@ func _do_trigger() -> void:
 
 
 func _run(state: ActionState) -> void:
+	if not preserves_state:
+		state.reset()
 	super._run(state)
 	self.state = state
 	resume()

@@ -14,9 +14,9 @@ func initialize(state: ActionState) -> void:
 
 
 func modify_from_state(state: ActionState) -> void:
-	target = state.follower.target
-	speed = state.follower.get_speed()
-	aim_deviation = state.follower.get_aim_deviation()
+	target = state.stats.follower.target
+	speed = state.stats.follower.speed.val()
+	aim_deviation = state.stats.follower.aim_deviation.val()
 
 
 func _get_direction_to_target() -> Vector2:

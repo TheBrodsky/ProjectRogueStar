@@ -12,6 +12,14 @@ extends Node
 ## A blank ActionState is instantiated at the beginning of a chain. See ChainRoot for more info.
 
 
+static func get_state() -> ActionState:
+	var state: ActionState = ActionState.new()
+	state.stats.populate_substats()
+	return state
+
+
+
+@export_group(Globals.PRIVATE_CATEGORY)
 enum OwnerType {PLAYER, ENEMY}
 @export var owner_type: OwnerType # who initially kicked off the chain. Used for determining collision, e.g. a Player shouldnt be able to hurt themselves
 @export var source: Node2D: # origin of an event, e.g. from a Player, from an Enemy
@@ -21,30 +29,38 @@ enum OwnerType {PLAYER, ENEMY}
 		else:
 			Logger.log_debug("Attempted to assign non-2D source to action state")
 
-@export var trigger: TriggerState = TriggerState.get_state()
-@export var status: StatusState = StatusState.get_state()
-@export var follower: FollowerState = FollowerState.get_state()
-@export var entity: EntityState = EntityState.get_state()
-@export var damage: DamageState = DamageState.get_state()
+@export var stats: ActionStateStats = ActionStateStats.get_state()
 
 
+#region state manipulation
+## Merges an ActionStateStats object into this state
+func merge(other_stats: ActionStateStats) -> ActionState:
+	if other_stats != null:
+		stats.merge(other_stats)
+	return self
+
+
+func scale(scalar: float) -> ActionState:
+	stats.scale(scalar)
+	return self
+
+
+## Resets stats except owner_type and source
 func reset() -> ActionState:
-	var blank_state: ActionState = ActionState.new()
-	blank_state.owner_type = owner_type
-	blank_state.source = source
-	return blank_state
+	stats = ActionStateStats.get_state()
+	stats.populate_substats()
+	return self
 
 
+## Returns a clone of this state with identical properties but different references
 func clone() -> ActionState:
 	var cloned_state: ActionState = self.duplicate()
-	cloned_state.trigger = trigger.duplicate()
-	cloned_state.status = status.duplicate()
-	cloned_state.follower = follower.duplicate()
-	cloned_state.entity = entity.duplicate()
-	cloned_state.damage = damage.duplicate()
+	cloned_state.stats = stats.duplicate(true)
 	return cloned_state
+#endregion
 
 
+#region getters and setters
 ## Checks node groups to determine whether the owner of this chain is a player or enemy
 func set_owner_type_from_node(owner: Node2D) -> void:
 	if owner.is_in_group("Enemy"):
@@ -53,6 +69,7 @@ func set_owner_type_from_node(owner: Node2D) -> void:
 		owner_type = OwnerType.PLAYER
 
 
+## Returns the collision layer and mask for action entities according to ownership of this chain
 func get_effect_collision() -> Array[int]:
 	match owner_type:
 		OwnerType.PLAYER:
@@ -61,4 +78,4 @@ func get_effect_collision() -> Array[int]:
 			return [Globals.enemy_effect_collision_layer, Globals.enemy_effect_collision_mask]
 		_:
 			return []
-
+#endregion

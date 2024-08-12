@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=39 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://scenes/UI/reticle/Reticle.tscn" id="2_icas4"]
@@ -20,10 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="15_5otsj"]
 [ext_resource type="PackedScene" uid="uid://cin5tqx275gpg" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/StatModifier.tscn" id="15_hjr3a"]
 [ext_resource type="PackedScene" uid="uid://dieydw573v1db" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/OrbitAt/OrbitAt.tscn" id="15_wtxkg"]
-[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/sub_states/damage_state.gd" id="16_d4iik"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/SubStates/StatObjects/float_stat.gd" id="16_e41qw"]
 [ext_resource type="PackedScene" uid="uid://bycxpvc2oatsp" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/SpiralAt/SpiralAt.tscn" id="16_pftxv"]
-[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/sub_states/follower_state.gd" id="17_2uwvv"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/action_state_stats.gd" id="16_pm4wf"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://scenes/Characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/SubStates/damage_state.gd" id="17_hmq4m"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/ActionChainUtils/action_state/SubStates/follower_state.gd" id="17_w33o0"]
 
 [sub_resource type="Resource" id="Resource_dquvo"]
 script = ExtResource("7_ebomw")
@@ -31,29 +33,82 @@ script = ExtResource("7_ebomw")
 [sub_resource type="Resource" id="Resource_hl6vn"]
 script = ExtResource("7_ebomw")
 
-[sub_resource type="Resource" id="Resource_e38cs"]
+[sub_resource type="Resource" id="Resource_rif8x"]
 resource_local_to_scene = true
-script = ExtResource("16_d4iik")
-damage_base = 1.0
-damage_multi = 1.0
+script = ExtResource("16_e41qw")
+add = 1.0
+inc = 1.0
+mult = 1.0
 
-[sub_resource type="Resource" id="Resource_1ar7x"]
+[sub_resource type="Resource" id="Resource_25pcv"]
 resource_local_to_scene = true
-script = ExtResource("17_2uwvv")
+script = ExtResource("17_hmq4m")
+damage = SubResource("Resource_rif8x")
+
+[sub_resource type="Resource" id="Resource_kt2bd"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 0.0
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_imxiy"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 0.0
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_y56qe"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 0.0
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_m3yuc"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 0.0
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_d550h"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 0.393
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_klrf5"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 100.0
+inc = 1.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_utm53"]
+resource_local_to_scene = true
+script = ExtResource("17_w33o0")
 disable_rotation = false
-speed_base = 300.0
-speed_mult = 1.0
-aim_deviation_base = 0.0
-aim_deviation_mult = 1.0
-group_deviation_base = 0.0
-group_deviation_mult = 1.0
-orbit_speed_base = 1.571
-orbit_speed_multi = 1.0
-orbit_distance_base = 50.0
-orbit_distance_multi = 1.0
-orbit_chases_target = true
-homing_rate_base = 0.0
-homing_rate_multi = 1.0
+speed = SubResource("Resource_klrf5")
+aim_deviation = SubResource("Resource_kt2bd")
+group_aim_deviation = SubResource("Resource_imxiy")
+orbit_chases_target = false
+orbit_speed = SubResource("Resource_d550h")
+orbit_distance = SubResource("Resource_m3yuc")
+homing_rate = SubResource("Resource_y56qe")
+
+[sub_resource type="Resource" id="Resource_nqv5o"]
+resource_local_to_scene = true
+script = ExtResource("16_pm4wf")
+modifies_damage = true
+damage = SubResource("Resource_25pcv")
+modifies_entity = false
+modifies_follower = true
+follower = SubResource("Resource_utm53")
+modifies_status = false
+modifies_trigger = false
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
@@ -68,33 +123,33 @@ cooldown = 0.25
 
 [node name="Event" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("11_brn3d")]
 action = ExtResource("6_f13vx")
+is_status_action = null
 effect = SubResource("Resource_dquvo")
+max_entities = null
+_event_group_name = null
+num_next = null
 
 [node name="OnHit" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("8_j8ra8")]
 
 [node name="Event" parent="Player/ChainRoot/OnCompoundCooldown/Event/OnHit" instance=ExtResource("11_brn3d")]
 action = ExtResource("9_6k78g")
 is_status_action = true
+max_entities = null
+_event_group_name = null
+num_next = null
 
 [node name="OnHit" parent="Player/ChainRoot/OnCompoundCooldown/Event/OnHit/Event" instance=ExtResource("8_j8ra8")]
 
 [node name="Event" parent="Player/ChainRoot/OnCompoundCooldown/Event/OnHit/Event/OnHit" instance=ExtResource("11_brn3d")]
 action = ExtResource("10_pvlpw")
+is_status_action = null
 effect = SubResource("Resource_hl6vn")
-
-[node name="BuildFollower" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("14_6ujpu")]
-followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")])
-
-[node name="Firecone" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("9_m1uu5")]
-num_actions = 12
-cone_angle = 360.0
-head_start_distance = 100.0
+max_entities = null
+_event_group_name = null
+num_next = null
 
 [node name="StatModifier" parent="Player/ChainRoot/OnCompoundCooldown/Event" instance=ExtResource("15_hjr3a")]
-modifies_damage = true
-damage_stats = SubResource("Resource_e38cs")
-modifies_follower = true
-follower_stats = SubResource("Resource_1ar7x")
+state = SubResource("Resource_nqv5o")
 
 [node name="OnInput" parent="Player/ChainRoot/OnCompoundCooldown" instance=ExtResource("8_11g4m")]
 input_action = 1
@@ -103,6 +158,19 @@ input_action = 1
 
 [node name="SetActionFollower" parent="PlayerSpawnPoint" instance=ExtResource("15_5otsj")]
 follower = ExtResource("16_pftxv")
+follower_of = null
+container_pos = 1
+disable_rotation = null
+
+[node name="Firecone" parent="PlayerSpawnPoint" instance=ExtResource("9_m1uu5")]
+num_actions = 12
+cone_angle = 360.0
+is_even_spread = null
+group_spread = null
+rotation_mode = null
+
+[node name="BuildFollower" parent="PlayerSpawnPoint" instance=ExtResource("14_6ujpu")]
+followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")])
 container_pos = 1
 
 [node name="Reticle" parent="." instance=ExtResource("2_icas4")]

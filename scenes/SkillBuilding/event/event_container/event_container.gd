@@ -91,7 +91,7 @@ func _build_action() -> Dictionary:
 		new_action.pre_tree_initialize(state, effect)
 		@warning_ignore("unsafe_method_access") # duck-typed method
 		var new_follower: Follower = new_action.set_follower(action_follower)
-		new_follower.rotation = (state.follower.target.get_target(get_tree()) - state.source.global_position).angle()
+		new_follower.rotation = (state.stats.follower.target.get_target(get_tree()) - state.source.global_position).angle()
 		return_dict[_ACTION_KEY] = new_action
 		return_dict[_FOLLWER_KEY] = new_follower
 
@@ -119,7 +119,7 @@ func _get_container_pos() -> Vector2:
 	if container_position == ContainerPosition.FROM_SOURCE:
 		return state.source.global_position
 	else:
-		return state.follower.target.get_target(get_tree())
+		return state.stats.follower.target.get_target(get_tree())
 #endregion
 
 

@@ -22,7 +22,7 @@ func _ready() -> void:
 func modify_initialization(state: ActionState, container: EventContainer) -> void:
 	if follower_of == FollowOf.ACTION:
 		container.action_follower = built_follower
-		state.follower.disable_rotation = disable_rotation
+		state.stats.follower.disable_rotation = disable_rotation
 	else:
 		container.container_follower = built_follower
 	container.container_position = container_pos

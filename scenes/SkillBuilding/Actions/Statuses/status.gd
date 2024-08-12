@@ -11,49 +11,40 @@ enum StatusType {
 	SHARED_STACK_NON_RESET, ## Stacks share timers but their expiration timer is not reset when adding a new stack
 	SEPARATE_STACK ## Stacks proc and expire individually
 }
+
+@export_group(Globals.INSPECTOR_CATEGORY)
+@export var base_stats: ActionStateStats = ActionStateStats.get_state()
+@export var stack_scaling: ActionStateStats = ActionStateStats.get_state()
 @export var status_type: StatusType
-@export var max_stacks: int = -1 ## -1 is no limit. Be careful about no limit or high limits for SEPARATE_STACK type
-@export var proc_time: float = 1 ## Number of seconds between each proc
-@export var duration: float = 1 ## Time (in seconds) before stack(s) expire
+@export var has_stack_limit: bool = true ## Be careful about no limit or high limits for SEPARATE_STACK type
+
 @export var trigger_hook: SupportedTriggers
 @export var effect: Effect
-@export var affected_entity: Node2D
-@export var stack_efficiency: float = 1 ## How effective stacks are, as a multiplier 
+
 
 var state: ActionState
-var _tracker: StackTracker
+var _tracker: StackTracker ## Not used for StatusType.SEPARATE_STACK
 var _total_stacks: int = 0:
 	set(value):
 		_total_stacks = value
-		_update_stack_count()
-
-
-func _ready() -> void:
-	if max_stacks == -1:
-		max_stacks = Globals.INT64_MAX
 
 
 func initialize(state: ActionState, effect: Effect) -> void:
-	self.affected_entity = state.source
 	self.effect = effect
-	modify_from_action_state(state)
-
-
-func modify_from_action_state(state: ActionState) -> void:
-	self.state = modify_action_state(state)
-
-
-func modify_action_state(state: ActionState) -> ActionState:
-	return state
+	self.state = state.duplicate()
+	_modify_action_state()
+	_modify_from_action_state()
 
 
 func do_effect(body: Node2D) -> void:
-	effect.modify_from_action_state(state)
-	effect.do_effect(body, state)
+	var stack_modified_state: ActionState = state.clone().merge(stack_scaling.scale(_total_stacks))
+	effect.modify_from_action_state(stack_modified_state)
+	effect.do_effect(body, stack_modified_state)
 
 
 func add_stacks(num_stacks: int = 1) -> void:
-	num_stacks -= max(0, _total_stacks + num_stacks - max_stacks) # make sure not to add more than max stacks
+	if has_stack_limit:
+		num_stacks -= max(0, _total_stacks + num_stacks - round(state.stats.status.max_stacks.val())) # make sure not to add more than max stacks
 	_total_stacks += num_stacks
 	match status_type:
 		StatusType.SHARED_STACK, StatusType.SHARED_STACK_NON_RESET:
@@ -64,26 +55,30 @@ func add_stacks(num_stacks: int = 1) -> void:
 				_tracker.add_stacks(num_stacks, reset_stacks)
 		StatusType.SEPARATE_STACK:
 			_build_new_tracker(num_stacks)
+
+
+func _modify_from_action_state() -> void:
+	pass
+
+
+func _modify_action_state() -> void:
+	state.merge(base_stats)
 	
 
 func _build_new_tracker(num_stacks: int) -> StackTracker:
 	var tracker: StackTracker = tracker_packed.instantiate()
 	add_child(tracker)
-	tracker.proc_time = proc_time
-	tracker.expiration_time = duration
+	tracker.proc_time = state.stats.status.proc_time.val()
+	tracker.expiration_time = state.stats.status.duration.val()
 	tracker.add_stacks(num_stacks)
 	tracker.stack_proc.connect(_on_proc)
 	tracker.stack_expire.connect(_on_expiration)
 	return tracker
 
 
-func _update_stack_count() -> void:
-	state.status.stacks = _total_stacks * stack_efficiency
-
-
 func _on_proc(tracker: StackTracker) -> void:
 	proc.emit(self)
-	do_effect(affected_entity)
+	do_effect(state.source)
 
 
 func _on_expiration(tracker: StackTracker) -> void:

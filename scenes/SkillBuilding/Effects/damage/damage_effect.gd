@@ -13,6 +13,5 @@ func do_effect(effect_body: Node2D, state: ActionState) -> void:
 
 
 func modify_from_action_state(state: ActionState) -> void:
-	damage = state.damage.get_damage()
-	damage *= state.status.get_stacks()
+	damage = state.stats.damage.damage.val()
 

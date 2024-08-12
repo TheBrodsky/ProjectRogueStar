@@ -29,6 +29,6 @@ func initialize(state: ActionState) -> void:
 
 func modify_from_state(state: ActionState) -> void:
 	super(state)
-	orbital_speed = state.follower.get_orbit_speed()
-	orbital_distance = state.follower.get_orbit_distance()
-	chases_target = state.follower.does_orbit_chase_target()
+	orbital_speed = state.stats.follower.orbit_speed.val()
+	orbital_distance = state.stats.follower.orbit_distance.val()
+	chases_target = state.stats.follower.does_orbit_chase_target()

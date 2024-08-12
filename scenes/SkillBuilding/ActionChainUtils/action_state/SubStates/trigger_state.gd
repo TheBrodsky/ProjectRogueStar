@@ -10,3 +10,7 @@ static func get_state() -> TriggerState:
 
 func merge(other: TriggerState) -> void:
 	pass
+
+
+func scale(scalar: float) -> void:
+	pass
