@@ -1,13 +1,15 @@
 extends Trigger
 
 
-func _ready() -> void:
-	super()
+
+## Determines whether the connecting node meets the requirements to be able to trigger this Trigger
+static func is_compatible(connecting_node: Node) -> bool:
+	return true
 
 
-func resume() -> void:
-	_is_paused = false
+func _engage_as_root(state: ActionState) -> void:
+	pass
 
 
-func pause() -> void:
-	_is_paused = true
+func _engage_as_link(connecting_node: Node) -> void:
+	pass

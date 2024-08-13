@@ -46,7 +46,7 @@ func _add_new_status(status: Status, effect: Effect, state: ActionState, event_g
 modifiers: Array[QualitativeModifier], triggers: Array[Trigger]) -> void:
 	add_child(status)
 	status.add_to_group(event_group)
-	status.initialize(state, effect)
+	status.initialize(state.clone(), effect)
 	status.expire.connect(_remove_status)
 	_apply_modifiers()
 	_add_triggers(status, state, triggers)
@@ -61,7 +61,7 @@ func _add_triggers(status: Status, state: ActionState, triggers: Array[Trigger])
 		@warning_ignore("unsafe_property_access")
 		var trigger_hook: SupportedTriggers = status.trigger_hook
 		for trigger: Trigger in triggers:
-			trigger_hook.set_trigger(trigger, state)
+			trigger_hook.set_trigger(trigger)
 
 
 func _remove_status(status: Status) -> void:

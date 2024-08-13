@@ -16,5 +16,5 @@ extends Node
 @export var state: ActionStateStats = ActionStateStats.get_state()
 
 
-func modify_state(to_modify: ActionState) -> void:
+func modify_state(to_modify: ActionStateStats) -> void:
 	to_modify.merge(state)

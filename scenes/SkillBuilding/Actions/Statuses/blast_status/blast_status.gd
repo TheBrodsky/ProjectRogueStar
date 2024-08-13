@@ -9,12 +9,12 @@ class_name BlastStatus
 
 func initialize(state: ActionState, effect: Effect) -> void:
 	super(state, effect)
-	OnExpireHook.set_trigger(self, expiration_trigger, state)
-	#supported_triggers.set_trigger(expiration_trigger, self.state)
+	state.stats.status.proc_time = state.stats.status.duration.duplicate()
+	expiration_trigger.engage(self)
 
 
 func _on_expiration(tracker: StackTracker) -> void:
-	expire.emit(self)
+	expire.emit(self, state)
 	_total_stacks -= tracker.stacks
 	tracker.queue_free()
 	_tracker = null

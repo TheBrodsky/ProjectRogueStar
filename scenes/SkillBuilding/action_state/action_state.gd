@@ -12,9 +12,12 @@ extends Node
 ## A blank ActionState is instantiated at the beginning of a chain. See ChainRoot for more info.
 
 
-static func get_state() -> ActionState:
+static func get_state(other: ActionState = null) -> ActionState:
 	var state: ActionState = ActionState.new()
 	state.stats.populate_substats()
+	if other != null:
+		state.owner_type = other.owner_type
+		state.source = other.source
 	return state
 
 
@@ -42,13 +45,6 @@ func merge(other_stats: ActionStateStats) -> ActionState:
 
 func scale(scalar: float) -> ActionState:
 	stats.scale(scalar)
-	return self
-
-
-## Resets stats except owner_type and source
-func reset() -> ActionState:
-	stats = ActionStateStats.get_state()
-	stats.populate_substats()
 	return self
 
 

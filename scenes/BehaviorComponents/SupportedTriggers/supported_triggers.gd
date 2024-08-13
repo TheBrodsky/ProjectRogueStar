@@ -41,44 +41,26 @@ func _ready() -> void:
 		_verify_type_requirements()
 
 
-func set_trigger(trigger: Trigger, state: ActionState) -> void:
+func set_trigger(trigger: Trigger) -> void:
 	if trigger.trigger_type & supported_types:
-		var cloned_trigger: Trigger = _set_trigger_helper(trigger, state)
-		if cloned_trigger.trigger_type & CYCLICAL:
-			pass
-		if cloned_trigger.trigger_type & HIT:
-			OnHitHook.set_trigger(get_parent(), cloned_trigger, state)
-		if cloned_trigger.trigger_type & HIT_RECEIVED:
-			pass
-		if cloned_trigger.trigger_type & KILL:
-			pass
-		if cloned_trigger.trigger_type & DEATH:
-			pass
-		if cloned_trigger.trigger_type & CREATION:
-			pass
-		if cloned_trigger.trigger_type & EXPIRATION:
-			OnExpireHook.set_trigger(get_parent(), cloned_trigger, state)
-		if cloned_trigger.trigger_type & PROC:
-			OnProcHook.set_trigger(get_parent(), cloned_trigger, state)
+		trigger.engage(get_parent())
 	else:
-		set_trigger_on_deferred(trigger, state)
+		set_trigger_on_deferred(trigger)
 
 
-func set_trigger_on_deferred(trigger: Trigger, state: ActionState) -> void:
+func set_trigger_on_deferred(trigger: Trigger) -> void:
 	for i in range(deferred_events.size()):
 		var defer_event: Event = deferred_events[i]
 		var flags: int = deferred_flags[i]
-		if flags & trigger.trigger_type:
-			var cloned_trigger: Trigger = trigger.clone()
-			defer_event.add_child(cloned_trigger)
-			defer_event.find_next_action_nodes([ActionNode.ActionType.TRIGGER]) # TODO: this smells. Events should probably have a method to add a trigger to them.
+		#if flags & trigger.trigger_type:
+			#defer_event.find_next_action_nodes([ActionNode.ActionType.TRIGGER]) # TODO: this smells. Events should probably have a method to add a trigger to them.
 
 
 func _verify_type_requirements() -> void:
 	if supported_types & CYCLICAL:
-		pass
+		assert(OnTimer.is_compatible(get_parent()))
 	if supported_types & HIT:
-		assert(OnHitHook.is_compatible(get_parent()))
+		assert(OnHit.is_compatible(get_parent()))
 	if supported_types & HIT_RECEIVED:
 		pass
 	if supported_types & KILL:
@@ -88,13 +70,6 @@ func _verify_type_requirements() -> void:
 	if supported_types & CREATION:
 		pass
 	if supported_types & EXPIRATION:
-		assert(OnExpireHook.is_compatible(get_parent()))
+		assert(OnExpiration.is_compatible(get_parent()))
 	if supported_types & PROC:
-		assert(OnProcHook.is_compatible(get_parent()))
-
-
-func _set_trigger_helper(trigger: Trigger, state: ActionState) -> Trigger:
-	var cloned_trigger: Trigger = trigger.clone()
-	add_child(cloned_trigger)
-	return cloned_trigger
-	
+		assert(OnProc.is_compatible(get_parent()))

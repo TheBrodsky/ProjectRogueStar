@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ofn4qifpdpi"]
+
+[ext_resource type="Script" path="res://scenes/SkillBuilding/Triggers/on_timer/stateful_timer.gd" id="1_v466c"]
+
+[node name="StatefulTimer" type="Timer"]
+autostart = true
+script = ExtResource("1_v466c")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

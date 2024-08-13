@@ -8,3 +8,8 @@ extends Node
 ## this global signal.
 
 signal enemy_died(enemy: Node2D)
+
+# trigger signals
+signal register_hit(body: Node2D, state: ActionState)
+signal expire(transient: Node, state: ActionState)
+signal proc(procable: Node, state: ActionState)

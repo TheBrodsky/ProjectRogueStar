@@ -1,7 +1,7 @@
 extends Action
 class_name CircleAoe
-signal register_hit(body: Node2D)
-signal expire(transient: Node)
+signal register_hit(body: Node2D, state: ActionState)
+signal expire(transient: Node, state: ActionState)
 
 
 @export_group(Globals.MODIFIABLE_CATEGORY)
@@ -41,7 +41,7 @@ func do_animation() -> void:
 
 
 func on_animation_complete() -> void:
-	expire.emit(self)
+	expire.emit(self, state)
 	queue_free()
 
 
@@ -54,7 +54,7 @@ func _modify_from_action_state() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Hittable") and does_hit(body):
-		register_hit.emit(body)
+		register_hit.emit(body, state)
 		effect.do_effect(body, state)
 	_bodies_hit[body] = null
 

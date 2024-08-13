@@ -1,7 +1,7 @@
 extends Node
 class_name Status
-signal expire(status: Status)
-signal proc(status: Status)
+signal expire(status: Status, state: ActionState)
+signal proc(status: Status, state: ActionState)
 
 
 const tracker_packed: PackedScene = preload("res://scenes/SkillBuilding/Actions/Statuses/StackTracker.tscn")
@@ -77,7 +77,7 @@ func _build_new_tracker(num_stacks: int) -> StackTracker:
 
 
 func _on_proc(tracker: StackTracker) -> void:
-	proc.emit(self)
+	proc.emit(self, state)
 	do_effect(state.source)
 
 
@@ -87,4 +87,4 @@ func _on_expiration(tracker: StackTracker) -> void:
 	_tracker = null
 	
 	if _total_stacks <= 0:
-		expire.emit(self)
+		expire.emit(self, state)

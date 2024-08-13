@@ -60,7 +60,7 @@ func _modify_from_action_state() -> void:
 
 func _set_triggers(triggers: Array[Trigger]) -> void:
 	for trigger: Trigger in triggers:
-		trigger_hook.set_trigger(trigger, state)
+		trigger_hook.set_trigger(trigger)
 
 
 ## Modifies action state IN PLACE

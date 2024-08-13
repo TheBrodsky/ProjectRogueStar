@@ -50,7 +50,7 @@ func initialize(action: PackedScene, effect: Effect, max_entities: int, entity_g
 	self.effect = effect
 	self.max_entities = max_entities
 	self.entity_group_name = entity_group_name
-	self.state = state # state is not duplicated here becaused we dont want to reset the quantative modifiers from Event
+	self.state = state
 	self.modifiers = modifiers
 	self.triggers = triggers
 	_parse_modifiers()
@@ -88,7 +88,7 @@ func _build_action() -> Dictionary:
 		new_action.add_to_group(entity_group_name)
 		assert(new_action is Action or new_action is Enemy) # TODO this should eventually be changed to use typed variables, pending more action types
 		@warning_ignore("unsafe_method_access") # duck-typed method
-		new_action.pre_tree_initialize(state, effect)
+		new_action.pre_tree_initialize(state.clone(), effect)
 		@warning_ignore("unsafe_method_access") # duck-typed method
 		var new_follower: Follower = new_action.set_follower(action_follower)
 		new_follower.rotation = (state.stats.follower.target.get_target(get_tree()) - state.source.global_position).angle()

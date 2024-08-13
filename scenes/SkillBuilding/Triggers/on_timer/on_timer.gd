@@ -2,31 +2,52 @@ extends Trigger
 class_name OnTimer
 
 
-@onready var timer: Timer = $Timer
-
+@export_group(Globals.MODIFIABLE_CATEGORY)
 @export var activations_per_second: float = 10:
 	set(value):
 		activations_per_second = value
-		if timer != null:
-			timer.wait_time = 1.0 / activations_per_second
-			timer.start()
+		_wait_time = 1 / value
+
+var _wait_time: float
+var _root_timer: StatefulTimer
+var _stateful_timer_packed: PackedScene = preload("res://scenes/SkillBuilding/Triggers/on_timer/StatefulTimer.tscn")
 
 
-func _ready() -> void:
-	super()
-	timer.wait_time = 1.0 / activations_per_second
-	timer.start()
+static func is_compatible(connecting_node: Node) -> bool:
+	return true
 
 
-func _on_timer_timeout() -> void:
-	_do_trigger()
-
-
+## Only works as root
 func pause() -> void:
-	_is_paused = true
-	timer.stop()
+	_root_timer.paused = true
 
 
+## Only works as root
 func resume() -> void:
-	_is_paused = false
+	_root_timer.paused = false
+
+
+func on_timeout(state: ActionState) -> void:
+	do_trigger(_build_state_for_trigger(state))
+
+
+func _engage_as_root(state: ActionState) -> void:
+	_root_timer = _build_timer(state)
+	add_child(_root_timer)
+	_root_timer.start()
+
+
+func _engage_as_link(connecting_node: Node) -> void:
+	@warning_ignore("unsafe_property_access")
+	var state: ActionState = connecting_node.state if "state" in connecting_node else ActionState.get_state()
+	var timer: StatefulTimer = _build_timer(state)
+	connecting_node.add_child(timer)
 	timer.start()
+
+
+func _build_timer(state: ActionState) -> StatefulTimer:
+	var timer: StatefulTimer = _stateful_timer_packed.instantiate()
+	timer.wait_time = _wait_time
+	timer.state = state
+	timer.stateful_timeout.connect(on_timeout)
+	return timer

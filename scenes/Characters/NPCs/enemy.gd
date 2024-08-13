@@ -79,7 +79,7 @@ func _modify_from_action_state(state: ActionState) -> void:
 
 func _set_triggers(triggers: Array[Trigger]) -> void:
 	for trigger: Trigger in triggers:
-		trigger_hook.set_trigger(trigger, state)
+		trigger_hook.set_trigger(trigger)
 
 
 func _modify_action_state(state: ActionState) -> void:

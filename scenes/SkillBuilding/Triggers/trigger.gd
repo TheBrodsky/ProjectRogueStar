@@ -1,74 +1,78 @@
 @icon("res://assets/editor_icons/trigger.png")
 class_name Trigger
-extends ActionNode
-signal triggered(origin: Trigger)
+extends Node
 
 
-## Triggers specify when the current "place" in the ActionChain advances to the next node (usually an Event)
+## Triggers represent the "cause" part of the "cause and effect" loop of the ActionChain
+## Triggers listen for something or track a process, the outcome of which is a call to do_trigger()
+## Triggers are stateless; ie they do not store states. They rely on whatever trips the trigger to pass
+## a state in via a signal. The exact nature of that signal contract is different for each Trigger type.
 ##
-## Together with Events, Triggers are the two fundamental building blocks of the ActionChain. See ActionNode for more information.
-## Triggers listen for something or track a process, the outcome of which is a call to _do_trigger(). This also emits triggered.
-##
-## Triggers keep a persistent reference to an action_state at all times, because they may be "active" for more than a single frame.
-## Because Triggers keep a persistent reference of the ActionState, triggers clone the ActionState when running the next node,
-## which prevents nodes later in the chain from making unexpected modifications that propagate up the chain.
+## Triggers can operate as the root of a chain. In this case, it must be specified that it's a root.
 
-@export_group("Base Trigger Properties")
+
+## Determines whether the connecting node meets the requirements to be able to trigger this Trigger
+static func is_compatible(connecting_node: Node) -> bool:
+	return true
+
+
+@export_group(Globals.INSPECTOR_CATEGORY)
+@export_subgroup("Base Trigger Properties")
 # coupled with supported_triggers.gd
 @export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var trigger_type: int = 0
-@export var is_one_shot: bool = false ## one shot triggers will pause after triggering once. Once paused, they will not run until resumed.
 @export var preserves_state: bool = false ## if true, the ActionState is not reset as it passes to the Trigger. Be careful with this, it can be very powerful.
 
-@export_group("Root Trigger Properties")
+@export_subgroup("Root Trigger Properties")
 @export var is_root: bool = false ## If this is the highest trigger node in the chain, this should be true
 @export var source_node: Node2D ## The node that acts as both the chain owner and the source of the chain
 
-var state: ActionState
-var _is_paused: bool = true # all triggers begin disengaged. Either a ChainRoot or preceding Event must engage it.
-
-
-func _enter_tree() -> void:
-	action_type = ActionType.TRIGGER
+var _next_events: Array[Event] = []
 
 
 func _ready() -> void:
-	find_next_action_nodes([ActionType.EVENT])
+	_find_next_events()
 	if is_root:
-		assert(source_node != null)
-		var new_state: ActionState = ActionState.get_state()
-		new_state.set_owner_type_from_node(source_node)
-		new_state.source = source_node
-		_run(new_state)
+		preserves_state = true # no sense duplicating the state if this is the root
+		engage(null)
+
+
+## Performs any necessary setup for the trigger to do its function
+func engage(connecting_node: Node) -> void:
+	if is_root:
+		_engage_as_root(_build_new_state_for_root())
 	else:
-		pause() # non-root triggers go into standby until a parent calls them
+		_engage_as_link(connecting_node)
 
 
-func resume() -> void:
-	_is_paused = false
-
-
-func pause() -> void:
-	_is_paused = true
-
-
-func _run_next() -> void:
-	for child: ActionNode in _next:
-		Logger.log_trace("%s: connecting to node %s" % [get_action_name(), child.get_action_name()])
+func do_trigger(state: ActionState) -> void:
+	for event: Event in _next_events:
 		var new_state: ActionState = state.clone() # Trigger -> Event state duplication
-		child._run(new_state)
-	
-
-func _do_trigger() -> void:
-	if !_is_paused:
-		if is_one_shot:
-			pause()
-		triggered.emit(self)
-		_run_next()
+		event.do_event(new_state)
 
 
-func _run(state: ActionState) -> void:
+func _engage_as_root(state: ActionState) -> void:
+	pass
+
+
+func _engage_as_link(connecting_node: Node) -> void:
+	pass
+
+
+func _find_next_events() -> void:
+	for child in get_children():
+		if child is Event:
+			_next_events.append(child)
+
+
+func _build_new_state_for_root() -> ActionState:
+	assert(source_node != null)
+	var new_state: ActionState = ActionState.get_state()
+	new_state.set_owner_type_from_node(source_node)
+	new_state.source = source_node
+	return new_state
+
+
+func _build_state_for_trigger(state: ActionState) -> ActionState:
 	if not preserves_state:
-		state.reset()
-	super._run(state)
-	self.state = state
-	resume()
+		state = ActionState.get_state(state) # get a clean state with owner and source from passed-in state
+	return state

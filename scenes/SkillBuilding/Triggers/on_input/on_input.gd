@@ -7,9 +7,9 @@ static var InputTriggerButtonInputsLabels: Array[String] = ["automatic", "mouse_
 @export var input_action: InputTriggerButtonInputs
 
 
-func _process(delta: float) -> void:
-	if !_is_paused and Input.is_action_pressed(_get_input_label(input_action)):
-		_do_trigger()
+#func _process(delta: float) -> void:
+	#if !_is_paused and Input.is_action_pressed(_get_input_label(input_action)):
+		#_do_trigger()
 
 
 func _get_input_label(input: InputTriggerButtonInputs) -> String:
