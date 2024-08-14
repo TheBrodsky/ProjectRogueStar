@@ -1,7 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://8b8i2vqopbq0"]
+[gd_scene load_steps=24 format=3 uid="uid://8b8i2vqopbq0"]
 
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Actions/Statuses/blast_status/blast_status.gd" id="1_ygmis"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Effects/debug/debug_effect.gd" id="2_15odw"]
+[ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/SubStates/status_state.gd" id="2_au2u0"]
 [ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://scenes/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="2_dum32"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="2_mqrsd"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/SubStates/damage_state.gd" id="3_5ppcw"]
@@ -9,72 +10,52 @@
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://scenes/SkillBuilding/event/Event.tscn" id="4_28eb6"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/SubStates/entity_state.gd" id="4_682hm"]
 [ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://scenes/SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="5_ph5ij"]
-[ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/SubStates/status_state.gd" id="6_ahg4l"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/Effects/damage/damage_effect.gd" id="6_nvcev"]
 [ext_resource type="PackedScene" uid="uid://cin5tqx275gpg" path="res://scenes/SkillBuilding/Modifiers/QuantitativeModifiers/StatModifier.tscn" id="7_7thog"]
 [ext_resource type="Script" path="res://scenes/SkillBuilding/action_state/action_state_stats.gd" id="9_14xpv"]
 
-[sub_resource type="Resource" id="Resource_46px3"]
+[sub_resource type="Resource" id="Resource_2i5e0"]
+script = ExtResource("2_mqrsd")
+add = 1.5
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_4shu0"]
+script = ExtResource("2_au2u0")
+duration = SubResource("Resource_2i5e0")
+
+[sub_resource type="Resource" id="Resource_34w1c"]
 resource_local_to_scene = true
 script = ExtResource("2_mqrsd")
 add = 1.0
-inc = 1.0
+inc = 0.0
 mult = 1.0
 
-[sub_resource type="Resource" id="Resource_bmul2"]
+[sub_resource type="Resource" id="Resource_ncqkf"]
 resource_local_to_scene = true
 script = ExtResource("3_5ppcw")
-damage = SubResource("Resource_46px3")
+damage = SubResource("Resource_34w1c")
 
-[sub_resource type="Resource" id="Resource_s5xcw"]
+[sub_resource type="Resource" id="Resource_if01h"]
 resource_local_to_scene = true
 script = ExtResource("2_mqrsd")
-add = 50.0
-inc = 1.0
+add = 10.0
+inc = 0.1
 mult = 1.0
 
-[sub_resource type="Resource" id="Resource_rfqn1"]
+[sub_resource type="Resource" id="Resource_gfq41"]
 resource_local_to_scene = true
 script = ExtResource("4_682hm")
-aoe_radius = SubResource("Resource_s5xcw")
+aoe_radius = SubResource("Resource_if01h")
 
-[sub_resource type="Resource" id="Resource_w2x4o"]
-resource_local_to_scene = true
-script = ExtResource("2_mqrsd")
-add = 1.5
-inc = 1.0
-mult = 1.0
-
-[sub_resource type="Resource" id="Resource_q5f08"]
-resource_local_to_scene = true
-script = ExtResource("2_mqrsd")
-add = 0.0
-inc = 1.0
-mult = 1.0
-
-[sub_resource type="Resource" id="Resource_idtlt"]
-resource_local_to_scene = true
-script = ExtResource("2_mqrsd")
-add = 1.5
-inc = 1.0
-mult = 1.0
-
-[sub_resource type="Resource" id="Resource_ubryg"]
-resource_local_to_scene = true
-script = ExtResource("6_ahg4l")
-max_stacks = SubResource("Resource_q5f08")
-proc_time = SubResource("Resource_idtlt")
-duration = SubResource("Resource_w2x4o")
-
-[sub_resource type="Resource" id="Resource_22pua"]
+[sub_resource type="Resource" id="Resource_2l7ox"]
 script = ExtResource("9_14xpv")
 modifies_damage = true
-damage = SubResource("Resource_bmul2")
+damage = SubResource("Resource_ncqkf")
 modifies_entity = true
-entity = SubResource("Resource_rfqn1")
+entity = SubResource("Resource_gfq41")
 modifies_follower = false
-modifies_status = true
-status = SubResource("Resource_ubryg")
+modifies_status = false
 modifies_trigger = false
 
 [sub_resource type="Resource" id="Resource_5ffri"]
@@ -96,8 +77,10 @@ modifies_trigger = false
 script = ExtResource("1_ygmis")
 supported_triggers = NodePath("SupportedTriggers")
 expiration_trigger = NodePath("OnExpiration")
-base_stats = SubResource("Resource_22pua")
+base_stats = SubResource("Resource_4shu0")
+stack_scaling = SubResource("Resource_2l7ox")
 status_type = 1
+has_stack_limit = false
 trigger_hook = NodePath("SupportedTriggers")
 effect = SubResource("Resource_5ffri")
 

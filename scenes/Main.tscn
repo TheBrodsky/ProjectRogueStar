@@ -114,7 +114,7 @@ script = ExtResource("1_t0tca")
 [node name="Player" parent="." instance=ExtResource("3_pusd5")]
 
 [node name="OnTimer" parent="Player" node_paths=PackedStringArray("source_node") instance=ExtResource("4_fxvfb")]
-activations_per_second = 2.0
+activations_per_second = 8.0
 is_root = true
 source_node = NodePath("..")
 

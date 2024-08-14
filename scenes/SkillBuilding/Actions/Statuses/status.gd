@@ -13,7 +13,7 @@ enum StatusType {
 }
 
 @export_group(Globals.INSPECTOR_CATEGORY)
-@export var base_stats: ActionStateStats = ActionStateStats.get_state()
+@export var base_stats: StatusState = StatusState.get_state()
 @export var stack_scaling: ActionStateStats = ActionStateStats.get_state()
 @export var status_type: StatusType
 @export var has_stack_limit: bool = true ## Be careful about no limit or high limits for SEPARATE_STACK type
@@ -27,8 +27,11 @@ var _tracker: StackTracker ## Not used for StatusType.SEPARATE_STACK
 var _total_stacks: int = 0:
 	set(value):
 		_total_stacks = value
+var _scaled_state: ActionState ## the last calculated state scaled to stacks
+var _last_scaled_stacks: int = 0 ## the number of stacks _scaled_state was scaled at
 
 
+#region public methods
 func initialize(state: ActionState, effect: Effect) -> void:
 	self.effect = effect
 	self.state = state.duplicate()
@@ -37,9 +40,8 @@ func initialize(state: ActionState, effect: Effect) -> void:
 
 
 func do_effect(body: Node2D) -> void:
-	var stack_modified_state: ActionState = state.clone().merge(stack_scaling.scale(_total_stacks))
-	effect.modify_from_action_state(stack_modified_state)
-	effect.do_effect(body, stack_modified_state)
+	effect.modify_from_action_state(_get_scaled_state())
+	effect.do_effect(body, _get_scaled_state())
 
 
 func add_stacks(num_stacks: int = 1) -> void:
@@ -55,15 +57,17 @@ func add_stacks(num_stacks: int = 1) -> void:
 				_tracker.add_stacks(num_stacks, reset_stacks)
 		StatusType.SEPARATE_STACK:
 			_build_new_tracker(num_stacks)
+#endregion
 
-
+#region common action methods
 func _modify_from_action_state() -> void:
 	pass
 
 
 func _modify_action_state() -> void:
-	state.merge(base_stats)
-	
+	state.stats.status.merge(base_stats)
+#endregion
+
 
 func _build_new_tracker(num_stacks: int) -> StackTracker:
 	var tracker: StackTracker = tracker_packed.instantiate()
@@ -76,6 +80,14 @@ func _build_new_tracker(num_stacks: int) -> StackTracker:
 	return tracker
 
 
+func _get_scaled_state() -> ActionState:
+	if _scaled_state == null or _total_stacks != _last_scaled_stacks:
+		var unscaled_stats: ActionStateStats = stack_scaling.duplicate(true)
+		_scaled_state = state.clone().merge(unscaled_stats.scale(_total_stacks))
+	return _scaled_state
+
+
+#region signal handlers
 func _on_proc(tracker: StackTracker) -> void:
 	proc.emit(self, state)
 	do_effect(state.source)
@@ -88,3 +100,4 @@ func _on_expiration(tracker: StackTracker) -> void:
 	
 	if _total_stacks <= 0:
 		expire.emit(self, state)
+#endregion

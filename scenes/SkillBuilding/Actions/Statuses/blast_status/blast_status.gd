@@ -14,7 +14,7 @@ func initialize(state: ActionState, effect: Effect) -> void:
 
 
 func _on_expiration(tracker: StackTracker) -> void:
-	expire.emit(self, state)
+	expire.emit(self, _get_scaled_state())
 	_total_stacks -= tracker.stacks
 	tracker.queue_free()
 	_tracker = null

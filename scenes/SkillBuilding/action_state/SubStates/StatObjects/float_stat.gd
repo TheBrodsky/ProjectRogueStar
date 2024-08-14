@@ -9,21 +9,22 @@ static func get_stat() -> FloatStat:
 
 
 @export var add: float = 0
-@export var inc: float = 1
+@export var inc: float = 0
 @export var mult: float = 1
 
 
 func val() -> float:
-	return add * inc * mult
+	return add * (1 + inc) * mult
 
 
 func merge(other: FloatStat) -> void:
-	add += other.add
-	inc += other.inc
-	mult *= other.mult
+	if other != null:
+		add += other.add
+		inc += other.inc
+		mult *= other.mult
 
 
 func scale(scalar: float) -> void:
 	add *= scalar
-	inc = (inc - 1) * scalar
-	mult = (mult - 1) * scalar
+	inc = inc * scalar
+	mult = 1 + (mult - 1) * scalar
