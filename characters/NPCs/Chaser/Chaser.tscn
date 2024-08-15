@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5uxj4w0eay7j"]
+
+[ext_resource type="Script" path="res://characters/NPCs/enemy.gd" id="1_5nlnx"]
+[ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="1_su4im"]
+[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://UI/health_bar/HealthBar.tscn" id="2_d5n4s"]
+[ext_resource type="PackedScene" uid="uid://bj8tshriqiang" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/HomeAt/HomeAt.tscn" id="2_y3q8a"]
+[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://SkillBuilding/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="5_152gj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dedkn"]
+radius = 834.869
+height = 1669.74
+
+[node name="Chaser" type="CharacterBody2D" node_paths=PackedStringArray("trigger_hook")]
+scale = Vector2(0.03, 0.03)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_5nlnx")
+trigger_hook = NodePath("SupportedTriggers")
+default_follower_packed = ExtResource("2_y3q8a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.211765, 0.290196, 1)
+texture = ExtResource("1_su4im")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.05046, 1.09262)
+shape = SubResource("CapsuleShape2D_dedkn")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_d5n4s")]
+offset_left = -800.0
+offset_top = -1300.0
+offset_right = 806.0
+offset_bottom = -1100.0
+max_hp = 100
+
+[node name="SupportedTriggers" parent="." instance=ExtResource("5_152gj")]
+supported_types = 53

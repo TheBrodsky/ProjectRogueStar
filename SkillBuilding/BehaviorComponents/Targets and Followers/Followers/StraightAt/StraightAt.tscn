@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cde10ga5uiu82"]
+
+[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/StraightAt/straight_at.gd" id="1_2b0ah"]
+
+[node name="StraightAt" type="Node2D"]
+script = ExtResource("1_2b0ah")

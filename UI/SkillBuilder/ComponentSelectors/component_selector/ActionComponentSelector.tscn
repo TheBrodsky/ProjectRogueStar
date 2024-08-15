@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctvj004erck63"]
+
+[ext_resource type="Script" path="res://UI/SkillBuilder/ComponentSelectors/component_selector/component_selector.gd" id="1_arxvd"]
+[ext_resource type="Texture2D" uid="uid://cs8hveism00vw" path="res://UI/SkillBuilder/ComponentSelectors/component_selector/pencil.png" id="2_2qrg3"]
+
+[node name="ActionComponentSelector" type="HBoxContainer"]
+offset_right = 167.0
+offset_bottom = 20.0
+script = ExtResource("1_arxvd")
+action_chain_resource_type = null
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+
+[node name="ComponentList" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.75
+text_overrun_behavior = 1
+
+[node name="EditButton" type="TextureButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+texture_normal = ExtResource("2_2qrg3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="item_selected" from="ComponentList" to="." method="_on_component_list_item_selected"]
+[connection signal="pressed" from="EditButton" to="." method="_on_edit_button_pressed"]

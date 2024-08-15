@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="AtReticle" load_steps=2 format=3 uid="uid://8aqxnyqq62om"]
+
+[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Targets/AtReticle/at_reticle.gd" id="1_qunk0"]
+
+[resource]
+script = ExtResource("1_qunk0")

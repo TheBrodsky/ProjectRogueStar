@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c762313cx5xnm"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Triggers/on_hit/on_hit.gd" id="1_qgjcs"]
+
+[node name="OnHit" type="Node2D"]
+script = ExtResource("1_qgjcs")
+trigger_type = 2
+action_name = "OnHit"
+action_type = 1

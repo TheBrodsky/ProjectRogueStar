@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://tc45yqvkffg6"]
-
-[ext_resource type="Script" path="res://scenes/BehaviorComponents/Targets and Followers/Followers/PendulumAt/pendulum_at.gd" id="1_wne0a"]
-
-[node name="PendelumAt" type="Node2D"]
-script = ExtResource("1_wne0a")

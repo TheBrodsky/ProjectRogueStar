@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cin5tqx275gpg"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Modifiers/QuantitativeModifiers/quant_modifier.gd" id="1_e3wtl"]
+
+[node name="StatModifier" type="Node"]
+script = ExtResource("1_e3wtl")

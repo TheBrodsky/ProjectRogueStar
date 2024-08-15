@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dieydw573v1db"]
+
+[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/OrbitAt/orbit_at.gd" id="1_rm6qd"]
+[ext_resource type="Texture2D" uid="uid://xr2dxir45u8p" path="res://assets/basic_bullet.png" id="2_br78i"]
+[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/follower_link.gd" id="2_y66y5"]
+
+[node name="OrbitAt" type="Node2D" node_paths=PackedStringArray("orbitor")]
+script = ExtResource("1_rm6qd")
+orbitor = NodePath("Orbitor")
+
+[node name="Orbitor" type="Node2D" parent="."]
+script = ExtResource("2_y66y5")
+
+[node name="OrbitOrigin" type="Sprite2D" parent="."]
+modulate = Color(0, 0.721569, 0.647059, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_br78i")

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://spx0ijgsiyeq"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Actions/Statuses/stack_tracker.gd" id="1_s4x1p"]
+
+[node name="StackTracker" type="Node" node_paths=PackedStringArray("proc_timer", "expiration_timer")]
+script = ExtResource("1_s4x1p")
+proc_timer = NodePath("ProcTimer")
+expiration_timer = NodePath("ExpirationTimer")
+
+[node name="ProcTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ExpirationTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ProcTimer" to="." method="_on_proc_timer_timeout"]
+[connection signal="timeout" from="ExpirationTimer" to="." method="_on_expiration_timer_timeout"]

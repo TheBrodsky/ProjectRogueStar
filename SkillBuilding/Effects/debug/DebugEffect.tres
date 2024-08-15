@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="DebugEffect" load_steps=2 format=3 uid="uid://oewcs2wqyuuw"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Effects/debug/debug_effect.gd" id="1_e6yft"]
+
+[resource]
+script = ExtResource("1_e6yft")

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://te86bvck7r6x"]
-
-[ext_resource type="Script" path="res://scenes/SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/fire_cone.gd" id="1_iwe6u"]
-
-[node name="Firecone" type="Node"]
-script = ExtResource("1_iwe6u")

@@ -1,0 +1,100 @@
+[gd_scene load_steps=24 format=3 uid="uid://8b8i2vqopbq0"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Actions/Statuses/blast_status/blast_status.gd" id="1_ygmis"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/debug/debug_effect.gd" id="2_15odw"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/status_state.gd" id="2_au2u0"]
+[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://SkillBuilding/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="2_dum32"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="2_mqrsd"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="3_5ppcw"]
+[ext_resource type="PackedScene" uid="uid://cymo1skj4pmaq" path="res://SkillBuilding/Triggers/on_expiration/OnExpiration.tscn" id="3_rxby3"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/event/Event.tscn" id="4_28eb6"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/entity_state.gd" id="4_682hm"]
+[ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="5_ph5ij"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="6_nvcev"]
+[ext_resource type="PackedScene" uid="uid://cin5tqx275gpg" path="res://SkillBuilding/Modifiers/QuantitativeModifiers/StatModifier.tscn" id="7_7thog"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/action_state_stats.gd" id="9_14xpv"]
+
+[sub_resource type="Resource" id="Resource_2i5e0"]
+script = ExtResource("2_mqrsd")
+add = 1.5
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_4shu0"]
+script = ExtResource("2_au2u0")
+duration = SubResource("Resource_2i5e0")
+
+[sub_resource type="Resource" id="Resource_34w1c"]
+resource_local_to_scene = true
+script = ExtResource("2_mqrsd")
+add = 1.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_ncqkf"]
+resource_local_to_scene = true
+script = ExtResource("3_5ppcw")
+damage = SubResource("Resource_34w1c")
+
+[sub_resource type="Resource" id="Resource_if01h"]
+resource_local_to_scene = true
+script = ExtResource("2_mqrsd")
+add = 10.0
+inc = 0.1
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_gfq41"]
+resource_local_to_scene = true
+script = ExtResource("4_682hm")
+aoe_radius = SubResource("Resource_if01h")
+
+[sub_resource type="Resource" id="Resource_2l7ox"]
+script = ExtResource("9_14xpv")
+modifies_damage = true
+damage = SubResource("Resource_ncqkf")
+modifies_entity = true
+entity = SubResource("Resource_gfq41")
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
+[sub_resource type="Resource" id="Resource_5ffri"]
+script = ExtResource("2_15odw")
+
+[sub_resource type="Resource" id="Resource_ywx5v"]
+script = ExtResource("6_nvcev")
+
+[sub_resource type="Resource" id="Resource_tkayv"]
+resource_local_to_scene = true
+script = ExtResource("9_14xpv")
+modifies_damage = false
+modifies_entity = false
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
+[node name="BlastStatus" type="Node" node_paths=PackedStringArray("supported_triggers", "expiration_trigger", "trigger_hook")]
+script = ExtResource("1_ygmis")
+supported_triggers = NodePath("SupportedTriggers")
+expiration_trigger = NodePath("OnExpiration")
+base_stats = SubResource("Resource_4shu0")
+stack_scaling = SubResource("Resource_2l7ox")
+status_type = 1
+has_stack_limit = false
+trigger_hook = NodePath("SupportedTriggers")
+effect = SubResource("Resource_5ffri")
+
+[node name="SupportedTriggers" parent="." instance=ExtResource("2_dum32")]
+supported_types = 193
+deferred_types = 10
+deferred_flags = Array[int]([10])
+
+[node name="OnExpiration" parent="." instance=ExtResource("3_rxby3")]
+preserves_state = true
+
+[node name="Event" parent="OnExpiration" instance=ExtResource("4_28eb6")]
+action = ExtResource("5_ph5ij")
+effect = SubResource("Resource_ywx5v")
+
+[node name="ExplosionStats" parent="OnExpiration/Event" instance=ExtResource("7_7thog")]
+state = SubResource("Resource_tkayv")

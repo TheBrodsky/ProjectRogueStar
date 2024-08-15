@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh4se5knipoka"]
+
+[ext_resource type="PackedScene" uid="uid://ctvj004erck63" path="res://UI/SkillBuilder/ComponentSelectors/component_selector/ActionComponentSelector.tscn" id="1_a2aos"]
+[ext_resource type="Script" path="res://UI/SkillBuilder/ComponentBuilders/root_builder/root_builder.gd" id="1_al2dv"]
+[ext_resource type="PackedScene" uid="uid://fvt4bxdopiix" path="res://UI/SkillBuilder/ComponentSelectors/multicomponent_selector/MulticomponentSelector.tscn" id="3_u77vr"]
+
+[node name="RootSelector" type="VBoxContainer"]
+script = ExtResource("1_al2dv")
+
+[node name="TriggerSelector" parent="." instance=ExtResource("1_a2aos")]
+layout_mode = 2
+action_chain_resource_type = 2
+
+[node name="InputSelector" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InputSelector"]
+layout_mode = 2
+text = "Input"
+
+[node name="OptionButton" type="OptionButton" parent="InputSelector"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuantModSelector" parent="." instance=ExtResource("3_u77vr")]
+layout_mode = 2
+action_chain_resource_type = 3
