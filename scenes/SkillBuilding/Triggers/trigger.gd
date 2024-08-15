@@ -32,6 +32,9 @@ var _next_events: Array[Event] = []
 func _ready() -> void:
 	_find_next_events()
 	if is_root:
+		if source_node == null:
+			assert(get_parent() is Node2D)
+			source_node = get_parent()
 		preserves_state = true # no sense duplicating the state if this is the root
 		engage(null)
 

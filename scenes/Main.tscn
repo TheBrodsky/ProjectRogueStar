@@ -113,10 +113,9 @@ script = ExtResource("1_t0tca")
 
 [node name="Player" parent="." instance=ExtResource("3_pusd5")]
 
-[node name="OnTimer" parent="Player" node_paths=PackedStringArray("source_node") instance=ExtResource("4_fxvfb")]
+[node name="OnTimer" parent="Player" instance=ExtResource("4_fxvfb")]
 activations_per_second = 8.0
 is_root = true
-source_node = NodePath("..")
 
 [node name="Event" parent="Player/OnTimer" instance=ExtResource("11_brn3d")]
 scale = Vector2(41.6667, 41.6667)
