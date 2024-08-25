@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=42 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://UI/reticle/Reticle.tscn" id="2_icas4"]
@@ -7,19 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="PackedScene" uid="uid://dsdyinehxpo5p" path="res://SkillBuilding/Actions/Projectiles/debug_arrow/DebugArrow.tscn" id="6_f13vx"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/ProtoTiles.tscn" id="6_ydiao"]
+[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Targets/AtReticle/at_reticle.gd" id="7_4krft"]
 [ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="7_ebomw"]
 [ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://SkillBuilding/Triggers/on_hit/OnHit.tscn" id="8_j8ra8"]
 [ext_resource type="PackedScene" uid="uid://8b8i2vqopbq0" path="res://SkillBuilding/Actions/Statuses/blast_status/BlastStatus.tscn" id="9_6k78g"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="9_m1uu5"]
 [ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="10_pvlpw"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/event/Event.tscn" id="11_brn3d"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/entity_state.gd" id="12_gf58y"]
 [ext_resource type="PackedScene" uid="uid://drw1uyyrhlus7" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/build_follower/BuildFollower.tscn" id="14_6ujpu"]
 [ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/StraightAt/StraightAt.tscn" id="15_4euk7"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="15_5otsj"]
 [ext_resource type="PackedScene" uid="uid://cin5tqx275gpg" path="res://SkillBuilding/Modifiers/QuantitativeModifiers/StatModifier.tscn" id="15_hjr3a"]
 [ext_resource type="PackedScene" uid="uid://dieydw573v1db" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/OrbitAt/OrbitAt.tscn" id="15_wtxkg"]
 [ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="16_e41qw"]
-[ext_resource type="PackedScene" uid="uid://bycxpvc2oatsp" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/SpiralAt/SpiralAt.tscn" id="16_pftxv"]
 [ext_resource type="Script" path="res://SkillBuilding/action_state/action_state_stats.gd" id="16_pm4wf"]
 [ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://characters/NPCs/spawner/Spawner.tscn" id="17_h3l5w"]
 [ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="17_hmq4m"]
@@ -28,8 +29,8 @@
 [sub_resource type="Resource" id="Resource_dquvo"]
 script = ExtResource("7_ebomw")
 
-[sub_resource type="Resource" id="Resource_hl6vn"]
-script = ExtResource("7_ebomw")
+[sub_resource type="Resource" id="Resource_ehkws"]
+script = ExtResource("7_4krft")
 
 [sub_resource type="Resource" id="Resource_rif8x"]
 resource_local_to_scene = true
@@ -92,7 +93,7 @@ disable_rotation = false
 speed = SubResource("Resource_klrf5")
 aim_deviation = SubResource("Resource_kt2bd")
 group_aim_deviation = SubResource("Resource_imxiy")
-orbit_chases_target = false
+orbit_chases_target = true
 orbit_speed = SubResource("Resource_d550h")
 orbit_distance = SubResource("Resource_m3yuc")
 homing_rate = SubResource("Resource_y56qe")
@@ -108,53 +109,77 @@ follower = SubResource("Resource_utm53")
 modifies_status = false
 modifies_trigger = false
 
+[sub_resource type="Resource" id="Resource_hl6vn"]
+script = ExtResource("7_ebomw")
+
+[sub_resource type="Resource" id="Resource_icb5s"]
+resource_local_to_scene = true
+script = ExtResource("16_e41qw")
+add = 100.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_bfge1"]
+resource_local_to_scene = true
+script = ExtResource("12_gf58y")
+aoe_radius = SubResource("Resource_icb5s")
+
+[sub_resource type="Resource" id="Resource_nyk4r"]
+script = ExtResource("16_pm4wf")
+modifies_damage = false
+modifies_entity = true
+entity = SubResource("Resource_bfge1")
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_t0tca")
 
 [node name="Player" parent="." instance=ExtResource("3_pusd5")]
 
 [node name="OnTimer" parent="Player" instance=ExtResource("4_fxvfb")]
-activations_per_second = 8.0
+activations_per_second = 1.0
 is_root = true
 
 [node name="Event" parent="Player/OnTimer" instance=ExtResource("11_brn3d")]
 scale = Vector2(41.6667, 41.6667)
 action = ExtResource("6_f13vx")
 effect = SubResource("Resource_dquvo")
-
-[node name="OnHit" parent="Player/OnTimer/Event" instance=ExtResource("8_j8ra8")]
-
-[node name="Event" parent="Player/OnTimer/Event/OnHit" instance=ExtResource("11_brn3d")]
-action = ExtResource("9_6k78g")
-is_status_action = true
-
-[node name="OnHit" parent="Player/OnTimer/Event/OnHit/Event" instance=ExtResource("8_j8ra8")]
-
-[node name="Event" parent="Player/OnTimer/Event/OnHit/Event/OnHit" instance=ExtResource("11_brn3d")]
-action = ExtResource("10_pvlpw")
-effect = SubResource("Resource_hl6vn")
+target = SubResource("Resource_ehkws")
 
 [node name="StatModifier" parent="Player/OnTimer/Event" instance=ExtResource("15_hjr3a")]
 state = SubResource("Resource_nqv5o")
 
-[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
-
-[node name="SetActionFollower" parent="PlayerSpawnPoint" instance=ExtResource("15_5otsj")]
-follower = ExtResource("16_pftxv")
-follower_of = null
-container_pos = 1
-disable_rotation = null
-
-[node name="Firecone" parent="PlayerSpawnPoint" instance=ExtResource("9_m1uu5")]
+[node name="Firecone" parent="Player/OnTimer/Event" instance=ExtResource("9_m1uu5")]
 num_actions = 12
 cone_angle = 360.0
-is_even_spread = null
-group_spread = null
-rotation_mode = null
+
+[node name="SetActionFollower" parent="Player/OnTimer/Event" instance=ExtResource("15_5otsj")]
+follower = ExtResource("15_wtxkg")
+container_pos = 1
+
+[node name="OnHit" parent="Player/OnTimer/Event" instance=ExtResource("8_j8ra8")]
+
+[node name="Blast" parent="Player/OnTimer/Event/OnHit" instance=ExtResource("11_brn3d")]
+action = ExtResource("9_6k78g")
+is_status_action = true
+
+[node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 
 [node name="BuildFollower" parent="PlayerSpawnPoint" instance=ExtResource("14_6ujpu")]
 followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")])
 container_pos = 1
+
+[node name="OnHit2" parent="PlayerSpawnPoint" instance=ExtResource("8_j8ra8")]
+scale = Vector2(1, 1)
+
+[node name="AoE" parent="PlayerSpawnPoint/OnHit2" instance=ExtResource("11_brn3d")]
+action = ExtResource("10_pvlpw")
+effect = SubResource("Resource_hl6vn")
+
+[node name="StatModifier" parent="PlayerSpawnPoint/OnHit2/AoE" instance=ExtResource("15_hjr3a")]
+state = SubResource("Resource_nyk4r")
 
 [node name="Reticle" parent="." instance=ExtResource("2_icas4")]
 process_mode = 3

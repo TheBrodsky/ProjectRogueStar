@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dw65dp45o4o4q"]
+
+[ext_resource type="Script" path="res://addons/BrodskysHexMap/demo/demo.gd" id="1_uoflw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r2fu7"]
+radius = 40.0
+
+[node name="DemoMap" type="Node2D"]
+script = ExtResource("1_uoflw")
+
+[node name="Origin" type="Marker2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Origin"]
+shape = SubResource("CircleShape2D_r2fu7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
