@@ -8,13 +8,13 @@ class_name HexLayout
 
 enum Orientation {FLAT, POINTY}
 
-var orient: Orientation
+var orient: HexLayout.Orientation
 var size: Vector2 ## pixel width and height of the hex
 var origin : Vector2 ## pixel coords of the center of the hex
 
 
 ## HexLayout constructor
-static func new_layout(orientation: Orientation, size: Vector2, origin: Vector2) -> HexLayout:
+static func new_layout(orientation: HexLayout.Orientation, size: Vector2, origin: Vector2) -> HexLayout:
 	var layout: HexLayout = HexLayout.new()
 	layout.orient = orientation
 	layout.size = size
@@ -46,7 +46,7 @@ func pixel_to_hex(pos: Vector2) -> Hex:
 
 
 ## Gets the relevant conversion matrix according to the orientation
-func _get_conversion_matrix(orientation: Orientation) -> Transform2D:
+func _get_conversion_matrix(orientation: HexLayout.Orientation) -> Transform2D:
 	if orientation == Orientation.FLAT:
 		return HexOrientation.FLAT_CONVERSION_MAT
 	else:
@@ -72,12 +72,12 @@ func calc_polygon_corners(hex: Hex) -> Array[Vector2]:
 
 
 ## Returns the angle offset (in radians) corresponding to the given corner, beginning at the starting angle and rotation counterclockwise
-func _get_corner_angle(corner: int, orientation: Orientation) -> float:
+func _get_corner_angle(corner: int, orientation: HexLayout.Orientation) -> float:
 	return _get_start_angle(orientation) + (TAU / 6 * corner)
 
 
 ## Gets the relevant starting angle of the 1st corner according to the orientation
-func _get_start_angle(orientation: Orientation) -> float:
+func _get_start_angle(orientation: HexLayout.Orientation) -> float:
 	if orientation == Orientation.FLAT:
 		return HexOrientation.FLAT_START_ANGLE
 	else:
