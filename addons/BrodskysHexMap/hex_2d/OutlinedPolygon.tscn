@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyd7lahh5wa1d"]
+
+[ext_resource type="Script" path="res://addons/BrodskysHexMap/hex_2d/outlined_polygon.gd" id="1_xsj0l"]
+
+[node name="OutlinedPolygon" type="Polygon2D" node_paths=PackedStringArray("outline")]
+position = Vector2(70, 52)
+color = Color(0.470588, 0.266667, 0.643137, 0.741176)
+antialiased = true
+script = ExtResource("1_xsj0l")
+outline = NodePath("Line2D")
+
+[node name="Line2D" type="Line2D" parent="."]
+closed = true
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[connection signal="draw" from="." to="." method="_on_draw"]

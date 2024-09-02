@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw65dp45o4o4q"]
+
+[ext_resource type="PackedScene" uid="uid://dbnydu1fkv4di" path="res://addons/BrodskysHexMap/hex_2d/hex_maps/hexagonal/HexagonalHexMap2D.tscn" id="1_hiy5i"]
+
+[node name="DemoMap" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HexagonalHexMap2d" parent="Camera2D" instance=ExtResource("1_hiy5i")]
+radius = 3
+tile_size = Vector2(50, 50)
