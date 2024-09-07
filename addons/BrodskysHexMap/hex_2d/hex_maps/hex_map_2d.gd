@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name HexMap2D
 
@@ -6,6 +7,10 @@ class_name HexMap2D
 # So this is effectively asking how you want to map the 2 axial values to the 3 possible axes.
 # TL;DR - some maps have 3 different "directions"
 enum PrimaryAxes {QR, QS, RS}
+
+@export var draw_in_editor: bool:
+	set(value):
+		initialize()
 
 @export var tile_size: Vector2 = Vector2(100, 100)
 @export var orientation: HexLayout.Orientation = HexLayout.Orientation.FLAT
@@ -23,6 +28,10 @@ func _populate_map() -> void:
 
 
 func _ready() -> void:
+	initialize()
+
+
+func initialize() -> void:
 	map = HexMapStruct.new()
 	layout = HexLayout.new_layout(orientation, tile_size, Vector2.ZERO)
 	_populate_map()
