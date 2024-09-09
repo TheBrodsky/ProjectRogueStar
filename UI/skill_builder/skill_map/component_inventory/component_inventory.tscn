@@ -1,0 +1,81 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfafsqw7oqyqa"]
+
+[ext_resource type="Script" path="res://addons/BrodskysHexMap/hex_2d/hex_maps/rectangular/rectangular_map_2d.gd" id="1_d5i2d"]
+[ext_resource type="Script" path="res://UI/skill_builder/skill_map/component_inventory/component_inventory.gd" id="1_qr3do"]
+
+[node name="ComponentInventory" type="Panel"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -291.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_qr3do")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -131.0
+offset_right = 1920.0
+offset_bottom = 131.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HexMap2D" type="Node2D" parent="Control"]
+position = Vector2(80, 74.5)
+script = ExtResource("1_d5i2d")
+width = 14
+height = 2
+tile_size = Vector2(75, 75)
+orientation = 1
+
+[node name="OriginHex" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 80.0
+offset_top = 74.5
+offset_right = 80.0
+offset_bottom = 74.5
+
+[node name="AddHexTileButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -73.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Add Hex"
+
+[connection signal="draw" from="Control/HexMap2D/OutlinedPolygon" to="Control/HexMap2D/OutlinedPolygon" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17513" to="Control/HexMap2D/@Polygon2D@17513" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17514" to="Control/HexMap2D/@Polygon2D@17514" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17515" to="Control/HexMap2D/@Polygon2D@17515" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17516" to="Control/HexMap2D/@Polygon2D@17516" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17517" to="Control/HexMap2D/@Polygon2D@17517" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17518" to="Control/HexMap2D/@Polygon2D@17518" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17519" to="Control/HexMap2D/@Polygon2D@17519" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17520" to="Control/HexMap2D/@Polygon2D@17520" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17521" to="Control/HexMap2D/@Polygon2D@17521" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17522" to="Control/HexMap2D/@Polygon2D@17522" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17523" to="Control/HexMap2D/@Polygon2D@17523" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17524" to="Control/HexMap2D/@Polygon2D@17524" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17525" to="Control/HexMap2D/@Polygon2D@17525" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17526" to="Control/HexMap2D/@Polygon2D@17526" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17527" to="Control/HexMap2D/@Polygon2D@17527" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17528" to="Control/HexMap2D/@Polygon2D@17528" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17529" to="Control/HexMap2D/@Polygon2D@17529" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17530" to="Control/HexMap2D/@Polygon2D@17530" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17531" to="Control/HexMap2D/@Polygon2D@17531" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17532" to="Control/HexMap2D/@Polygon2D@17532" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17533" to="Control/HexMap2D/@Polygon2D@17533" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17534" to="Control/HexMap2D/@Polygon2D@17534" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17535" to="Control/HexMap2D/@Polygon2D@17535" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17536" to="Control/HexMap2D/@Polygon2D@17536" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17537" to="Control/HexMap2D/@Polygon2D@17537" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17538" to="Control/HexMap2D/@Polygon2D@17538" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17539" to="Control/HexMap2D/@Polygon2D@17539" method="_on_draw"]
+[connection signal="pressed" from="AddHexTileButton" to="." method="_on_add_hex_tile_button_pressed"]

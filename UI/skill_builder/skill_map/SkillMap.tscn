@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://bepoum8nvi7ei"]
+
+[ext_resource type="Script" path="res://UI/skill_builder/skill_map/map_drag_and_drop.gd" id="1_6mxwb"]
+[ext_resource type="PackedScene" uid="uid://dupeqhbq1urjg" path="res://addons/BrodskysHexMap/hex_2d/hex_maps/triangular/TriangularHexMap2D.tscn" id="1_8ml1q"]
+[ext_resource type="PackedScene" uid="uid://bfafsqw7oqyqa" path="res://UI/skill_builder/skill_map/component_inventory/component_inventory.tscn" id="3_m877b"]
+
+[node name="SkillMap" type="CanvasLayer"]
+
+[node name="MapControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_6mxwb")
+
+[node name="MapCenter" type="Control" parent="MapControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TriangularHexMap2d" parent="MapControl/MapCenter" instance=ExtResource("1_8ml1q")]
+side_length = 3
+tile_size = Vector2(75, 75)
+orientation = 1
+primary_axes = 1
+
+[node name="ComponentInventory" parent="." instance=ExtResource("3_m877b")]
+mouse_filter = 1
+
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/OutlinedPolygon" to="MapControl/MapCenter/TriangularHexMap2d/OutlinedPolygon" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175716" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175716" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175717" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175717" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175718" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175718" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175719" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175719" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175720" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175720" method="_on_draw"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb66xnhlouf23"]
+
+[ext_resource type="Script" path="res://UI/skill_builder/skill_tile/tile_style.gd" id="1_53wea"]
+
+[node name="TileStyle" type="Polygon2D" node_paths=PackedStringArray("area", "outline")]
+position = Vector2(581, 304)
+uv = PackedVector2Array(75, 0, 37.5, 64.95, -37.5, 64.95, -75, 0, -37.5, -64.95, 37.5, -64.95)
+script = ExtResource("1_53wea")
+area = NodePath("Area2D")
+outline = NodePath("Line2D")
+
+[node name="Line2D" type="Line2D" parent="."]
+closed = true
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+
+[connection signal="draw" from="." to="." method="_on_draw"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlopurwdy5fef"]
+
+[ext_resource type="PackedScene" uid="uid://cxynm2lcvu2h5" path="res://UI/skill_builder/skill_tile/sides/TileSide.tscn" id="1_qg786"]
+[ext_resource type="Script" path="res://UI/skill_builder/skill_tile/sides/skill_tile_sides.gd" id="1_rik55"]
+
+[node name="SkillTileSides" type="Node2D" node_paths=PackedStringArray("east", "north_east", "north_west", "west", "south_west", "south_east")]
+script = ExtResource("1_rik55")
+east = NodePath("East")
+north_east = NodePath("NorthEast")
+north_west = NodePath("NorthWest")
+west = NodePath("West")
+south_west = NodePath("SouthWest")
+south_east = NodePath("SouthEast")
+
+[node name="East" parent="." instance=ExtResource("1_qg786")]
+
+[node name="NorthEast" parent="." instance=ExtResource("1_qg786")]
+rotation = -5.75959
+side = 1
+
+[node name="NorthWest" parent="." instance=ExtResource("1_qg786")]
+rotation = -0.523599
+side = 2
+
+[node name="West" parent="." instance=ExtResource("1_qg786")]
+rotation = -1.5708
+side = 3
+
+[node name="SouthWest" parent="." instance=ExtResource("1_qg786")]
+rotation = -2.61799
+side = 4
+
+[node name="SouthEast" parent="." instance=ExtResource("1_qg786")]
+rotation = -3.66519
+side = 5

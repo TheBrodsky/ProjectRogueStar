@@ -172,7 +172,6 @@ followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")
 container_pos = 1
 
 [node name="OnHit2" parent="PlayerSpawnPoint" instance=ExtResource("8_j8ra8")]
-scale = Vector2(1, 1)
 
 [node name="AoE" parent="PlayerSpawnPoint/OnHit2" instance=ExtResource("11_brn3d")]
 action = ExtResource("10_pvlpw")
