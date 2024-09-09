@@ -4,3 +4,5 @@
 
 [node name="HexagonalHexMap2d" type="Node2D"]
 script = ExtResource("1_b8als")
+
+[connection signal="draw" from="OutlinedPolygon" to="OutlinedPolygon" method="_on_draw"]
