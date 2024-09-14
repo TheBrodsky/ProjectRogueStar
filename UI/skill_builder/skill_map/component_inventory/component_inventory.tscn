@@ -51,7 +51,6 @@ grow_horizontal = 0
 text = "Add Hex"
 
 [connection signal="draw" from="Control/HexMap2D/OutlinedPolygon" to="Control/HexMap2D/OutlinedPolygon" method="_on_draw"]
-[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17513" to="Control/HexMap2D/@Polygon2D@17513" method="_on_draw"]
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17514" to="Control/HexMap2D/@Polygon2D@17514" method="_on_draw"]
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17515" to="Control/HexMap2D/@Polygon2D@17515" method="_on_draw"]
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17516" to="Control/HexMap2D/@Polygon2D@17516" method="_on_draw"]
@@ -78,4 +77,5 @@ text = "Add Hex"
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17537" to="Control/HexMap2D/@Polygon2D@17537" method="_on_draw"]
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17538" to="Control/HexMap2D/@Polygon2D@17538" method="_on_draw"]
 [connection signal="draw" from="Control/HexMap2D/@Polygon2D@17539" to="Control/HexMap2D/@Polygon2D@17539" method="_on_draw"]
+[connection signal="draw" from="Control/HexMap2D/@Polygon2D@17540" to="Control/HexMap2D/@Polygon2D@17540" method="_on_draw"]
 [connection signal="pressed" from="AddHexTileButton" to="." method="_on_add_hex_tile_button_pressed"]

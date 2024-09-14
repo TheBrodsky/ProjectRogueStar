@@ -37,8 +37,8 @@ primary_axes = 1
 mouse_filter = 1
 
 [connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/OutlinedPolygon" to="MapControl/MapCenter/TriangularHexMap2d/OutlinedPolygon" method="_on_draw"]
-[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175716" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175716" method="_on_draw"]
-[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175717" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175717" method="_on_draw"]
-[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175718" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175718" method="_on_draw"]
-[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175719" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175719" method="_on_draw"]
-[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175720" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@175720" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110846" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110846" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110847" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110847" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110848" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110848" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110849" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110849" method="_on_draw"]
+[connection signal="draw" from="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110850" to="MapControl/MapCenter/TriangularHexMap2d/@Polygon2D@110850" method="_on_draw"]

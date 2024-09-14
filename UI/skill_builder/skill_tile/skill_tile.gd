@@ -6,14 +6,11 @@ class_name SkillTile
 
 @export_group(Globals.INSPECTOR_CATEGORY)
 @export var polygon: TileStyle
-@export var sides: SkillTileSides
-@export var info_panel: PanelContainer
+
+@onready var sides: SkillTileSides = $SkillTileSides
+@onready var info_panel: Control = $InfoPanel
 
 var hex: Hex
-
-static var counter: int = 0
-var id: int = -1
-@onready var label: Label = $Label
 
 
 func _ready() -> void:
@@ -24,11 +21,6 @@ func _ready() -> void:
 	polygon.area.mouse_entered.connect(_on_mouse_hover)
 	polygon.area.mouse_exited.connect(_on_mouse_exit)
 	info_panel.hide()
-	
-	if id == -1:
-		id = counter
-		counter += 1
-		label.text = "%s" % id
 
 
 #region hover info panel

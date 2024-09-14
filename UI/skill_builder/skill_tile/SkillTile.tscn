@@ -1,45 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://n2ub67g7vlrp"]
+[gd_scene load_steps=5 format=3 uid="uid://n2ub67g7vlrp"]
 
 [ext_resource type="Script" path="res://UI/skill_builder/skill_tile/skill_tile.gd" id="1_qayf7"]
 [ext_resource type="PackedScene" uid="uid://bb66xnhlouf23" path="res://UI/skill_builder/skill_tile/TileStyle.tscn" id="2_abr86"]
 [ext_resource type="PackedScene" uid="uid://dlopurwdy5fef" path="res://UI/skill_builder/skill_tile/sides/SkillTileSides.tscn" id="2_ww1yg"]
-[ext_resource type="Script" path="res://UI/skill_builder/skill_tile/info_panel/info_panel.gd" id="4_i3fsy"]
+[ext_resource type="PackedScene" uid="uid://dffyynpygb0g4" path="res://UI/skill_builder/skill_tile/info_panel/InfoPanel.tscn" id="4_7ljon"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1dht"]
-bg_color = Color(0.160784, 0.160784, 0.160784, 1)
-
-[node name="SkillTile" type="Control" node_paths=PackedStringArray("polygon", "sides", "info_panel")]
+[node name="SkillTile" type="Control" node_paths=PackedStringArray("polygon")]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 mouse_filter = 1
 script = ExtResource("1_qayf7")
 polygon = NodePath("TileStyle")
-sides = NodePath("SkillTileSides")
-info_panel = NodePath("InfoPanel")
 
 [node name="TileStyle" parent="." instance=ExtResource("2_abr86")]
 position = Vector2(0, 0)
 
 [node name="SkillTileSides" parent="." instance=ExtResource("2_ww1yg")]
 
-[node name="InfoPanel" type="PanelContainer" parent="."]
-z_index = 2
+[node name="InfoPanel" parent="." instance=ExtResource("4_7ljon")]
 layout_mode = 0
-offset_left = 99.0
-offset_top = -240.0
-offset_right = 339.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_x1dht")
-script = ExtResource("4_i3fsy")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = -20.0
-offset_top = -11.0
-offset_right = 20.0
-offset_bottom = 12.0
-horizontal_alignment = 1
-
-[connection signal="visibility_changed" from="InfoPanel" to="InfoPanel" method="_on_visibility_changed"]
+offset_right = 240.0
+offset_bottom = 240.0

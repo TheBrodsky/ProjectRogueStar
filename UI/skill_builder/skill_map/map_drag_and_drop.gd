@@ -21,7 +21,7 @@ func _input(event: InputEvent) -> void:
 			_initiate_drag()
 
 
-#region drag and drop\
+#region drag and drop
 func _initiate_drag() -> void:
 	if not get_viewport().gui_is_dragging():
 		var clicked_hex: Hex = hex_map.get_hex_at_pixel(origin.get_local_mouse_position())
