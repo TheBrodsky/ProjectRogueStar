@@ -27,17 +27,20 @@ class_name Event
 
 var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
 var _next_triggers: Array[Trigger] = []
-var _state_transform: ActionStateStats
+var _state_transform: ActionStateStats = null
 
-
-func _ready() -> void:
-	_find_next_triggers()
-	_build_state_transform()
-	if _event_group_name.is_empty():
-		_event_group_name = GroupIdGen.make_group_name()
 
 
 func do_event(state: ActionState) -> void:
+	if _next_triggers.is_empty():
+		_find_next_triggers()
+	
+	if _state_transform == null:
+		_build_state_transform()
+	
+	if _event_group_name.is_empty():
+		_event_group_name = GroupIdGen.make_group_name()
+	
 	state.merge(_state_transform)
 	if is_status_action:
 		_build_status_manager(state)

@@ -30,7 +30,6 @@ var _next_events: Array[Event] = []
 
 
 func _ready() -> void:
-	_find_next_events()
 	if is_root:
 		if source_node == null:
 			assert(get_parent() is Node2D)
@@ -48,6 +47,8 @@ func engage(connecting_node: Node) -> void:
 
 
 func do_trigger(state: ActionState) -> void:
+	if _next_events.is_empty():
+		_find_next_events()
 	for event: Event in _next_events:
 		var new_state: ActionState = state.clone() # Trigger -> Event state duplication
 		event.do_event(new_state)

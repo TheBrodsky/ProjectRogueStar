@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=44 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://UI/reticle/Reticle.tscn" id="2_icas4"]
@@ -10,8 +10,10 @@
 [ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Targets/AtReticle/at_reticle.gd" id="7_4krft"]
 [ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="7_ebomw"]
 [ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://SkillBuilding/Triggers/on_hit/OnHit.tscn" id="8_j8ra8"]
+[ext_resource type="PackedScene" uid="uid://c0237tt2hdt50" path="res://skill_components/AnyNodes/AnyNode.tscn" id="8_rdf7r"]
 [ext_resource type="PackedScene" uid="uid://8b8i2vqopbq0" path="res://SkillBuilding/Actions/Statuses/blast_status/BlastStatus.tscn" id="9_6k78g"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="9_m1uu5"]
+[ext_resource type="Resource" uid="uid://d0leopjfdcxbn" path="res://skill_components/AnyNodes/any_triggers/projectile_triggers.tres" id="9_vp1kb"]
 [ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="10_pvlpw"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/event/Event.tscn" id="11_brn3d"]
 [ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/entity_state.gd" id="12_gf58y"]
@@ -148,6 +150,13 @@ action = ExtResource("6_f13vx")
 effect = SubResource("Resource_dquvo")
 target = SubResource("Resource_ehkws")
 
+[node name="AnyNode" parent="Player/OnTimer/Event" instance=ExtResource("8_rdf7r")]
+possible_nodes = ExtResource("9_vp1kb")
+
+[node name="Blast" parent="Player/OnTimer/Event/AnyNode" instance=ExtResource("11_brn3d")]
+action = ExtResource("9_6k78g")
+is_status_action = true
+
 [node name="StatModifier" parent="Player/OnTimer/Event" instance=ExtResource("15_hjr3a")]
 state = SubResource("Resource_nqv5o")
 
@@ -159,13 +168,9 @@ cone_angle = 360.0
 follower = ExtResource("15_wtxkg")
 container_pos = 1
 
-[node name="OnHit" parent="Player/OnTimer/Event" instance=ExtResource("8_j8ra8")]
-
-[node name="Blast" parent="Player/OnTimer/Event/OnHit" instance=ExtResource("11_brn3d")]
-action = ExtResource("9_6k78g")
-is_status_action = true
-
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
+
+[node name="OnHit" parent="PlayerSpawnPoint" instance=ExtResource("8_j8ra8")]
 
 [node name="BuildFollower" parent="PlayerSpawnPoint" instance=ExtResource("14_6ujpu")]
 followers = Array[PackedScene]([ExtResource("15_wtxkg"), ExtResource("15_4euk7")])
