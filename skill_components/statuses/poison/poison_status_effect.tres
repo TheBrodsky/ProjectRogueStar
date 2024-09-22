@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StatusEffect" load_steps=3 format=3 uid="uid://ci4v60vcbhscu"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/status_effect.gd" id="1_sx2ol"]
+[ext_resource type="Resource" uid="uid://cryx1by1d53du" path="res://skill_components/statuses/poison/poison_status.tres" id="2_wjr5d"]
+
+[resource]
+script = ExtResource("1_sx2ol")
+status = ExtResource("2_wjr5d")

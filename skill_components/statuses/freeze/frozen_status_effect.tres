@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StatusEffect" load_steps=3 format=3 uid="uid://bex33abpfvsll"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/status_effect.gd" id="1_2353w"]
+[ext_resource type="Resource" uid="uid://dd5jm0wykoykj" path="res://skill_components/statuses/freeze/frozen_status.tres" id="2_fxc85"]
+
+[resource]
+script = ExtResource("1_2353w")
+status = ExtResource("2_fxc85")

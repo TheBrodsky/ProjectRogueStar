@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp3i27leftpv"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/stack_tracker/atomic_tracker.gd" id="1_iw3o0"]
+
+[node name="AtomicTracker" type="Node" node_paths=PackedStringArray("proc_timer", "expiration_timer")]
+script = ExtResource("1_iw3o0")
+proc_timer = NodePath("ProcTimer")
+expiration_timer = NodePath("ExpirationTimer")
+
+[node name="ProcTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ExpirationTimer" type="Timer" parent="."]
+autostart = true

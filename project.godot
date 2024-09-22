@@ -21,6 +21,7 @@ Logger="*res://lib/global/Logger.tscn"
 Globals="*res://lib/global/Globals.tscn"
 SignalBus="*res://lib/global/signal_bus/SignalBus.tscn"
 ComponentLoader="*res://lib/global/component_loader/ComponentLoader.tscn"
+GroupRegistry="*res://lib/global/group_registry/GroupRegistry.tscn"
 
 [debug]
 

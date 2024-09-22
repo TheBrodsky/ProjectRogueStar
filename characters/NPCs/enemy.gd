@@ -69,7 +69,6 @@ func set_follower(follower_packed: PackedScene) -> Follower:
 
 
 func do_effect(body: Node2D) -> void:
-	effect.modify_from_action_state(state)
 	effect.do_effect(body, state)
 
 

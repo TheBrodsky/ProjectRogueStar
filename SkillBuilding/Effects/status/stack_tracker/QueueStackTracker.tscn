@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt7g43xndpjon"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/stack_tracker/queue_stack_tracker.gd" id="1_oeaof"]
+
+[node name="QueueStackTracker" type="Node" node_paths=PackedStringArray("proc_timer")]
+script = ExtResource("1_oeaof")
+proc_timer = NodePath("ProcTimer")
+
+[node name="ProcTimer" type="Timer" parent="."]
+autostart = true

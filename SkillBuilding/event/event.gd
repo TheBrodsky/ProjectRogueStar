@@ -19,11 +19,8 @@ class_name Event
 
 @export_group(Globals.INSPECTOR_CATEGORY)
 @export var action: PackedScene ## Determines what the event does/how it behaves. ie "cause"
-@export var is_status_action: bool
 @export var effect: Effect = DebugEffect.new() ## Determines how the action interacts with other things
 @export var target: Target = AtReticle.new()
-
-@onready var GroupIdGen: GroupIdGenerator = $GroupIdGenerator
 
 var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
 var _next_triggers: Array[Trigger] = []
@@ -39,13 +36,10 @@ func do_event(state: ActionState) -> void:
 		_build_state_transform()
 	
 	if _event_group_name.is_empty():
-		_event_group_name = GroupIdGen.make_group_name()
+		_event_group_name = GroupRegistry.get_group_id("event")
 	
 	state.merge(_state_transform)
-	if is_status_action:
-		_build_status_manager(state)
-	else:
-		_build_event_container(state)
+	_build_event_container(state)
 
 
 func _build_event_container(state: ActionState) -> void:
@@ -53,21 +47,6 @@ func _build_event_container(state: ActionState) -> void:
 	get_tree().get_root().add_child(container)
 	container.initialize(action, effect, max_entities, _event_group_name, state, _get_qualt_modifiers(), _next_triggers)
 	container.build()
-
-
-func _build_status_manager(state: ActionState) -> void:
-	var affected_entity: Node2D = state.source
-	var status_manager: StatusManager = null
-	for child in affected_entity.get_children(): # check for existing manager
-		if child is StatusManager:
-			status_manager = child
-			break
-	
-	if status_manager == null: # no existing manager, instantiate new one
-		status_manager = StatusManager.new()
-		affected_entity.add_child(status_manager)
-	
-	status_manager.add_status(action.instantiate() as Status, effect, state, _event_group_name, _get_qualt_modifiers(), _next_triggers)
 
 
 func _get_qualt_modifiers() -> Array[QualitativeModifier]:

@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="ProccableStatus" load_steps=14 format=3 uid="uid://cryx1by1d53du"]
+
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="1_2c144"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/status_state.gd" id="1_wdjrw"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="2_qyyqa"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/variants/proccable_status.gd" id="4_6rmpg"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="5_201rs"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/action_state_stats.gd" id="6_neaum"]
+
+[sub_resource type="Resource" id="Resource_yij6r"]
+script = ExtResource("1_2c144")
+add = 4.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_8winy"]
+script = ExtResource("1_2c144")
+add = 0.1
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_iofl2"]
+script = ExtResource("1_wdjrw")
+ignore_stack_limit = false
+proc_time = SubResource("Resource_8winy")
+duration = SubResource("Resource_yij6r")
+
+[sub_resource type="Resource" id="Resource_xbeju"]
+script = ExtResource("2_qyyqa")
+
+[sub_resource type="Resource" id="Resource_rjs2l"]
+resource_local_to_scene = true
+script = ExtResource("1_2c144")
+add = 0.1
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_d4lla"]
+resource_local_to_scene = true
+script = ExtResource("5_201rs")
+damage = SubResource("Resource_rjs2l")
+
+[sub_resource type="Resource" id="Resource_bpu1m"]
+script = ExtResource("6_neaum")
+modifies_damage = true
+damage = SubResource("Resource_d4lla")
+modifies_entity = false
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
+[resource]
+script = ExtResource("4_6rmpg")
+base_stats = SubResource("Resource_iofl2")
+effect = SubResource("Resource_xbeju")
+stack_type = 3
+stack_scaling = SubResource("Resource_bpu1m")

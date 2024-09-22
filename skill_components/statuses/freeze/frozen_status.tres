@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="StackThresholdStatus" load_steps=13 format=3 uid="uid://dd5jm0wykoykj"]
+
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="1_ed4hv"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/status/variants/stack_threshold_status.gd" id="1_lph2c"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/status_state.gd" id="2_5ir5d"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="4_peil3"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="5_wxk5h"]
+[ext_resource type="Script" path="res://SkillBuilding/action_state/action_state_stats.gd" id="6_iupof"]
+
+[sub_resource type="Resource" id="Resource_jxok7"]
+script = ExtResource("1_ed4hv")
+add = 6.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_fgakg"]
+script = ExtResource("2_5ir5d")
+ignore_stack_limit = true
+duration = SubResource("Resource_jxok7")
+
+[sub_resource type="Resource" id="Resource_wv86o"]
+script = ExtResource("4_peil3")
+
+[sub_resource type="Resource" id="Resource_ps0yi"]
+resource_local_to_scene = true
+script = ExtResource("1_ed4hv")
+add = 25.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_1cc65"]
+resource_local_to_scene = true
+script = ExtResource("5_wxk5h")
+damage = SubResource("Resource_ps0yi")
+
+[sub_resource type="Resource" id="Resource_fx6rj"]
+script = ExtResource("6_iupof")
+modifies_damage = true
+damage = SubResource("Resource_1cc65")
+modifies_entity = false
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
+[resource]
+script = ExtResource("1_lph2c")
+stack_threshold = 5
+threshold_effect = SubResource("Resource_wv86o")
+threshold_effect_stats = SubResource("Resource_fx6rj")
+expire_on_proc = true
+base_stats = SubResource("Resource_fgakg")
+stack_type = 1
