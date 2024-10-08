@@ -16,12 +16,6 @@ static func is_compatible(connecting_node: Node) -> bool:
 	return true
 
 
-@export_group(Globals.INSPECTOR_CATEGORY)
-@export_subgroup("Base Trigger Properties")
-# coupled with supported_triggers.gd
-@export_flags("Cyclical", "Hit", "HitReceived", "Kill", "Death", "Creation", "Expiration", "Proc") var trigger_type: int = 0
-@export var preserves_state: bool = false ## if true, the ActionState is not reset as it passes to the Trigger. Be careful with this, it can be very powerful.
-
 @export_subgroup("Root Trigger Properties")
 @export var is_root: bool = false ## If this is the highest trigger node in the chain, this should be true
 @export var source_node: Node2D ## The node that acts as both the chain owner and the source of the chain
@@ -34,8 +28,16 @@ func _ready() -> void:
 		if source_node == null:
 			assert(get_parent() is Node2D)
 			source_node = get_parent()
-		preserves_state = true # no sense duplicating the state if this is the root
 		engage(null)
+
+
+func do_trigger(state: ActionState) -> void:
+	state = state.get_passed_on_state()
+	if _next_events.is_empty():
+		_find_next_events()
+	for event: Event in _next_events:
+		var new_state: ActionState = state.clone() # Trigger -> Event state duplication
+		event.do_event(new_state)
 
 
 ## Performs any necessary setup for the trigger to do its function
@@ -44,14 +46,6 @@ func engage(connecting_node: Node) -> void:
 		_engage_as_root(_build_new_state_for_root())
 	else:
 		_engage_as_link(connecting_node)
-
-
-func do_trigger(state: ActionState) -> void:
-	if _next_events.is_empty():
-		_find_next_events()
-	for event: Event in _next_events:
-		var new_state: ActionState = state.clone() # Trigger -> Event state duplication
-		event.do_event(new_state)
 
 
 func _engage_as_root(state: ActionState) -> void:
@@ -74,9 +68,3 @@ func _build_new_state_for_root() -> ActionState:
 	new_state.set_owner_type_from_node(source_node)
 	new_state.source = source_node
 	return new_state
-
-
-func _build_state_for_trigger(state: ActionState) -> ActionState:
-	if not preserves_state:
-		state = ActionState.get_state(state) # get a clean state with owner and source from passed-in state
-	return state

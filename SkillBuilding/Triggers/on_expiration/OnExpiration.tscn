@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cymo1skj4pmaq"]
-
-[ext_resource type="Script" path="res://SkillBuilding/Triggers/on_expiration/on_expiration.gd" id="1_civfd"]
-
-[node name="OnExpiration" type="Node"]
-script = ExtResource("1_civfd")
-trigger_type = 64

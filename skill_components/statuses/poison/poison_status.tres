@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ProccableStatus" load_steps=14 format=3 uid="uid://cryx1by1d53du"]
 
-[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/StatObjects/float_stat.gd" id="1_2c144"]
-[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/status_state.gd" id="1_wdjrw"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/StatObjects/float_stat.gd" id="1_2c144"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/status_state.gd" id="1_wdjrw"]
 [ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="2_qyyqa"]
 [ext_resource type="Script" path="res://SkillBuilding/Effects/status/variants/proccable_status.gd" id="4_6rmpg"]
-[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="5_201rs"]
-[ext_resource type="Script" path="res://SkillBuilding/action_state/action_state_stats.gd" id="6_neaum"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/damage_state.gd" id="5_201rs"]
+[ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="6_neaum"]
 
 [sub_resource type="Resource" id="Resource_yij6r"]
 script = ExtResource("1_2c144")

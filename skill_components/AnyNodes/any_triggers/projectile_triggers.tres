@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="AnyNodeList" load_steps=3 format=3 uid="uid://d0leopjfdcxbn"]
-
-[ext_resource type="Script" path="res://skill_components/AnyNodes/any_node_list.gd" id="1_7ux1e"]
-[ext_resource type="PackedScene" uid="uid://c762313cx5xnm" path="res://SkillBuilding/Triggers/on_hit/OnHit.tscn" id="1_qr48m"]
-
-[resource]
-script = ExtResource("1_7ux1e")
-node_list = Array[PackedScene]([ExtResource("1_qr48m")])

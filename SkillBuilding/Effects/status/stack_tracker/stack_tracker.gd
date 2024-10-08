@@ -4,12 +4,18 @@ signal proc(tracker: StackTracker)
 signal expire(tracker: StackTracker)
 
 
+## StackTrackers have all the instance-related logic for handling statuses.
+## A StackTracker is status-agnotistic, since the exact behavior of a status effect
+## is largely unrelated to the logic of tracking the duration, stacks, and proccing of a status.
+
+
 @export var proc_timer: Timer
 @export var expiration_timer: Timer
 
 var stacks: int = 0
 var state: ActionState
 var affected_entity: Node2D
+var triggers: Array[Trigger] = [] # statuses pass triggers on to their effect
 
 var _max_stacks: int
 var _ignore_stack_limit: bool
@@ -43,6 +49,7 @@ func _process(delta: float) -> void:
 
 func initialize(state: ActionState, num_stacks: int, affected_entity: Node2D) -> void:
 	self.state = state
+	self.state.source = affected_entity
 	self.affected_entity = affected_entity
 	_update_properties_from_state(state)
 	_add_stacks(num_stacks)
@@ -59,6 +66,12 @@ func update(new_state: ActionState, num_stacks: int, reset_expiration: bool) -> 
 func force_expire() -> void:
 	queue_free()
 	expire.emit(self)
+
+
+func add_triggers(triggers: Array[Trigger]) -> void:
+	for trigger in triggers:
+		trigger.engage(self)
+	self.triggers.append_array(triggers)
 
 
 ## Adds stacks to the tracker, respecting stack limit. Returns the amount of stacks added, after limit considerations.
@@ -94,4 +107,3 @@ func _on_expiration_timer_timeout() -> void:
 		proc.emit(self)
 	queue_free()
 	expire.emit(self)
-	

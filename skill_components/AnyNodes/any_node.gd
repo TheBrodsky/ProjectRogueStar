@@ -1,6 +1,12 @@
 extends Node
 
 
+## AnyNode is a placeholder node that can be put in a scene and, upon scene instantiation,
+## it will replace itself with a random node from its list. This has a MAJOR caveat:
+## _enter_tree or _ready logic that depends on the node in AnyNode's place may
+## need to be moved to some place that get's called after AnyNode swaps out.
+
+
 @export var possible_nodes: AnyNodeList
 
 

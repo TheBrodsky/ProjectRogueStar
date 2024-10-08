@@ -13,7 +13,7 @@ class_name EventContainer
 
 #region properties
 # fundamental event objects
-var action: PackedScene
+var action_entity_packed: PackedScene
 var effect: Effect
 var state: ActionState
 var triggers: Array[Trigger]
@@ -34,8 +34,10 @@ var modifiers: Array[QualitativeModifier]
 var container_modifiers: Array[ContainerModifier] = []
 var action_modifiers: Array[ActionModifier] = []
 
-const _ACTION_KEY: String = "action"
-const _FOLLWER_KEY: String = "follower"
+const _ACTION_ENTITY_KEY: String = "action_entity"
+const _ACTION_INTERFACE_KEY: String = "i_action"
+const _FOLLOWER_KEY: String = "follower"
+const _REACHED_ENTITY_LIMIT_KEY: String = "reached_entity_limit" 
 #endregion
 
 
@@ -44,9 +46,9 @@ func _process(delta: float) -> void:
 		queue_free()
 
 
-func initialize(action: PackedScene, effect: Effect, max_entities: int, entity_group_name: String, 
+func initialize(action_entity_packed: PackedScene, effect: Effect, max_entities: int, entity_group_name: String, 
 	state: ActionState, modifiers: Array[QualitativeModifier], triggers: Array[Trigger]) -> void:
-	self.action = action
+	self.action_entity_packed = action_entity_packed
 	self.effect = effect
 	self.max_entities = max_entities
 	self.entity_group_name = entity_group_name
@@ -62,38 +64,48 @@ func build() -> void:
 	for i: int in num_actions:
 		# get action and follower
 		var action_dict: Dictionary = _build_action()
-		var new_action: Node2D = action_dict[_ACTION_KEY]
-		var new_follower: Follower = action_dict[_FOLLWER_KEY]
-		if new_action == null: # null new_action means we're at entity limit, so we break
+		if action_dict[_REACHED_ENTITY_LIMIT_KEY] == true:
 			break
-		add_child(new_follower)
+		
+		var action_entity: Node2D = action_dict[_ACTION_ENTITY_KEY]
+		var action_interface: ActionInterface = action_dict[_ACTION_INTERFACE_KEY]
+		var follower: Follower = action_dict[_FOLLOWER_KEY]
+		add_child(follower)
 		
 		# perform per-action modifications
-		_modify_action_from_container_mods(new_action, new_follower, i)
-		_modify_action_from_action_mods(new_action)
+		_modify_action_from_container_mods(action_entity, follower, i)
+		_modify_action_from_action_mods(action_entity)
 		@warning_ignore("unsafe_method_access")
-		new_action.post_tree_initialize(triggers)
+		action_interface.post_tree_initialize(triggers)
 	_modify_build()
 
 
 func _build_action() -> Dictionary:
-	var return_dict: Dictionary = {_ACTION_KEY : null, _FOLLWER_KEY : null}
+	var return_dict: Dictionary = {
+		_REACHED_ENTITY_LIMIT_KEY : false, 
+		_ACTION_ENTITY_KEY : null, 
+		_ACTION_INTERFACE_KEY : null, 
+		_FOLLOWER_KEY : null}
 	
 	# check if max entities hit
 	if max_entities > -1 and get_tree().get_nodes_in_group(entity_group_name).size() >= max_entities: # check 
 		Logger.log_debug("Event hit maximum entities")
+		return_dict[_REACHED_ENTITY_LIMIT_KEY] = true
 	else:
-		# create action
-		var new_action: Node2D = action.instantiate()
-		new_action.add_to_group(entity_group_name)
-		assert(new_action is Action or new_action is Enemy) # TODO this should eventually be changed to use typed variables, pending more action types
-		@warning_ignore("unsafe_method_access") # duck-typed method
-		new_action.pre_tree_initialize(state.clone(), effect)
-		@warning_ignore("unsafe_method_access") # duck-typed method
-		var new_follower: Follower = new_action.set_follower(action_follower)
+		# create action entity
+		var action_entity: Node2D = action_entity_packed.instantiate()
+		action_entity.add_to_group(entity_group_name)
+		return_dict[_ACTION_ENTITY_KEY] = action_entity
+		
+		# do action initialization
+		var action_component: ActionInterface = _get_action(action_entity)
+		action_component.pre_tree_initialize(state.clone(), effect)
+		return_dict[_ACTION_INTERFACE_KEY] = action_component
+		
+		# do follower initialization
+		var new_follower: Follower = action_component.set_follower(action_follower, state, action_entity)
 		new_follower.rotation = (state.stats.follower.target.get_target(get_tree()) - state.source.global_position).angle()
-		return_dict[_ACTION_KEY] = new_action
-		return_dict[_FOLLWER_KEY] = new_follower
+		return_dict[_FOLLOWER_KEY] = new_follower
 
 	return return_dict
 
@@ -159,3 +171,13 @@ func _modify_build() -> void:
 
 func _should_exist() -> bool:
 	return get_child_count() == 0
+
+
+func _get_action(action_entity: Node2D) -> ActionInterface:
+	var interface: ActionInterface = null
+	for child in action_entity.get_children():
+		if child is ActionInterface:
+			interface = child
+			break
+	assert(interface != null, "All entities used in the action chain MUST implement the ActionInterface")
+	return interface

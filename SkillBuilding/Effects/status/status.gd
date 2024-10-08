@@ -2,6 +2,13 @@ extends Resource
 class_name Status
 
 
+## A Status is a non-instantiable reference for the behavior of a status effect.
+## Any instance-related behavior, such as duration and proccing, is deferred to StackTrackers.
+## The Status class itself defines what type of StackTracker will be used and
+## any other specific behavior to the status. In many cases, this is as simple
+## as choosing a Status class or subclass, tweaking variables and base stats, and adding an effect.
+
+
 const atomic_tracker_packed: PackedScene = preload("res://SkillBuilding/Effects/status/stack_tracker/AtomicTracker.tscn")
 const tracker_packed: PackedScene = preload("res://SkillBuilding/Effects/status/stack_tracker/StackTracker.tscn")
 const queue_tracker_packed: PackedScene = preload("res://SkillBuilding/Effects/status/stack_tracker/QueueStackTracker.tscn")
@@ -19,18 +26,23 @@ enum StackingType {
 @export var stack_scaling: ActionStateStats = ActionStateStats.get_state()
 
 
-func build_new_tracker(state: ActionState, num_stacks: int, affected_entity: Node2D) -> StackTracker:
+func build_new_tracker(state: ActionState, affected_entity: Node2D) -> StackTracker:
 	var merged_state: ActionState = _get_modified_base_stats(state)
 	var tracker: StackTracker = _get_tracker_type()
-	tracker.initialize(merged_state, num_stacks, affected_entity)
+	tracker.initialize(merged_state, _get_stacks_added(state), affected_entity)
 	tracker.expire.connect(_on_expiration)
 	return tracker
 
 
-func update_tracker(tracker: StackTracker, state: ActionState, num_stacks: int) -> void:
+func update_tracker(tracker: StackTracker, state: ActionState) -> void:
 	var merged_state: ActionState = _get_modified_base_stats(state)
 	var reset_expiration_timer: bool = stack_type == StackingType.SHARED_STACK
-	tracker.update(merged_state, num_stacks, reset_expiration_timer)
+	tracker.update(merged_state, _get_stacks_added(state), reset_expiration_timer)
+
+
+func do_effect(effect: Effect, tracker: StackTracker) -> void:
+	var scaled_state: ActionState = _get_scaled_tracker_state(tracker)
+	effect.do_effect(tracker.affected_entity, scaled_state, tracker.triggers)
 
 
 func _get_modified_base_stats(state: ActionState) -> ActionState:
@@ -59,14 +71,9 @@ func _get_tracker_type() -> StackTracker:
 			return tracker_packed.instantiate()
 
 
+func _get_stacks_added(state: ActionState) -> int:
+	return 1 + state.stats.status.bonus_stacks_applied.val()
+
+
 func _on_expiration(tracker: StackTracker) -> void:
 	pass
-
-
-
-
-
-
-
-
-

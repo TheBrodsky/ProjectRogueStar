@@ -8,21 +8,21 @@ class_name StackThresholdStatus
 @export var expire_on_proc: bool = true
 
 
-func build_new_tracker(state: ActionState, num_stacks: int, affected_entity: Node2D) -> StackTracker:
-	var tracker: StackTracker = super(state, num_stacks, affected_entity)
+func build_new_tracker(state: ActionState, affected_entity: Node2D) -> StackTracker:
+	var tracker: StackTracker = super(state, affected_entity)
 	_on_stack_added(tracker)
 	return tracker
 
 
-func update_tracker(tracker: StackTracker, state: ActionState, num_stacks: int) -> void:
-	super(tracker, state, num_stacks)
+func update_tracker(tracker: StackTracker, state: ActionState) -> void:
+	super(tracker, state)
 	_on_stack_added(tracker)
 
 
 func _on_stack_added(tracker: StackTracker) -> void:
 	if tracker.stacks >= stack_threshold:
 		tracker.stacks = stack_threshold
-		threshold_effect.do_effect(tracker.affected_entity, _get_scaled_tracker_state(tracker))
+		do_effect(threshold_effect, tracker)
 		tracker.force_expire()
 
 

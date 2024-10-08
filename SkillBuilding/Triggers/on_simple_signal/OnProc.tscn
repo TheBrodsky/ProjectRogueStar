@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhhyiyx3bnuu0"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Triggers/on_simple_signal/on_simple_signal.gd" id="1_xxcsh"]
+
+[node name="OnProc" type="Node"]
+script = ExtResource("1_xxcsh")
+signal_name = "proc"

@@ -1,20 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsdyinehxpo5p"]
+[gd_scene load_steps=7 format=3 uid="uid://dsdyinehxpo5p"]
 
 [ext_resource type="Script" path="res://SkillBuilding/Actions/Projectiles/projectile.gd" id="1_urs01"]
-[ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/StraightAt/StraightAt.tscn" id="2_dx2jh"]
+[ext_resource type="PackedScene" uid="uid://da0ftmpbs66oa" path="res://SkillBuilding/Actions/IAction.tscn" id="2_cdy7n"]
 [ext_resource type="Texture2D" uid="uid://b3v5pmgs25b4a" path="res://assets/debug arrow.png" id="2_wxyuv"]
-[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://SkillBuilding/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="3_2ss6k"]
+[ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="3_rxkwn"]
+
+[sub_resource type="Resource" id="Resource_wun31"]
+script = ExtResource("3_rxkwn")
+modifies_damage = false
+modifies_entity = false
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ayb4j"]
 radius = 50.0899
 
-[node name="Projectile" type="Node2D" node_paths=PackedStringArray("area", "trigger_hook") groups=["projectile"]]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("iaction", "area") groups=["projectile"]]
 z_index = -1
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_urs01")
+iaction = NodePath("IAction")
 area = NodePath("Area2D")
-trigger_hook = NodePath("SupportedTriggers")
-default_follower_packed = ExtResource("2_dx2jh")
+
+[node name="IAction" parent="." instance=ExtResource("2_cdy7n")]
+base_stats = SubResource("Resource_wun31")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -29,9 +39,6 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_ayb4j")
-
-[node name="SupportedTriggers" parent="." instance=ExtResource("3_2ss6k")]
-supported_types = 43
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -27,10 +27,6 @@ func resume() -> void:
 	_root_timer.paused = false
 
 
-func on_timeout(state: ActionState) -> void:
-	do_trigger(_build_state_for_trigger(state))
-
-
 func _engage_as_root(state: ActionState) -> void:
 	_root_timer = _build_timer(state)
 	add_child(_root_timer)
@@ -49,5 +45,5 @@ func _build_timer(state: ActionState) -> StatefulTimer:
 	var timer: StatefulTimer = _stateful_timer_packed.instantiate()
 	timer.wait_time = _wait_time
 	timer.state = state
-	timer.stateful_timeout.connect(on_timeout)
+	timer.stateful_timeout.connect(do_trigger)
 	return timer

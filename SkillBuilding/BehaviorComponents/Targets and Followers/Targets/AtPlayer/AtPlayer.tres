@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="AtPlayer" load_steps=2 format=3 uid="uid://cb3gu77yyavu7"]
-
-[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Targets/AtPlayer/at_player.gd" id="1_mwbtp"]
-
-[resource]
-script = ExtResource("1_mwbtp")

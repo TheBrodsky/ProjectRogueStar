@@ -27,7 +27,8 @@ func modify_initialization(state: ActionState, container: EventContainer) -> voi
 
 
 func modify_action(state: ActionState, container: EventContainer, action: Node2D, action_follower: Follower, action_index: int) -> void:
-	_rotate_action(container, action_follower, action_index)
+	if action_follower != null:
+		_rotate_action(container, action_follower, action_index)
 
 
 func modify_build(state: ActionState, container: EventContainer) -> void:

@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://b3v5pmgs25b4a" path="res://assets/debug arrow.png" id="2_4d5kx"]
 [ext_resource type="Script" path="res://scenes/testing_script.gd" id="3_wpi8n"]
-[ext_resource type="PackedScene" uid="uid://dhw1cnokhbtv6" path="res://SkillBuilding/action_state/ActionState.tscn" id="4_0why4"]
+[ext_resource type="PackedScene" uid="uid://dhw1cnokhbtv6" path="res://SkillBuilding/States/ActionState.tscn" id="4_0why4"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://UI/reticle/Reticle.tscn" id="4_bs7lb"]
-[ext_resource type="Script" path="res://SkillBuilding/action_state/SubStates/damage_state.gd" id="5_5bi57"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/damage_state.gd" id="5_5bi57"]
 
 [sub_resource type="Resource" id="Resource_c163t"]
 resource_local_to_scene = true

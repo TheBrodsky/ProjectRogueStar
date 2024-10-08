@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://blfmygvfblap4"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Triggers/on_simple_signal/on_simple_signal.gd" id="1_yrv8p"]
+
+[node name="OnExpire" type="Node"]
+script = ExtResource("1_yrv8p")
+signal_name = "expire"

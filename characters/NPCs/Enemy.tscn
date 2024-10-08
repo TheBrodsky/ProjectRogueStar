@@ -1,20 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkvyfec6n64gc"]
+[gd_scene load_steps=5 format=3 uid="uid://bkvyfec6n64gc"]
 
 [ext_resource type="Script" path="res://characters/NPCs/enemy.gd" id="1_0qba5"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="2_0mieg"]
 [ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://UI/health_bar/HealthBar.tscn" id="3_eearr"]
-[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://SkillBuilding/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="4_o6god"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03wld"]
 radius = 834.869
 height = 1669.74
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("trigger_hook") groups=["Enemy", "Hittable"]]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy", "Hittable"]]
 scale = Vector2(0.03, 0.03)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_0qba5")
-trigger_hook = NodePath("SupportedTriggers")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.211765, 0.290196, 1)
@@ -29,8 +27,5 @@ offset_left = -800.0
 offset_top = -1300.0
 offset_right = 806.0
 offset_bottom = -1100.0
-
-[node name="SupportedTriggers" parent="." instance=ExtResource("4_o6god")]
-supported_types = 53
 
 [connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]

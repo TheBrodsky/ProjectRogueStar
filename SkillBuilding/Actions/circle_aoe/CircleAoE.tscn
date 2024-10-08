@@ -1,17 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3j30vxjap476"]
+[gd_scene load_steps=11 format=3 uid="uid://b3j30vxjap476"]
 
 [ext_resource type="Script" path="res://SkillBuilding/Actions/circle_aoe/circle_aoe.gd" id="1_87x4x"]
+[ext_resource type="PackedScene" uid="uid://da0ftmpbs66oa" path="res://SkillBuilding/Actions/IAction.tscn" id="2_83cmh"]
 [ext_resource type="Texture2D" uid="uid://bg17rucmyeo11" path="res://assets/aoe circle.png" id="2_vgd2d"]
-[ext_resource type="PackedScene" uid="uid://bf0j2vwxdjiju" path="res://SkillBuilding/BehaviorComponents/SupportedTriggers/SupportedTriggers.tscn" id="3_418ny"]
+[ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="3_38cyy"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/StatObjects/float_stat.gd" id="3_fyrsd"]
+[ext_resource type="Script" path="res://SkillBuilding/States/SubStates/entity_state.gd" id="4_a611l"]
+
+[sub_resource type="Resource" id="Resource_utsg8"]
+resource_local_to_scene = true
+script = ExtResource("3_fyrsd")
+add = 100.0
+inc = 0.0
+mult = 1.0
+
+[sub_resource type="Resource" id="Resource_es6cg"]
+resource_local_to_scene = true
+script = ExtResource("4_a611l")
+aoe_radius = SubResource("Resource_utsg8")
+
+[sub_resource type="Resource" id="Resource_qxucw"]
+script = ExtResource("3_38cyy")
+modifies_damage = false
+modifies_entity = true
+entity = SubResource("Resource_es6cg")
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d0yo"]
 resource_local_to_scene = true
 
-[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node", "trigger_hook")]
+[node name="CircleAoE" type="Node2D" node_paths=PackedStringArray("area_node")]
 script = ExtResource("1_87x4x")
-area_node = NodePath("Area2D")
-trigger_hook = NodePath("SupportedTriggers")
+area_node = NodePath("")
 metadata/_edit_group_ = true
+
+[node name="IAction" parent="." instance=ExtResource("2_83cmh")]
+base_stats = SubResource("Resource_qxucw")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -23,8 +49,5 @@ shape = SubResource("CircleShape2D_5d0yo")
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture_filter = 1
 texture = ExtResource("2_vgd2d")
-
-[node name="SupportedTriggers" parent="." instance=ExtResource("3_418ny")]
-supported_types = 106
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

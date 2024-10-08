@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://characters/NPCs/spawner/spawner.gd" id="1_48cu5"]
 [ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://SkillBuilding/Triggers/on_timer/OnTimer.tscn" id="2_siasl"]
-[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/event/Event.tscn" id="3_fa0ee"]
+[ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/Event/Event.tscn" id="3_fa0ee"]
 [ext_resource type="PackedScene" uid="uid://bkvyfec6n64gc" path="res://characters/NPCs/Enemy.tscn" id="5_w6rpg"]
-[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Targets/AtPlayer/at_player.gd" id="6_k3qkw"]
+[ext_resource type="Script" path="res://SkillBuilding/Movement/Targets/AtPlayer/at_player.gd" id="6_k3qkw"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="6_m5gdy"]
 [ext_resource type="PackedScene" uid="uid://diklof3b63apa" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/set_follower/SetFollower.tscn" id="7_qqvb0"]
-[ext_resource type="PackedScene" uid="uid://6u7hhe25e7kh" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/StaticFollower.tscn" id="8_ba1jc"]
+[ext_resource type="PackedScene" uid="uid://6u7hhe25e7kh" path="res://SkillBuilding/Movement/Followers/StaticFollower.tscn" id="8_ba1jc"]
 
 [sub_resource type="Resource" id="Resource_pmoxv"]
 script = ExtResource("6_k3qkw")
@@ -22,10 +22,9 @@ firecone_mod = NodePath("OnTimer/Event/Firecone")
 
 [node name="OnTimer" parent="." node_paths=PackedStringArray("source_node") instance=ExtResource("2_siasl")]
 is_root = true
-source_node = NodePath("..")
+source_node = NodePath("")
 
 [node name="Event" parent="OnTimer" instance=ExtResource("3_fa0ee")]
-action = ExtResource("5_w6rpg")
 target = SubResource("Resource_pmoxv")
 
 [node name="Firecone" parent="OnTimer/Event" instance=ExtResource("6_m5gdy")]

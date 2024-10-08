@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyhdooaplg51b"]
-
-[ext_resource type="Script" path="res://SkillBuilding/Triggers/on_proc/on_proc.gd" id="1_26lpb"]
-
-[node name="OnProc" type="Node"]
-script = ExtResource("1_26lpb")
-trigger_type = 128

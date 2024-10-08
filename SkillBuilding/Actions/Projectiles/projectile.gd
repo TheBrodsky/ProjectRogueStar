@@ -1,16 +1,15 @@
-extends Action
+extends Node2D
 class_name Projectile
 signal register_hit(body: Node2D, state: ActionState)
 
 
 @export_group(Globals.INSPECTOR_CATEGORY)
+@export var iaction: ActionInterface
 @export var area: Area2D
 
 
-func _modify_from_action_state() -> void:
-	var collision_masks: Array[int] = state.get_effect_collision()
-	area.collision_layer |= collision_masks[0]
-	area.collision_mask |= collision_masks[1]
+func _ready() -> void:
+	iaction.set_collision(area)
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -20,6 +19,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Hittable"):
-		register_hit.emit(body, state)
-		effect.do_effect(body, state)
+		iaction.signaler.register_hit.emit(iaction.state)
+		iaction.do_effect(body)
 	queue_free()

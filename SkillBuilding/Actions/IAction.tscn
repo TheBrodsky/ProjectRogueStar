@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://da0ftmpbs66oa"]
+
+[ext_resource type="Script" path="res://SkillBuilding/Actions/action_interface.gd" id="1_pflgj"]
+
+[node name="IAction" type="Node"]
+script = ExtResource("1_pflgj")

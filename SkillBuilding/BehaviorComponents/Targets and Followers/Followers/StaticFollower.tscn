@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://6u7hhe25e7kh"]
-
-[ext_resource type="Script" path="res://SkillBuilding/BehaviorComponents/Targets and Followers/Followers/static_follower.gd" id="1_xtp1b"]
-
-[node name="StaticFollower" type="Node2D"]
-script = ExtResource("1_xtp1b")

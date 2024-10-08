@@ -10,6 +10,6 @@ extends Node
 signal enemy_died(enemy: Node2D)
 
 # trigger signals
-signal register_hit(body: Node2D, state: ActionState)
-signal expire(transient: Node, state: ActionState)
-signal proc(procable: Node, state: ActionState)
+signal register_hit(state: ActionState)
+signal expire(state: ActionState)
+signal proc(state: ActionState)

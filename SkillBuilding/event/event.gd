@@ -18,25 +18,18 @@ class_name Event
 @export var max_entities: int = -1 ## -1 is no max
 
 @export_group(Globals.INSPECTOR_CATEGORY)
-@export var action: PackedScene ## Determines what the event does/how it behaves. ie "cause"
+@export var action_entity_packed: PackedScene ## Determines what the event does/how it behaves. ie "cause"
 @export var effect: Effect = DebugEffect.new() ## Determines how the action interacts with other things
 @export var target: Target = AtReticle.new()
 
 var _event_group_name: String = "" ## Group added to all entities produced by this event. Allows to check existing entities
 var _next_triggers: Array[Trigger] = []
 var _state_transform: ActionStateStats = null
-
+var _has_setup: bool = false
 
 
 func do_event(state: ActionState) -> void:
-	if _next_triggers.is_empty():
-		_find_next_triggers()
-	
-	if _state_transform == null:
-		_build_state_transform()
-	
-	if _event_group_name.is_empty():
-		_event_group_name = GroupRegistry.get_group_id("event")
+	_do_one_time_setup()
 	
 	state.merge(_state_transform)
 	_build_event_container(state)
@@ -45,7 +38,7 @@ func do_event(state: ActionState) -> void:
 func _build_event_container(state: ActionState) -> void:
 	var container: EventContainer = EventContainer.new()
 	get_tree().get_root().add_child(container)
-	container.initialize(action, effect, max_entities, _event_group_name, state, _get_qualt_modifiers(), _next_triggers)
+	container.initialize(action_entity_packed, effect, max_entities, _event_group_name, state, _get_qualt_modifiers(), _next_triggers)
 	container.build()
 
 
@@ -74,3 +67,17 @@ func _apply_quant_modifiers(stats: ActionStateStats) -> void:
 	for child: Node in get_children():
 		if child is QuantitativeModifier:
 			(child as QuantitativeModifier).modify_state(stats)
+
+
+## Why isn't this in ready()? See AnyNode.
+func _do_one_time_setup() -> void:
+	if not _has_setup:
+		_has_setup = true
+		if _next_triggers.is_empty():
+			_find_next_triggers()
+		
+		if _state_transform == null:
+			_build_state_transform()
+		
+		if _event_group_name.is_empty():
+			_event_group_name = GroupRegistry.get_group_id("event")

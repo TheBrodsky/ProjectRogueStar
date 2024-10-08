@@ -19,7 +19,7 @@ func _enter_tree() -> void:
 	firecone_mod.num_actions = num_spawns
 	firecone_mod.head_start_distance = spread_distance
 	spawn_event.max_entities = max_entities
-	spawn_event.action = spawn_entity
+	spawn_event.action_entity_packed = spawn_entity
 	timer.activations_per_second = 1 / time_between_spawns
 
 
