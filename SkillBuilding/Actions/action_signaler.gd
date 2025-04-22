@@ -9,7 +9,7 @@ class_name ActionSignaler
 ## their parent entity
 
 
-signal register_hit(state: ActionState)
-signal expire(state: ActionState)
-signal proc(state: ActionState)
-signal die(state: ActionState)
+signal has_hit(state: ActionState)
+signal expired(state: ActionState)
+signal procced(state: ActionState)
+signal died(state: ActionState)

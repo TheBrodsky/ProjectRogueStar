@@ -4,4 +4,4 @@
 
 [node name="OnHit" type="Node"]
 script = ExtResource("1_fsfis")
-signal_name = "give_hit"
+signal_name = "has_hit"

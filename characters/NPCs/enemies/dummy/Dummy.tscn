@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2mo4pgx3duu3"]
+
+[ext_resource type="Script" path="res://characters/NPCs/enemies/enemy.gd" id="1_mxgtx"]
+[ext_resource type="PackedScene" uid="uid://da0ftmpbs66oa" path="res://SkillBuilding/Actions/IAction.tscn" id="2_geg4h"]
+[ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="3_2x1y6"]
+[ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="3_6m6ni"]
+[ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://UI/health_bar/HealthBar.tscn" id="4_micga"]
+
+[sub_resource type="Resource" id="Resource_27wkc"]
+resource_local_to_scene = true
+script = ExtResource("3_2x1y6")
+modifies_damage = false
+modifies_entity = false
+modifies_follower = false
+modifies_status = false
+modifies_trigger = false
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03wld"]
+radius = 834.869
+height = 1669.74
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("iaction") groups=["Enemy", "Hittable"]]
+scale = Vector2(0.03, 0.03)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_mxgtx")
+iaction = NodePath("IAction")
+
+[node name="IAction" parent="." instance=ExtResource("2_geg4h")]
+base_stats = SubResource("Resource_27wkc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.211765, 0.290196, 1)
+texture = ExtResource("3_6m6ni")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.05046, 1.09262)
+shape = SubResource("CapsuleShape2D_03wld")
+
+[node name="HealthBar" parent="." instance=ExtResource("4_micga")]
+offset_left = -800.0
+offset_top = -1300.0
+offset_right = 806.0
+offset_bottom = -1100.0
+
+[connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]

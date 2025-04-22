@@ -2,6 +2,7 @@ extends Node2D
 
 
 @export_group(Globals.MODIFIABLE_CATEGORY)
+@export var spawn_entity: PackedScene
 @export var num_spawns: int = 4
 @export var max_entities: int = 10
 @export var time_between_spawns: float = 5 ## in seconds
@@ -9,7 +10,6 @@ extends Node2D
 @export var enabled: bool = true
 
 @export_group(Globals.INSPECTOR_CATEGORY)
-@export var spawn_entity: PackedScene
 @export var timer: OnTimer
 @export var spawn_event: Event
 @export var firecone_mod: FireconeMod

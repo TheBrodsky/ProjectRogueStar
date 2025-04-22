@@ -75,7 +75,6 @@ func build() -> void:
 		# perform per-action modifications
 		_modify_action_from_container_mods(action_entity, follower, i)
 		_modify_action_from_action_mods(action_entity)
-		@warning_ignore("unsafe_method_access")
 		action_interface.post_tree_initialize(triggers)
 	_modify_build()
 
@@ -98,7 +97,7 @@ func _build_action() -> Dictionary:
 		return_dict[_ACTION_ENTITY_KEY] = action_entity
 		
 		# do action initialization
-		var action_component: ActionInterface = _get_action(action_entity)
+		var action_component: ActionInterface = ActionInterface.get_action_interface(action_entity)
 		action_component.pre_tree_initialize(state.clone(), effect)
 		return_dict[_ACTION_INTERFACE_KEY] = action_component
 		
@@ -171,13 +170,3 @@ func _modify_build() -> void:
 
 func _should_exist() -> bool:
 	return get_child_count() == 0
-
-
-func _get_action(action_entity: Node2D) -> ActionInterface:
-	var interface: ActionInterface = null
-	for child in action_entity.get_children():
-		if child is ActionInterface:
-			interface = child
-			break
-	assert(interface != null, "All entities used in the action chain MUST implement the ActionInterface")
-	return interface

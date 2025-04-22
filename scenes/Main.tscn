@@ -1,15 +1,18 @@
-[gd_scene load_steps=29 format=3 uid="uid://duv6p3f38ccgk"]
+[gd_scene load_steps=34 format=3 uid="uid://duv6p3f38ccgk"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_t0tca"]
 [ext_resource type="PackedScene" uid="uid://2kseyhofncyg" path="res://UI/reticle/Reticle.tscn" id="2_icas4"]
 [ext_resource type="PackedScene" uid="uid://c8i7jri1f0ryg" path="res://characters/player/Player.tscn" id="3_pusd5"]
 [ext_resource type="PackedScene" uid="uid://dhv1n0nlkl1lf" path="res://SkillBuilding/Triggers/on_timer/OnTimer.tscn" id="4_fxvfb"]
-[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://SkillBuilding/Actions/Projectiles/Projectile.tscn" id="5_hcdlr"]
+[ext_resource type="PackedScene" uid="uid://bbqjmhmclioqv" path="res://SkillBuilding/Actions/Projectiles/ProjectileTemplate.tscn" id="5_hcdlr"]
 [ext_resource type="PackedScene" uid="uid://djcbigx8g87j3" path="res://UI/Camera.tscn" id="5_qx7nx"]
 [ext_resource type="Resource" uid="uid://bex33abpfvsll" path="res://skill_components/statuses/freeze/frozen_status_effect.tres" id="6_to36b"]
 [ext_resource type="PackedScene" uid="uid://bsrngflrkgpfk" path="res://scenes/ProtoTiles.tscn" id="6_ydiao"]
 [ext_resource type="Script" path="res://SkillBuilding/Movement/Targets/AtReticle/at_reticle.gd" id="7_4krft"]
+[ext_resource type="PackedScene" uid="uid://cyh32ukk54ume" path="res://SkillBuilding/Triggers/on_simple_signal/OnHit.tscn" id="8_njd7g"]
+[ext_resource type="PackedScene" uid="uid://b3j30vxjap476" path="res://SkillBuilding/Actions/circle_aoe/CircleAoE.tscn" id="9_26chc"]
 [ext_resource type="PackedScene" uid="uid://te86bvck7r6x" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/firecone/Firecone.tscn" id="9_m1uu5"]
+[ext_resource type="Script" path="res://SkillBuilding/Effects/damage/damage_effect.gd" id="10_05eo7"]
 [ext_resource type="PackedScene" uid="uid://d2qi6c253udob" path="res://SkillBuilding/Event/Event.tscn" id="11_brn3d"]
 [ext_resource type="PackedScene" uid="uid://drw1uyyrhlus7" path="res://SkillBuilding/Modifiers/QualitativeModifiers/ContainerModifiers/build_follower/BuildFollower.tscn" id="14_6ujpu"]
 [ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://SkillBuilding/Movement/Followers/StraightAt/StraightAt.tscn" id="15_4euk7"]
@@ -19,9 +22,13 @@
 [ext_resource type="Script" path="res://SkillBuilding/States/SubStates/StatObjects/float_stat.gd" id="16_e41qw"]
 [ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="16_pm4wf"]
 [ext_resource type="Script" path="res://SkillBuilding/States/SubStates/follower_state.gd" id="17_w33o0"]
+[ext_resource type="PackedScene" uid="uid://cbyndtv70vpwv" path="res://characters/NPCs/enemies/spawner/Spawner.tscn" id="20_48pct"]
 
 [sub_resource type="Resource" id="Resource_ehkws"]
 script = ExtResource("7_4krft")
+
+[sub_resource type="Resource" id="Resource_vyya6"]
+script = ExtResource("10_05eo7")
 
 [sub_resource type="Resource" id="Resource_kt2bd"]
 resource_local_to_scene = true
@@ -102,6 +109,12 @@ action_entity_packed = ExtResource("5_hcdlr")
 effect = ExtResource("6_to36b")
 target = SubResource("Resource_ehkws")
 
+[node name="OnHit" parent="Player/OnTimer/Event" instance=ExtResource("8_njd7g")]
+
+[node name="Event" parent="Player/OnTimer/Event/OnHit" instance=ExtResource("11_brn3d")]
+action_entity_packed = ExtResource("9_26chc")
+effect = SubResource("Resource_vyya6")
+
 [node name="StatModifier" parent="Player/OnTimer/Event" instance=ExtResource("15_hjr3a")]
 state = SubResource("Resource_nqv5o")
 
@@ -131,3 +144,8 @@ Reticle = NodePath("../Reticle")
 [node name="ProtoTiles" parent="." instance=ExtResource("6_ydiao")]
 z_index = -2
 scale = Vector2(4, 4)
+
+[node name="Spawner" parent="." instance=ExtResource("20_48pct")]
+position = Vector2(-405, 2)
+max_entities = 1
+time_between_spawns = 2.0

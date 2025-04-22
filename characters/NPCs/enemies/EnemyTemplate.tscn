@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkvyfec6n64gc"]
+[gd_scene load_steps=6 format=3 uid="uid://bkvyfec6n64gc"]
 
-[ext_resource type="Script" path="res://characters/NPCs/enemy.gd" id="1_0qba5"]
+[ext_resource type="Script" path="res://characters/NPCs/enemies/enemy.gd" id="1_0qba5"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="2_0mieg"]
+[ext_resource type="PackedScene" uid="uid://da0ftmpbs66oa" path="res://SkillBuilding/Actions/IAction.tscn" id="2_m8m1c"]
 [ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://UI/health_bar/HealthBar.tscn" id="3_eearr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_03wld"]
@@ -13,6 +14,8 @@ scale = Vector2(0.03, 0.03)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_0qba5")
+
+[node name="IAction" parent="." instance=ExtResource("2_m8m1c")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.211765, 0.290196, 1)

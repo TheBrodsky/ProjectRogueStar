@@ -20,7 +20,7 @@ func take_damage(damage: float) -> void:
 
 
 func die() -> void:
-	iaction.signaler.die.emit(iaction.state)
+	iaction.signaler.died.emit(iaction.state)
 	queue_free()
 
 

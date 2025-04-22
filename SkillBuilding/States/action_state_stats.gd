@@ -74,6 +74,7 @@ func populate_substats() -> void:
 
 
 func merge(other: ActionStateStats) -> ActionStateStats:
+	populate_substats() # prevents issues where the state getting modified has null substates
 	if other.modifies_damage: damage.merge(other.damage)
 	if other.modifies_entity: entity.merge(other.entity)
 	if other.modifies_follower: follower.merge(other.follower)

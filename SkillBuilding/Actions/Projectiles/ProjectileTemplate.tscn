@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbqjmhmclioqv"]
+[gd_scene load_steps=8 format=3 uid="uid://bbqjmhmclioqv"]
 
 [ext_resource type="Script" path="res://SkillBuilding/Actions/Projectiles/projectile.gd" id="1_hqwwq"]
 [ext_resource type="PackedScene" uid="uid://da0ftmpbs66oa" path="res://SkillBuilding/Actions/IAction.tscn" id="2_32gde"]
 [ext_resource type="Texture2D" uid="uid://xr2dxir45u8p" path="res://assets/basic_bullet.png" id="2_wwoiw"]
 [ext_resource type="Script" path="res://SkillBuilding/States/action_state_stats.gd" id="3_8k3qg"]
+[ext_resource type="PackedScene" uid="uid://cde10ga5uiu82" path="res://SkillBuilding/Movement/Followers/StraightAt/StraightAt.tscn" id="10_xextk"]
 
-[sub_resource type="Resource" id="Resource_ngdx4"]
+[sub_resource type="Resource" id="Resource_plqtl"]
+resource_local_to_scene = true
 script = ExtResource("3_8k3qg")
 modifies_damage = false
 modifies_entity = false
@@ -24,7 +26,8 @@ iaction = NodePath("IAction")
 area = NodePath("Area2D")
 
 [node name="IAction" parent="." instance=ExtResource("2_32gde")]
-base_stats = SubResource("Resource_ngdx4")
+base_stats = SubResource("Resource_plqtl")
+default_follower_packed = ExtResource("10_xextk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_wwoiw")

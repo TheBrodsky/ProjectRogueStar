@@ -14,14 +14,28 @@ signal state_modified
 @export var default_follower_packed: PackedScene = preload("res://SkillBuilding/Movement/Followers/StaticFollower.tscn")
 
 var action_entity: Node2D = get_parent()
-var signaler: ActionSignaler
+var signaler: ActionSignaler = ActionSignaler.new()
 var follower: Follower # the follower at the top
 var effect: Effect
 var triggers: Array[Trigger] = []
 var state: ActionState
 
 
+## Checks if a node is an action based on whether it implements this interface
+static func is_action(action: Node2D) -> bool:
+	return "iaction" in action
+
+
+## gets the iaction/ActionInterface property from an action entity.
+static func get_action_interface(action: Node2D) -> ActionInterface:
+	assert(is_action(action))
+	@warning_ignore("unsafe_property_access")
+	var interface: ActionInterface = action.iaction
+	return interface
+
+
 func pre_tree_initialize(state: ActionState, effect: Effect) -> void:
+	action_entity = get_parent()
 	self.effect = effect
 	_initialize_state(state)
 
@@ -69,9 +83,15 @@ func set_collision(collision_body: CollisionObject2D) -> void:
 
 
 func _initialize_state(seed_state: ActionState) -> void:
+	# update stats
 	var merged_stats: ActionStateStats = base_stats.merge(seed_state.stats)
 	state = ActionState.get_state(seed_state)
 	state.stats = merged_stats
+	
+	# set action_entity as the new source for future parts of the action chain
+	state.source = action_entity
+	
+	# signal completion
 	state_modified.emit()
 
 

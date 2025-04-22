@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c5uxj4w0eay7j"]
 
-[ext_resource type="Script" path="res://characters/NPCs/enemy.gd" id="1_5nlnx"]
+[ext_resource type="Script" path="res://characters/NPCs/enemies/enemy.gd" id="1_5nlnx"]
 [ext_resource type="Texture2D" uid="uid://dq825f4prqh78" path="res://assets/player_icon.png" id="1_su4im"]
 [ext_resource type="PackedScene" uid="uid://bew4kp75gbuar" path="res://UI/health_bar/HealthBar.tscn" id="2_d5n4s"]
 [ext_resource type="PackedScene" uid="uid://bj8tshriqiang" path="res://SkillBuilding/Movement/Followers/HomeAt/HomeAt.tscn" id="2_y3q8a"]

@@ -42,12 +42,12 @@ func do_animation() -> void:
 
 
 func on_animation_complete() -> void:
-	iaction.signaler.expire.emit(iaction.state)
+	iaction.signaler.expired.emit(iaction.state)
 	queue_free()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Hittable") and does_hit(body):
-		iaction.signaler.register_hit.emit(iaction.state)
+		iaction.signaler.has_hit.emit(iaction.state)
 		iaction.do_effect(body)
 	_bodies_hit[body] = null
