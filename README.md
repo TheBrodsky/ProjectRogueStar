@@ -1,5 +1,5 @@
 # ProjectRogueStar
 
-My first foray into game development. Not being actively developed anymore and likely never will. Scope was way too high and lack of co-developers makes it less rewarding.
+My first foray into game development. Not being actively developed anymore and likely never will. Scope was way too high and lack of co-developers makes it less rewarding. Despite being unfinished, it was very interesting to work on technically, but it was also a lesson in how difficult development is when you do not clearly define what you're developing and thus can't make clear assumptions. Every addition to the skill system in this game required increasingly creative solutions to avoid breaking other functionality and avoid cornering myself for future additions, which was unsustainable.
 
 The concept was for a skill system built on top of a sufficiently advanced skill "language" to create a lot of emergent behavior, similar to Noita, Bioprototype, and other "spellcrafting" games. The underlying language is the "action chain," which consists of Actions and Triggers that chain together, allowing Actions later in the chain to inherit certain stats from prior Actions. Most importantly, the "origin" point (in space) of an Action is passed on to any object or effect created by an Action, allowing the player to create spells with more advanced behavior.
